@@ -1,27 +1,13 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="admin/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="admin/img/lrvlogo.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../admin/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="{{ asset('admin/img/lrvlogo.png') }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Admin
+    User - Update
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -31,28 +17,27 @@ Coded by www.creative-tim.com
   <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('admin/css/paper-dashboard.css?v=2.0.1') }}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="{{ ('admin/demo/demo.css') }}" rel="stylesheet" />
-</head>
+  <link href="{{ ('admin/demo/demo.css') }}" rel="stylesheet" /></head>
 
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-        <a href="#" class="simple-text logo-normal">
+         <a href="#" class="simple-text logo-normal">
           <div class="logo-image-big">
-            <img src="./admin/img/logolrv.png">
+            <img src="{{ asset('admin/img/logolrv.png') }}" alt="Ảnh của tôi">
           </div>
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active">
+          <li>
             <a href="{{ url('backend/backend') }}">
               <i class="fa fa-home" aria-hidden="true"></i>              
               <p>Trang chủ</p>
             </a>
           </li>
-          <li>
+          <li  class="active">
             <a href="{{ url('backend/categories') }}">
               <i class="fa fa-table fa-fw"></i>
               <p>Danh mục sản phẩm</p>
@@ -103,7 +88,7 @@ Coded by www.creative-tim.com
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Trang chủ Admin</a>
+            <a class="navbar-brand" href="javascript:;">Thay đổi danh mục sản phẩm</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -122,6 +107,14 @@ Coded by www.creative-tim.com
               </div>
             </form>
             <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link btn-magnify" href="javascript:;">
+                  <i class="nc-icon nc-layout-11"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Stats</span>
+                  </p>
+                </a>
+              </li>
               <li class="nav-item btn-rotate dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-bell-55"></i>
@@ -135,6 +128,14 @@ Coded by www.creative-tim.com
                   <a class="dropdown-item" href="#">Something else here</a>
                 </div>
               </li>
+              <li class="nav-item">
+                <a class="nav-link btn-rotate" href="javascript:;">
+                  <i class="nc-icon nc-settings-gear-65"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Account</span>
+                  </p>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -143,26 +144,71 @@ Coded by www.creative-tim.com
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="description">
-              
-              <div id="page-wrapper" style="padding-top: 20px;">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <!-- content here -->
-                    @yield("do-du-lieu-tu-view")
-                    <!-- end content -->
-                  </div>
-                <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title"> Danh mục</h4>
               </div>
-        <!-- /#page-wrapper -->
+              <div class="card-body">
+                <div class="table-responsive">
 
-            </h3>
+
+                  <!-- Add_edit_users -->
+                
+                    <div class="col-md-12">  
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                            <form method="post" action="{{ $action }}">
+                                @csrf
+                                <!-- rows -->
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-md-2">Parent</div>
+                                    <div class="col-md-10">
+                                        @php
+                                            if(isset($record->id))
+                                            $categories = DB::table("categories")->where("parent_id","=","0")->where("id","<>",$record->id)->orderBy("id","desc")->get();
+                                            else
+                                            $categories = DB::table("categories")->where("parent_id","=","0")->orderBy("id","desc")->get();
+                                        @endphp
+                                        <select name="parent_id" class="form-control" style="width: 250px;">
+                                          <option value="0"></option>
+                                          @foreach($categories as $row)
+                                          <option @if(isset($record->parent_id) && $record->parent_id == $row->id) selected @endif value="{{ $row->id }}">{{ $row->name }}
+                                          </option>
+                                          @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- end rows -->
+                                <!-- rows -->
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-md-2">Name</div>
+                                    <div class="col-md-10">
+                                        <input type="text" value="{{ isset($record->name)?$record->name:'' }}" name="name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <!-- end rows -->
+                                <!-- rows -->
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <input type="submit" value="Process" class="btn btn-primary">
+                                    </div>
+                            </div>
+                                <!-- end rows -->
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Add_edit_users -->
+
+
+                 
+                    </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <footer class="footer" style="position: absolute; bottom: 0; width: -webkit-fill-available;">
+      <footer class="footer" style="margin-top:100px !important ;position: absolute; bottom: 0; width: -webkit-fill-available;">
         <div class="container-fluid">
           <div class="row">
             <div class="credits ml-auto">

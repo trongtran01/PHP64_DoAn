@@ -40,6 +40,48 @@ Route::get('backend', function () {
 })->middleware("check_login");
 //--
 
+//---
+//để sử dụng Controller thì phải khai báo ở đây
+use App\Http\Controllers\Admin\UsersController;
+//read
+Route::get('backend/users',[UsersController::class,'read']);
+//create
+Route::get('backend/users/create',[UsersController::class,'create']);
+//create post
+Route::post('backend/users/create-post',[UsersController::class,'createPost']);
+//update
+Route::get('backend/users/update/{id}',[UsersController::class,'update']);
+//update post
+Route::post('backend/users/update-post/{id}',[UsersController::class,'updatePost']);
+//delete
+Route::get('backend/users/delete/{id}',[UsersController::class,'delete']);
+//---
+
+
+//để sử dụng Controller thì phải khai báo ở đây
+use App\Http\Controllers\Admin\CategoriesController;
+//read
+Route::get('backend/categories',[CategoriesController::class,'read']);
+//create
+Route::get('backend/categories/create',[CategoriesController::class,'create']);
+//create post
+Route::post('backend/categories/create-post',[CategoriesController::class,'createPost']);
+//update
+Route::get('backend/categories/update/{id}',[CategoriesController::class,'update']);
+//update post
+Route::post('backend/categories/update-post/{id}',[CategoriesController::class,'updatePost']);
+//delete
+Route::get('backend/categories/delete/{id}',[CategoriesController::class,'delete']);
+//---
+
+
+//--
+// Route::get('backend/backend', function () {
+//     return view('admin.home.read');
+// });
+// // Thêm cái này thì khi ra trang backend/backend lại mất ảnh?
+//--
+
 //--
 //frontend
 //--
