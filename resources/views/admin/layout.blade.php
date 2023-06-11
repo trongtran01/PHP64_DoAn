@@ -18,7 +18,7 @@ Coded by www.creative-tim.com
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="admin/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="admin/img/lrvlogo.png">
+  <link rel="icon" type="image/png" href="admin/img/lrvlogo.png" style="width: 80px;">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     Admin

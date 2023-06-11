@@ -74,6 +74,39 @@ Route::post('backend/categories/update-post/{id}',[CategoriesController::class,'
 Route::get('backend/categories/delete/{id}',[CategoriesController::class,'delete']);
 //---
 
+//---
+//để sử dụng Controller thì phải khai báo ở đây
+use App\Http\Controllers\Admin\ProductsController;
+//read
+Route::get('backend/products',[ProductsController::class,'read']);
+//create
+Route::get('backend/products/create',[ProductsController::class,'create']);
+//create post
+Route::post('backend/products/create-post',[ProductsController::class,'createPost']);
+//update
+Route::get('backend/products/update/{id}',[ProductsController::class,'update']);
+//update post
+Route::post('backend/products/update-post/{id}',[ProductsController::class,'updatePost']);
+//delete
+Route::get('backend/products/delete/{id}',[ProductsController::class,'delete']);
+//---
+
+//---
+//để sử dụng Controller thì phải khai báo ở đây
+use App\Http\Controllers\Admin\NewsController;
+//read
+Route::get('backend/news',[NewsController::class,'read']);
+//create
+Route::get('backend/news/create',[NewsController::class,'create']);
+//create post
+Route::post('backend/news/create-post',[NewsController::class,'createPost']);
+//update
+Route::get('backend/news/update/{id}',[NewsController::class,'update']);
+//update post
+Route::post('backend/news/update-post/{id}',[NewsController::class,'updatePost']);
+//delete
+Route::get('backend/news/delete/{id}',[NewsController::class,'delete']);
+//---
 
 //--
 // Route::get('backend/backend', function () {
@@ -84,9 +117,18 @@ Route::get('backend/categories/delete/{id}',[CategoriesController::class,'delete
 
 //--
 //frontend
-//--
-Route::get('/', function () {
-    // Mã hóa passworld
-    echo Hash::make("123");
-    return view('welcome');
-});
+//Sử dụng HomeController
+use \App\Http\Controllers\Frontend\HomeController;
+Route::get("", [HomeController::class, 'index']);
+
+// Sử dụng ProductsController. Do ở bên trên đã khai báo ProductsController thực hiện tác vụ backend, vì vậy nếu khai báo lại ProductsController ở đây thì hệ thống sẽ báo lỗi. Xử lý bằng cách: đăth name cho controller
+use \App\Http\Controllers\Frontend\ProductsController as ProductsFrontend;
+Route::get('products/category/{category_id}',[ProductsFrontend::class,'category']);
+Route::get('products/detail/{id}',[ProductsFrontend::class,'detail']);
+
+use \App\Http\Controllers\Frontend\CustomersController;
+Route::get('customers/login',[CustomersController::class,'login']);
+Route::post('customers/login-post',[CustomersController::class,'loginPost']);
+Route::get('customers/register',[CustomersController::class,'register']);
+Route::post('customers/register-post',[CustomersController::class,'registerPost']);
+Route::get('customers/logout',[CustomersController::class,'logout']);

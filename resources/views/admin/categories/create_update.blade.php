@@ -187,6 +187,16 @@
                                     </div>
                                 </div>
                                 <!-- end rows -->
+
+                                <!-- rows -->
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <input type="checkbox" @if(isset($record->display_at_home_page) && $record->display_at_home_page == 1) checked @endif name="display_at_home_page" id="hot"> <label for="display_at_home_page">Hiện trên trang chủ</label>
+                                    </div>
+                                </div>
+                                <!-- end rows -->
+
                                 <!-- rows -->
                                 <div class="row" style="margin-top:5px;">
                                     <div class="col-md-2"></div>

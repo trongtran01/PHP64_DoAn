@@ -167,12 +167,18 @@ Coded by www.creative-tim.com
                   <table class="table">
                     <tr style="font-weight: bold;">
                         <td>Name</td>
+                        <td style="width: 100px;">Display</td>
                         <td style="width: 100px;"></td>
                     </tr>
                     <a href="{{ url('backend/categories/create') }}" class="btn btn-primary">Thêm</a>
                     @foreach($data as $row)
-                    <tr>
-                        <td style="font-weight: 700">{{ $row->name }}</td>
+                        <tr>
+                            <td style="font-weight: 700">{{ $row->name }}</td>
+                            <td style="text-align:center;">
+                            @if($row->display_at_home_page == 1)
+                            <span class="fa fa-check-circle-o" aria-hidden="true"></span>
+                            @endif
+                        </td>
                         <td style="text-align: center; font-weight: 700">
                             <a href="{{ url('backend/categories/update/'.$row->id) }}">Sửa</a>&nbsp;
                             <a href="{{ url('backend/categories/delete/'.$row->id) }}" onclick="return window.confirm('Bạn chắc chưa?');">Xóa</a>
@@ -185,6 +191,11 @@ Coded by www.creative-tim.com
                             @foreach($subCategories as $rowSub)
                               <tr>
                                   <td style="padding-left: 30px; font-weight: 500">{{ $rowSub->name }}</td>
+                                  <td style="text-align:center;">
+                                  @if($rowSub->display_at_home_page == 1)
+                                  <span class="fa fa-check-circle-o" aria-hidden="true"></span>
+                                  @endif
+                                </td>
                                   <td style="text-align: center;">
                                       <a href="{{ url('backend/categories/update/'.$rowSub->id) }}">Sửa</a>&nbsp;
                                       <a href="{{ url('backend/categories/delete/'.$rowSub->id) }}" onclick="return window.confirm('Bạn chắc chưa?');">Xóa</a>

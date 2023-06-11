@@ -1,0 +1,129 @@
+/* Trang shop */
+/* sub-menu-top */
+.menu-main{
+    display: flex;
+}
+.sub-menu-top ul{
+    display: flex;
+    list-style: none;
+    background-color: #f5f5f5;
+    width: 1140px;
+
+}
+.sub-menu-top ul li a{
+    color: #646464;
+    text-decoration: none;
+    line-height: 50px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+/* main-product */
+.main-product{
+    width: 900px;
+    margin-top: 50px;
+    margin-left: 35px;
+}
+.main-product ul{
+    width: 900px;
+    margin-bottom: 40px;
+    display: block;
+}
+.main-product ul h1{
+    width: 900px;
+    border-bottom: 3px solid #CD2626;
+    line-height: 25px;
+    font-size: 18PX;
+}
+.main-product ul h1 i{
+    float: right;
+    padding-top: 5px;
+    padding-left: 3px;
+
+}
+.main-product ul h1 .col-lg-3{
+    float: right;
+}
+.main-product ul li{
+    position: relative;
+    margin-top: 10px;
+    padding-top: 90px;
+    padding-left: 10px;
+    width: 195px;
+    display: inline-block;
+    text-align: center;
+    height: 230px;
+    margin-left: 5px;
+}
+.main-product > ul > li{
+    border: #ccc solid 1px;
+    border-radius: 5px;
+}
+.main-product ul li a{
+    bottom: 20px;
+    left: 60px;
+    text-decoration: none;
+    color: #646464;
+}
+.main-product > ul > li > a:hover {
+    color: #CD2626;
+}
+.main-product > ul > li:hover{
+    border: #CD2626 1px solid;
+}
+.main-product img{
+    width: 172px;
+    margin-top: -50px;
+}
+.p3{
+    text-decoration: line-through;
+
+    color: #646464;
+}
+.tag{
+    color: #CD2626;
+    border: solid #CD2626 1px;
+    border-radius: 5px;
+    height: 30px;
+    width: 50px;
+    text-align: center;
+    line-height: 30px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+/* button */
+.button{
+    margin-left: 1000px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.button input{
+    height: 35px;
+    padding-left: 13px;
+    padding-right: 13px;
+    background-color: #fff;
+    border: solid 1px #646464;
+}
+
+.button input:hover{
+    background-color: #CD2626;
+    color: #fff;
+}
+.add-to-cart{
+    margin-top: 10px;
+    margin-right: 10px;
+    height: 30px;
+    width: 180px;
+    border: #fff 1px solid;
+    background: #CD2626;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.add-to-cart:hover{
+    border: #CD2626 1px solid;
+    background: #fff;
+    color: #CD2626;
+}

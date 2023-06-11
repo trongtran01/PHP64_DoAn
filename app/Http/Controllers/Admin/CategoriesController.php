@@ -24,8 +24,9 @@ class CategoriesController extends Controller
     public function updatePost(Request $request,$id){
         $name = $request->get("name");
         $parent_id = $request->get("parent_id");
+        $display_at_home_page = $request->get("display_at_home_page") != "" ? 1 : 0;
         // Upadate name
-        Categories::where("id", "=", $id)->update(["name"=>$name, "parent_id"=> $parent_id]);
+        Categories::where("id", "=", $id)->update(["name"=>$name, "parent_id"=> $parent_id, "display_at_home_page"=>$display_at_home_page]);
         return redirect(url('backend/categories'));
     }
     public function create(Request $request){
@@ -36,8 +37,9 @@ class CategoriesController extends Controller
     public function createPost(Request $request){
         $name = $request->get("name");
         $parent_id = $request->get("parent_id");
+        $display_at_home_page = $request->get("display_at_home_page") != "" ? 1 : 0;
         // Upadate name
-        Categories::insert(["name"=>$name, "parent_id"=> $parent_id]);
+        Categories::insert(["name"=>$name, "parent_id"=> $parent_id, "display_at_home_page"=>$display_at_home_page]);
         return redirect(url('backend/categories'));
     }
     public function delete(Request $request,$id){
