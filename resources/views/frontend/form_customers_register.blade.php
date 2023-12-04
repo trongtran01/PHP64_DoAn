@@ -40,10 +40,10 @@
         </div>
         <div  class="form-container sign-in-container">
             <form action="#">
-                <h1 style="margin-left: 290px; margin-top: 200px !important; color: #CD2626;">Nếu chưa có tài khoản, đăng ký ngay thôi ^^ </h1>
+                <h1 style="margin-left: 290px; margin-top: 200px !important; color: #CD2626;">Nếu chưa có tài khoản, đăng ký ngay thôi</h1>
             </form>
         </div>
-    
+
     </div>
 </body>
 </html>

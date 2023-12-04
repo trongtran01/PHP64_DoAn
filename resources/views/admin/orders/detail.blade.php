@@ -1,3 +1,17 @@
+<!--
+=========================================================
+* Paper Dashboard 2 - v2.0.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
 <!doctype html>
 <html lang="en">
 
@@ -7,7 +21,7 @@
   <link rel="icon" type="image/png" href="{{ asset('admin/img/lrvlogo.png') }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    User - Update
+    Order-detail
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -25,7 +39,7 @@
       <div class="logo">
          <a href="#" class="simple-text logo-normal">
           <div class="logo-image-big">
-            <img src="{{ asset('admin/img/logolrv.png') }}" alt="Ảnh của tôi">
+            <img src="{{ asset('admin/img/logolrv.png') }}">
           </div>
         </a>
       </div>
@@ -55,13 +69,13 @@
               <p>Tin tức</p>
             </a>
           </li>
-          <li>
+          <li   class="active">
             <a href="{{ url('backend/orders') }}">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
               <p>Đơn hàng</p>
             </a>
           </li>
-          <li  class="active">
+          <li>
             <a href="{{ url('backend/users') }}">
               <i class="fa fa-user" aria-hidden="true"></i>
               <p>User</p>
@@ -88,7 +102,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Thay đổi về người dùng</a>
+            <a class="navbar-brand" href="javascript:;">Trang chi tiết đơn hàng</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -141,79 +155,107 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title"> Người dùng</h4>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
+      @php
+    //lấy thông tin đơn hàng
+    function getOrder($order_id){
+        $order = DB::table("orders")->where("id","=",$order_id)->first();
+        return $order;
+    }
+    //lấy thông tin customer
+    function getCustomer($customer_id){
+        $customer = DB::table("customers")->where("id","=",$customer_id)->first();
+        return $customer;
+    }
+    //lấy thông tin sản phẩm thuộc đơn hàng
+    function getProducts($order_id){
+    $products = DB::table("orderdetails")
+        ->join("products", "products.id", "=", "orderdetails.product_id")
+        ->select("products.name", "products.photo", "products.discount", "orderdetails.quantity", "orderdetails.price")
+        ->where("orderdetails.order_id", $order_id)
+        ->get();
+    return $products;
+}
 
+      @endphp
 
-                  <!-- Add_edit_users -->
-
-                    <div class="col-md-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-body">
-                            <form method="post" action="{{ $action }}">
-                                @csrf
-                                <!-- rows -->
-                                <div class="row" style="margin-top:5px;">
-                                    <div class="col-md-2">Name</div>
-                                    <div class="col-md-10">
-                                        <input type="text" value="{{ isset($record->name)?$record->name:'' }}" name="name" class="form-control" required>
-                                    </div>
-                                </div>
-                                <!-- end rows -->
-                                <!-- rows -->
-                                <div class="row" style="margin-top:5px;">
-                                    <div class="col-md-2">Email</div>
-                                    <div class="col-md-10">
-                                        <input type="email" value="{{ isset($record->email)?$record->email:'' }}" name="email" @if(isset($record->email)) disabled @else required @endif class="form-control">
-                                    </div>
-                                </div>
-                                <!-- end rows -->
-                                <!-- rows -->
-                                <div class="row" style="margin-top:5px;">
-                                    <div class="col-md-2">Password</div>
-                                    <div class="col-md-10">
-                                        <input type="password" name="password" class="form-control" placeholder="Không đổi password thì không nhập thông tin vào ô textbox này">
-                                    </div>
-                                </div>
-                                <!-- end rows -->
-                                <!-- rows -->
-                                <div class="row" style="margin-top:5px;">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-10">
-                                        <input type="submit" value="Process" class="btn btn-primary">
-                                    </div>
-                            </div>
-                                <!-- end rows -->
-                            </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Add_edit_users -->
-
-
-
-                    </div>
-              </div>
-            </div>
-          </div>
+@php
+    $order = getOrder($order_id);
+    $customer = getCustomer($order->customer_id)
+@endphp
+    <div style="margin-top: 100px;" class="col-md-12">
+    <div style="margin-bottom:5px;">
+        <a href="#" onclick="history.go(-1);" class="btn btn-primary">Quay lại</a>
+        @if($order->status == 0)
+        <a href="{{ url('backend/orders/update/'.$order->id) }}" class="btn btn-danger">Thực hiện giao hàng</a>
+        @endif
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Thông tin đơn hàng</div>
+        <div class="panel-body">
+            <table class="table">
+                <tr>
+                    <td style="width:200px;">Tên khách hàng</td>
+                    <td>{{ isset($customer->name) ? $customer->name : "" }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{ isset($customer->email) ? $customer->email : "" }}</td>
+                </tr>
+                <tr>
+                    <td>ngày mua</td>
+                    <td>{{ isset($order->date) ? date("d/m/Y", strtotime($order->date)) : "" }}</td>
+                </tr>
+                <tr>
+                    <td>Tổng giá</td>
+                    <td>{{ isset($order->price) ? $order->price : "" }}</td>
+                </tr>
+                <tr>
+                    <td>Trạng thái giao hàng</td>
+                    <td>{{ $order->status == 1 ? "Đã giao hàng" : "Chưa giao hàng" }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Chi tiết đơn hàng</div>
+        <div class="panel-body">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th style="width:100px;">Photo</th>
+                    <th>Name</th>
+                    <th style="width:100px;">Price</th>
+                    <th style="width:80px;">Discount</th>
+                    <th style="width:80px;">Quantity</th>
+                </tr>
+                @php
+                    $products = getProducts($order_id);
+                @endphp
+                @foreach($products as $row)
+                <tr>
+                    <td>
+                        @if($row->photo != "" && file_exists('upload/products/'.$row->photo))
+                        <img src="{{ asset('upload/products/'.$row->photo) }}" style="width:100px;">
+                        @endif
+                    </td>
+                    <td>{{ $row->name }}</td>
+                    <td>{{ number_format($row->price) }}</td>
+                    <td style="text-align:center;">{{ $row->discount }}%</td>
+                    <td style="text-align:center;">{{ $row->quantity }}</td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
       <footer class="footer" style="margin-top:100px !important ;position: absolute; bottom: 0; width: -webkit-fill-available;">
         <div class="container-fluid">
           <div class="row">
             <div class="credits ml-auto">
-              <span class="copyright" style="font-size: 18px;">
-                © 2023, made with <i class="fa fa-heart heart"></i> by Suplement Home
-              </span>
+
             </div>
           </div>
         </div>
+
       </footer>
     </div>
   </div>

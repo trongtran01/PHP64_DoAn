@@ -108,6 +108,16 @@ Route::post('backend/news/update-post/{id}',[NewsController::class,'updatePost']
 Route::get('backend/news/delete/{id}',[NewsController::class,'delete']);
 //---
 
+//Orders
+use App\Http\Controllers\Admin\OrdersController;
+//read
+Route::get('backend/orders',[OrdersController::class,'read']);
+//detail
+Route::get('backend/orders/detail/{order_id}',[OrdersController::class,'detail']);
+//update trạng thái giao hàng
+Route::get('backend/orders/update/{id}',[OrdersController::class,'update']);
+
+
 //--
 // Route::get('backend/backend', function () {
 //     return view('admin.home.read');
@@ -125,6 +135,16 @@ Route::get("", [HomeController::class, 'index']);
 use \App\Http\Controllers\Frontend\ProductsController as ProductsFrontend;
 Route::get('products/category/{category_id}',[ProductsFrontend::class,'category']);
 Route::get('products/detail/{id}',[ProductsFrontend::class,'detail']);
+//tìm kiếm
+Route::get('products/search',[ProductsFrontend::class,'search']);
+Route::get('products/ajax-search',[ProductsFrontend::class,'ajax']);
+Route::get('products/rating/{id}',[ProductsFrontend::class,'rating']);
+
+//Frontend New
+use \App\Http\Controllers\Frontend\NewsController as NewsFrontend;
+
+Route::get('/news', [App\Http\Controllers\Frontend\NewsController::class, 'index']);
+Route::get('news/detail/{id}',[NewsFrontend::class,'detail']);
 
 use \App\Http\Controllers\Frontend\CustomersController;
 Route::get('customers/login',[CustomersController::class,'login']);
@@ -132,3 +152,32 @@ Route::post('customers/login-post',[CustomersController::class,'loginPost']);
 Route::get('customers/register',[CustomersController::class,'register']);
 Route::post('customers/register-post',[CustomersController::class,'registerPost']);
 Route::get('customers/logout',[CustomersController::class,'logout']);
+
+// Cart
+use \App\Http\Controllers\Frontend\CartController;
+// Danh sách giỏ hàng
+Route::get('cart',[CartController::class,'index']);
+// Thêm sản phẩm vào giỏ hàng
+Route::get('cart/buy/{id}',[CartController::class,'buy']);
+// Xóa sản phẩm khỏi giỏ hàng
+Route::get('cart/delete/{id}',[CartController::class,'delete']);
+// Xóa toàn bộ sản phẩm khỏi giỏ hàng
+Route::get('cart/destroy',[CartController::class,'destroy']);
+// Cập nhật số lượng sản phẩm trong giỏ hàng
+Route::post('cart/update',[CartController::class,'update']);
+// Thanh toán đơn hàng
+Route::get('cart/order',[CartController::class,'order']);
+// Chuyển đến trang thanh toán thành công
+Route::get('cart/success', [CartController::class, 'success'])->name('success');
+
+
+//contact
+Route::get('contact',function(){
+    return view('frontend.contact');
+});
+
+//introduce
+Route::get('introduce',function(){
+    return view('frontend.introduce');
+});
+

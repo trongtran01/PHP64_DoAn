@@ -1,3 +1,17 @@
+<!--
+=========================================================
+* Paper Dashboard 2 - v2.0.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
 <!doctype html>
 <html lang="en">
 
@@ -7,7 +21,7 @@
   <link rel="icon" type="image/png" href="{{ asset('admin/img/lrvlogo.png') }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    User - Update
+    Order
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -25,14 +39,14 @@
       <div class="logo">
          <a href="#" class="simple-text logo-normal">
           <div class="logo-image-big">
-            <img src="{{ asset('admin/img/logolrv.png') }}" alt="Ảnh của tôi">
+            <img src="{{ asset('admin/img/logolrv.png') }}">
           </div>
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li>
-            <a href="{{ url('backend/backend') }}">
+              <a href="{{ url('/backend') }}">
               <i class="fa fa-home" aria-hidden="true"></i>
               <p>Trang chủ</p>
             </a>
@@ -55,13 +69,13 @@
               <p>Tin tức</p>
             </a>
           </li>
-          <li>
+          <li   class="active">
             <a href="{{ url('backend/orders') }}">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
               <p>Đơn hàng</p>
             </a>
           </li>
-          <li  class="active">
+          <li>
             <a href="{{ url('backend/users') }}">
               <i class="fa fa-user" aria-hidden="true"></i>
               <p>User</p>
@@ -88,7 +102,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Thay đổi về người dùng</a>
+            <a class="navbar-brand" href="javascript:;">Trang đơn hàng</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -141,66 +155,87 @@
         </div>
       </nav>
       <!-- End Navbar -->
+      @php
+      	function getCustomerName($customer_id){
+      		$record = DB::table("customers")->where("id","=",$customer_id)->first();
+      		return isset($record->name) ? $record->name : "";
+      	}
+      @endphp
       <div class="content">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Người dùng</h4>
+                <h4 class="card-title"> Danh sách đơn hàng</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
+                  <table class="table">
+                    <tr style="font-weight: bold;">
+                        <td>Tên khách hàng</td>
+                        <td>Thời gian</td>
+                        <td>Giá tiền</td>
+                        <td>Trạng thái</td>
+                        <td style="width: 100px;"></td>
+                    </tr>
+                    @foreach($data as $row)
+                    <tr>
+                        <td>{{ getCustomerName($row->customer_id) }}</td>
+                        <td>{{ date("d/m/Y", strtotime($row->date)) }}</td>
+                        <td>{{ number_format($row->price) }}đ</td>
+                        <td style="text-align: center;">
+							@if($row->status == 1)
+	                            <span style="color: red; margin-left: -190px;" >Đã giao hàng</span>
+	                        @else
+	                            <span style="margin-left: -190px">Chưa giao hàng</span>
+	                        @endif
+                    </td>
+                    <td style="text-align:center;">
+                        @if($row->status == 0)
+                            <a href="{{ url('backend/orders/detail/'.$row->id) }}" class="label label-warning">Chi tiết</a>
+                        @endif
+                    </td>
+                    </tr>
+                    @endforeach
+                  </table>
+                  <!-- <ul class="pagination" style="padding-left: 10px;">
+                      <li class="page-item">
+                          <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=1" class="page-link">1</a>
+                      </li>
+                      <li class="page-item">
+                          <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=2" class="page-link">2</a>
+                      </li>
+                  </ul> -->
+                  <style type="text/css">
+                      .page-link{
+                        color: #51cbce;
+                        font-size: 16px;
+                      }
+                      .page-link:hover{
+                        background: #51cbce;
+                        color: #fff;
+                      }
+                      .table{
+                        font-size: 16px;
+                      }
+                      .w-5{
+                        display: hidden !important;
+                      }
+                      .flex-1{
+                        margin-bottom: 15px;
+                      }
+                      svg {
+                        overflow: hidden;
+                        vertical-align: middle;
+                        display: contents;
+                        }
+                    .z-0{
+                            display: none;
+                        }
 
-
-                  <!-- Add_edit_users -->
-
-                    <div class="col-md-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-body">
-                            <form method="post" action="{{ $action }}">
-                                @csrf
-                                <!-- rows -->
-                                <div class="row" style="margin-top:5px;">
-                                    <div class="col-md-2">Name</div>
-                                    <div class="col-md-10">
-                                        <input type="text" value="{{ isset($record->name)?$record->name:'' }}" name="name" class="form-control" required>
-                                    </div>
-                                </div>
-                                <!-- end rows -->
-                                <!-- rows -->
-                                <div class="row" style="margin-top:5px;">
-                                    <div class="col-md-2">Email</div>
-                                    <div class="col-md-10">
-                                        <input type="email" value="{{ isset($record->email)?$record->email:'' }}" name="email" @if(isset($record->email)) disabled @else required @endif class="form-control">
-                                    </div>
-                                </div>
-                                <!-- end rows -->
-                                <!-- rows -->
-                                <div class="row" style="margin-top:5px;">
-                                    <div class="col-md-2">Password</div>
-                                    <div class="col-md-10">
-                                        <input type="password" name="password" class="form-control" placeholder="Không đổi password thì không nhập thông tin vào ô textbox này">
-                                    </div>
-                                </div>
-                                <!-- end rows -->
-                                <!-- rows -->
-                                <div class="row" style="margin-top:5px;">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-10">
-                                        <input type="submit" value="Process" class="btn btn-primary">
-                                    </div>
-                            </div>
-                                <!-- end rows -->
-                            </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Add_edit_users -->
-
-
-
-                    </div>
+                  </style>
+                  {{ $data->render() }}
+                </div>
               </div>
             </div>
           </div>
@@ -208,9 +243,6 @@
         <div class="container-fluid">
           <div class="row">
             <div class="credits ml-auto">
-              <span class="copyright" style="font-size: 18px;">
-                © 2023, made with <i class="fa fa-heart heart"></i> by Suplement Home
-              </span>
             </div>
           </div>
         </div>

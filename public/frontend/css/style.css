@@ -1,7 +1,7 @@
 body,ul,p,h1,h2,h3,h4,h5,h6{
     padding: 0px;
     margin: 0px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: system-ui !important;
     font-size: 14px;
 }
 .wrapper{
@@ -95,7 +95,7 @@ ul{
     position: absolute;
     top: 60px;
     left: 480px;
-    
+
 }
 .menu > ul > li{
     width: 130px;
@@ -219,7 +219,7 @@ ul{
     margin-left: 55px;
     width: 350px;
     display: block
-    
+
 }
 .under-top ul li h2{
     font-size: 16px;
@@ -250,7 +250,7 @@ ul{
     background-color: #fff;
     padding-top: 40px;
     padding-left: 10px;
-    
+
 }
 .menu-main-left ul h2{
     color: #fff;
@@ -282,42 +282,42 @@ ul{
 }
 
 .banner{
-    margin:auto; 
-    overflow: hidden; 
+    margin:auto;
+    overflow: hidden;
     position: relative;
     top: -35px;
 }
 .next{
-    width: 70px; 
-    line-height: 50px; 
-    text-align: center; 
-    background-color: rgba(0,0,0,0.6); 
-    color:white; 
-    position: absolute; 
-    top: 48%; 
-    display: none; 
+    width: 70px;
+    line-height: 50px;
+    text-align: center;
+    background-color: rgba(0,0,0,0.6);
+    color:white;
+    position: absolute;
+    top: 48%;
+    display: none;
     right:0px;
     border-radius: 20px 0px 0px 20px;
 }
 .prev{
-    width: 70px; 
-    line-height: 50px; 
-    text-align: center; 
-    background-color: rgba(0,0,0,0.6); 
-    color:white; 
-    position: absolute; 
+    width: 70px;
+    line-height: 50px;
+    text-align: center;
+    background-color: rgba(0,0,0,0.6);
+    color:white;
+    position: absolute;
     top: 48%;
-    left: 25px; 
+    left: 25px;
     display: none;
     border-radius: 0px 20px 20px 0px;
 
 }
 .banner:hover .next{
-    cursor: pointer; 
+    cursor: pointer;
     display: block;
 }
 .banner:hover .prev{
-    cursor: pointer; 
+    cursor: pointer;
     display: block;
 }
 /* product */
@@ -338,6 +338,8 @@ ul{
 /* Best seller */
 .best-seller{
     width: 250px;
+    height: 500px;
+    overflow: auto;
 }
 .best-seller ul{
     display: block;
@@ -348,9 +350,8 @@ ul{
 .best-seller ul li{
     margin-top: 15px;
     display: inline-block;
-    line-height: 25px;
     position: relative;
-    padding-left: 30px;
+    padding-left: 5px;
 }
 .best-seller ul li a {
     float: right;
@@ -358,13 +359,14 @@ ul{
     color: #707070;
     text-align: center;
     padding-top: 15px;
+    font-weight: 500;
 }
 .best-seller img{
     width: 60px;
 }
 .best-seller ul li a:hover{
     color: #CD2626;
-} 
+}
 
 .p1{
     color: #CD2626;
@@ -417,7 +419,7 @@ ul{
     width: 195px;
     display: inline-block;
     text-align: center;
-    height: 200px;
+    height: 230px;
     border: #fff solid 1px;
 }
 .discout ul li a{
@@ -586,7 +588,7 @@ ul{
 }
 .footer .info ul li{
     text-align: left;
-    
+
 }
 .footer .info ul li a{
     text-decoration: none;

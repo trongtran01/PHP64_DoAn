@@ -50,7 +50,7 @@ Coded by www.creative-tim.com
         <ul class="nav">
           <li>
             <a href="{{ url('backend/backend') }}">
-              <i class="fa fa-home" aria-hidden="true"></i>              
+              <i class="fa fa-home" aria-hidden="true"></i>
               <p>Trang chủ</p>
             </a>
           </li>
@@ -170,7 +170,7 @@ Coded by www.creative-tim.com
                       <div class="col-md-12">
     <div style="margin-bottom:5px;">
     </div>
-    <div class="col-md-12">  
+    <div class="col-md-12">
       <div class="panel panel-primary">
           <div class="panel-heading"></div>
           <div class="panel-body">
@@ -210,11 +210,11 @@ Coded by www.creative-tim.com
                         $categories = DB::select("select * from categories where parent_id = 0 order by id desc");
                       @endphp
                       <select class="form-control" name="category_id" style="width:250px;">
-                      @foreach($categories as $row)                     
-                        <option @if(isset($record->category_id)&&$record->category_id==$row->id) selected @endif value="{{ $row->id }}">{{ $row->name }}</option> 
+                      @foreach($categories as $row)
+                        <option @if(isset($record->category_id)&&$record->category_id==$row->id) selected @endif value="{{ $row->id }}">{{ $row->name }}</option>
                         @php
                           $subCategories = DB::table("categories")->where("parent_id","=",$row->id)->orderBy("id","desc")->get();
-                        @endphp                   
+                        @endphp
                         @foreach($subCategories as $subRow)
                           <option @if(isset($record->category_id)&&$record->category_id==$subRow->id) selected @endif value="{{ $subRow->id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $subRow->name }}</option>
                         @endforeach
@@ -283,7 +283,7 @@ Coded by www.creative-tim.com
   </div>
     </div>
 </div>
-                    
+
                   <!-- <ul class="pagination" style="padding-left: 10px;">
                       <li class="page-item">
                           <a href="http://localhost/php64_laravel_DoAn/public/backend/categories?page=1" class="page-link">1</a>
@@ -292,7 +292,7 @@ Coded by www.creative-tim.com
                           <a href="http://localhost/php64_laravel_DoAn/public/backend/categories?page=2" class="page-link">2</a>
                       </li>
                   </ul> -->
-                  <!-- <style type="text/css">               
+                  <!-- <style type="text/css">
                       .page-link{
                         color: #51cbce;
                         font-size: 16px;
@@ -315,7 +315,7 @@ Coded by www.creative-tim.com
                         vertical-align: middle;
                         display: contents;
                         }
-                    .z-0{ 
+                    .z-0{
                             display: none;
                         }
                   </style> -->
@@ -333,7 +333,7 @@ Coded by www.creative-tim.com
         </div>
       </footer>
     </div>
-                    <div class="cpr">© 2023, made with <i class="fa fa-heart heart"></i> by Tran Binh Trong</div>
+                    <div class="cpr">© 2023, made with <i class="fa fa-heart heart"></i> by Suplement Home</div>
 
   </div>
 

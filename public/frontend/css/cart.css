@@ -69,6 +69,9 @@
     margin:0;
 }
 /* Table */
+table{
+    margin-left: 50px;
+}
 table, th, td{
     border: 2px solid #ccc;
     color: #646464;
@@ -126,18 +129,4 @@ table tr td img{
     background-color: #CD2626;
     border:2px solid #CD2626;
 }
-.btn-pay-money{
-    float: right;
-    margin-right: 20px;
-    height: 40px;
-    text-transform: uppercase;
-    border: 2px solid #CD2626;
-    border-radius: 2px;
-    background-color: #CD2626;
-    color: #fff;
-}
-.btn-pay-money:hover{
-    cursor: pointer;
-    color: #CD2626;
-    background-color: #fff;
-}
+

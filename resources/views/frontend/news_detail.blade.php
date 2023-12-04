@@ -1,13 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Tin tức</title>
     <!-- Load font awsome online -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/new.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Favicon -->
@@ -19,25 +20,65 @@
     </style>
 </head>
 <body>
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/649b31decc26a871b0250604/1h3v3ljq5';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    <!--End of Tawk.to Script-->
-        <!-- Load header của trang web vào đây -->
-        @include("frontend.header")
+<div class="news-detail-container">
+    <!-- Load header của trang web vào đây -->
+    @include("frontend.header")
+    <div class="menu-main-left">
+        <ul><h2>DANH MỤC TIN TỨC</h2>
+            <li><a href="#">Trang chủ</a></li>
+            <li><a href="#">Giới thiệu</a></li>
+            <li><a href="#">Sản phẩm</a></li>
+            <li><a style="color: #CD2626;" href="#"><b>Tin tức</b></a></li>
+            <li><a href="#">Liên hệ</a></li>
+        </ul>
+    </div>
+    <!-- Product detail -->
+    <h1 class="news-title" style="color: #cd2626; font-weight: bold">{!! $record->name !!}</h1>
 
-        <!-- Đổ dữ liệu của product vào đây -->
-        @yield("do-du-lieu-vao-layout")
+    <div class="new-detail">
+        <div class="new-description">
+            <div class="description">
+                <p>{!! $record->description !!}</p>
+            </div>
+        </div>
+        <div class="new-content">
+            <div class="content">
+                <p>{!! $record->content !!}</p>
+            </div>
+        </div>
+    </div>
+    <style>
+        .new-detail {
+            width: 900px;
+            color: #3C4858;
+            margin-top: 300px;
+            margin-left: 304px;
+        }
+        .new-detail img {
+            width: 700px;
+        }
+        .new-description {
+            margin-top: -650px;
+        }
+        .new-content {
+            position: relative;
+            font-weight: lighter;
+        }
+        .image {
+            text-align: center;
+        }
+    </style>
 
+    <div class="support1">
+        <ul>
+            <h3>Hỗ trợ trực tuyến</h3>
+            <li><b>Hỗ trợ bán hàng</b></li>
+            <br>
+            <div class="logo-fb-1">
+                <i class="fa-brands fa-square-facebook fa-2xl" style="color: #3B5998;"></i>
+            </div>
+            <li class="box-chat"><a href="#">Chat ngay để được tư vấn</a></li>
+        </ul>
     </div>
     <!-- Footer -->
     <div class="footer">
@@ -75,9 +116,9 @@
 
         </div>
         <div class="raw-company">
-            <ul><h2>CÔNG TY TNHH SUPLEMENT HOME</h2>
-            <li>Trụ sở chính : Tầng 4 - Tòa nhà Hanoi Group - 442 Đội Cấn - Ba Đình - Hà Nội <br> Điện thoại : (04) 6674 2332 - (04) 3786 8904</li>
-            <li>Văn phòng đại diện : Lầu 3 - Tòa nhà Lữ Gia - Số 70 Lữ Gia - P.15 - Q.11 - TP. HCM <br> Điện thoại : (08) 6680 9686 - (04) 3866 6276</li>
+            <ul><h2>CÔNG TY TNHH SUPLEMENT BROTHERS</h2>
+                <li>Trụ sở chính : Tầng 4 - Tòa nhà Hanoi Group - 442 Đội Cấn - Ba Đình - Hà Nội <br> Điện thoại : (04) 6674 2332 - (04) 3786 8904</li>
+                <li>Văn phòng đại diện : Lầu 3 - Tòa nhà Lữ Gia - Số 70 Lữ Gia - P.15 - Q.11 - TP. HCM <br> Điện thoại : (08) 6680 9686 - (04) 3866 6276</li>
             </ul>
         </div>
 
@@ -85,6 +126,6 @@
             © Bản quyền thuộc về Suplement Brothers | Cung cấp bởi <a href="#" style="color: #CD2626;">SUPLEMENT HOME</a>
         </div>
     </div>
-
+</div>
 </body>
 </html>

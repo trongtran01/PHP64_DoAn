@@ -16,7 +16,7 @@ class HomeController extends Controller
     // Tạo hàm để từ view gọi hàm này đến dữ liệu
     // Sử dụng từ khóa static để bên ngoài view sẽ truy cập theo dạng: \App\Http\Controllers\HomeController::hotProducts();
     public static function hotProducts(){
-        $products = DB::table("products")->where("hot","=",1)->orderBy("id", "desc")->skip(0)->take(6)->get();
+        $products = DB::table("products")->where("hot","=",1)->orderBy("id", "desc")->skip(0)->take(10)->get();
         return $products;
     }
     public static function getCategories(){
@@ -24,11 +24,11 @@ class HomeController extends Controller
         return $categories;
     }
     public static function getProductsInCategory($category_id){
-        $products = DB::table("products")->where("category_id","=","$category_id")->orderBy("id", "desc")->skip(0)->take(6)->get();
+        $products = DB::table("products")->where("category_id","=","$category_id")->orderBy("id", "desc")->skip(0)->take(10)->get();
         return $products;
     }
     public static function hotNews(){
-        $news = DB::table("news")->where("hot","=",1)->orderBy("id", "desc")->skip(0)->take(6)->get();
+        $news = DB::table("news")->where("hot","=",1)->orderBy("id", "desc")->skip(0)->take(10)->get();
         return $news;
     }
 }

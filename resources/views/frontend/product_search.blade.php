@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop</title>
+    <title>Search</title>
     <!-- Load font awsome online -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
@@ -32,7 +32,7 @@
 	              <h2 style="margin-top: 8px;">DANH MỤC</h2>
 	              <li><a href="{{ asset('') }}">Trang chủ</a></li>
 	              <li><a href="#">Giới thiệu</a></li>
-	              <li><a style="color: #CD2626;" href="#"><b>Sản phẩm</b></a></li>
+	              <li><a style="color: #CD2626;" href="#">Sản phẩm</a></li>
 	              <li><a href="{{ asset('news') }}">Tin tức</a></li>
 	              <li><a href="{{ asset('contact') }}">Liên hệ</a></li>
 	            </ul>
@@ -40,24 +40,11 @@
 	          <!-- /Menu-main-left -->
             <!-- main-product -->
             <div class="main-product">
-                @php
-                	function getCategoryName($category_id){
-                		$record = DB::table("categories")->where("id", "=", $category_id)->select("name")->first();
-                		return isset($record->name) ? $record->name : "";
-                	}
-                @endphp
+
                 <ul>
-                    <h1>{{ getCategoryName($category_id) }}
+                    <h1>Tìm kiếm từ khóa: {{ $key }}
 
                         <div class="col-lg-3 pull-right text-right">
-                        	<i class="fa-solid fa-layer-group" style="color: #CD2626;"></i>
-			                <select style="width: 120px; border: 2px solid #CD2626; border-radius: 3px" class="form-control" onchange="location.href = '{{ url('products/category/'.$category_id.'?order=') }}'+this.value;">
-			                  <option value="0">Sắp xếp</option>
-			                  <option @if($order=='priceAsc') selected @endif value="priceAsc">Giá tăng dần</option>
-			                  <option @if($order=='priceDesc') selected @endif value="priceDesc">Giá giảm dần</option>
-			                  <option @if($order=='nameAsc') selected @endif value="nameAsc">Sắp xếp A-Z</option>
-			                  <option @if($order=='nameDesc') selected @endif value="nameDesc">Sắp xếp Z-A</option>
-			                </select>
 			              </div>
                     </h1>
                     @foreach($data as $row)

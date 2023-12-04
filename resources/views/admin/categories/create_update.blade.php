@@ -33,7 +33,7 @@
         <ul class="nav">
           <li>
             <a href="{{ url('backend/backend') }}">
-              <i class="fa fa-home" aria-hidden="true"></i>              
+              <i class="fa fa-home" aria-hidden="true"></i>
               <p>Trang chủ</p>
             </a>
           </li>
@@ -153,8 +153,8 @@
 
 
                   <!-- Add_edit_users -->
-                
-                    <div class="col-md-12">  
+
+                    <div class="col-md-12">
                         <div class="panel panel-primary">
                             <div class="panel-body">
                             <form method="post" action="{{ $action }}">
@@ -209,11 +209,11 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Add_edit_users -->
 
 
-                 
+
                     </div>
               </div>
             </div>
@@ -223,7 +223,7 @@
           <div class="row">
             <div class="credits ml-auto">
               <span class="copyright" style="font-size: 18px;">
-                © 2023, made with <i class="fa fa-heart heart"></i> by Tran Binh Trong
+                © 2023, made with <i class="fa fa-heart heart"></i> by Suplement Home
               </span>
             </div>
           </div>

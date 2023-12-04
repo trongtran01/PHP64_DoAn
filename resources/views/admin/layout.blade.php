@@ -47,8 +47,8 @@ Coded by www.creative-tim.com
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active">
-            <a href="{{ url('backend/backend') }}">
-              <i class="fa fa-home" aria-hidden="true"></i>              
+              <a href="{{ url('/backend') }}">
+              <i class="fa fa-home" aria-hidden="true"></i>
               <p>Trang chủ</p>
             </a>
           </li>
@@ -144,7 +144,7 @@ Coded by www.creative-tim.com
         <div class="row">
           <div class="col-md-12">
             <h3 class="description">
-              
+
               <div id="page-wrapper" style="padding-top: 20px;">
                 <div class="row">
                   <div class="col-lg-12">
@@ -167,7 +167,7 @@ Coded by www.creative-tim.com
           <div class="row">
             <div class="credits ml-auto">
               <span class="copyright" style="font-size: 18px;">
-                © 2023, made with <i class="fa fa-heart heart"></i> by Tran Binh Trong
+                © 2023, made with <i class="fa fa-heart heart"></i> by Suplement Home
               </span>
             </div>
           </div>
