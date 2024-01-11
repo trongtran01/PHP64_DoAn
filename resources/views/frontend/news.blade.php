@@ -50,11 +50,11 @@
     <!-- Menu-main-left -->
     <div class="menu-main-left">
         <ul><h2>DANH MỤC TIN TỨC</h2>
-            <li><a href="#">Trang chủ</a></li>
-            <li><a href="#">Giới thiệu</a></li>
-            <li><a href="#">Sản phẩm</a></li>
-            <li><a style="color: #CD2626;" href="#"><b>Tin tức</b></a></li>
-            <li><a href="#">Liên hệ</a></li>
+            <li><a href="{{ asset('') }}">Trang chủ</a></li>
+            <li><a href="{{ asset('introduce') }}">Giới thiệu</a></li>
+            <li><a href="{{ asset('') }}">Sản phẩm</a></li>
+            <li><a style="color: #CD2626;" href="{{ asset('news') }}"><b>Tin tức</b></a></li>
+            <li><a href="{{ asset('contact') }}">Liên hệ</a></li>
         </ul>
     </div>
     <!-- /Menu-main-left -->
@@ -68,7 +68,7 @@
         <div class="logo-fb-1">
             <i class="fa-brands fa-square-facebook fa-2xl" style="color: #3B5998;"></i>
         </div>
-        <li class="box-chat"><a href="#">Chat ngay để được tư vấn</a></li>
+        <li class="box-chat"><a href="https://www.facebook.com/nnthai0762/" target="_blank">Chat ngay để được tư vấn</a></li>
     </ul>
 </div>
 

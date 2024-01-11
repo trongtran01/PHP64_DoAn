@@ -32,7 +32,7 @@
                     <div class="logo-fb">
                         <i class="fa-brands fa-square-facebook fa-2xl" style="color: #3B5998;"></i>
                     </div>
-                    <li class="box-chat"><a href="https://www.facebook.com/profile.php?id=100009485204962" target="_blank">Chat ngay để được tư vấn</a></li>
+                    <li class="box-chat"><a href="https://www.facebook.com/nnthai0762/" target="_blank">Chat ngay để được tư vấn</a></li>
                 </ul>
             </div>
 

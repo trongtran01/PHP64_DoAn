@@ -5,8 +5,8 @@
             <ul>
               <h2 style="margin-top: 8px;">DANH MỤC</h2>
               <li><a href="{{ asset('') }}">Trang chủ</a></li>
-              <li><a href="#">Giới thiệu</a></li>
-              <li><a href="#">Sản phẩm</a></li>
+              <li><a href="{{ asset('/introduce') }}">Giới thiệu</a></li>
+              <li><a href="{{ asset('') }}">Sản phẩm</a></li>
               <!-- Truy vấn cơ sở dữ liệu trực tiếp -->
                             @php
                                 $categories = DB::table("categories")->where("parent_id","=",0)->orderBy("id", "desc")->get();
@@ -27,7 +27,7 @@
                                 @endif
                             </li>
                             @endforeach
-              <li><a href="#">Tin tức</a></li>
+              <li><a href="{{ asset('news') }}">Tin tức</a></li>
               <li><a href="{{ asset('contact') }}">Liên hệ</a></li>
             </ul>
           </div>

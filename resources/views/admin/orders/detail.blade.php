@@ -210,6 +210,10 @@ Coded by www.creative-tim.com
                     <td>{{ isset($order->price) ? $order->price : "" }}</td>
                 </tr>
                 <tr>
+                    <td>Địa chỉ</td>
+                    <td>{{ isset($customer->address) ? $customer->address : "" }}</td>
+                </tr>
+                <tr>
                     <td>Trạng thái giao hàng</td>
                     <td>{{ $order->status == 1 ? "Đã giao hàng" : "Chưa giao hàng" }}</td>
                 </tr>

@@ -170,42 +170,57 @@ Coded by www.creative-tim.com
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table">
-                    <tr style="font-weight: bold;">
-                        <td>Tên khách hàng</td>
-                        <td>Thời gian</td>
-                        <td>Giá tiền</td>
-                        <td>Trạng thái</td>
-                        <td style="width: 100px;"></td>
-                    </tr>
-                    @foreach($data as $row)
-                    <tr>
-                        <td>{{ getCustomerName($row->customer_id) }}</td>
-                        <td>{{ date("d/m/Y", strtotime($row->date)) }}</td>
-                        <td>{{ number_format($row->price) }}đ</td>
-                        <td style="text-align: center;">
-							@if($row->status == 1)
-	                            <span style="color: red; margin-left: -190px;" >Đã giao hàng</span>
-	                        @else
-	                            <span style="margin-left: -190px">Chưa giao hàng</span>
-	                        @endif
-                    </td>
-                    <td style="text-align:center;">
-                        @if($row->status == 0)
-                            <a href="{{ url('backend/orders/detail/'.$row->id) }}" class="label label-warning">Chi tiết</a>
-                        @endif
-                    </td>
-                    </tr>
-                    @endforeach
-                  </table>
-                  <!-- <ul class="pagination" style="padding-left: 10px;">
-                      <li class="page-item">
-                          <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=1" class="page-link">1</a>
-                      </li>
-                      <li class="page-item">
-                          <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=2" class="page-link">2</a>
-                      </li>
-                  </ul> -->
+                    <table class="table">
+                        <tr style="font-weight: bold;">
+                            <td>Tên khách hàng</td>
+                            <td>Thời gian</td>
+                            <td>Giá tiền</td>
+                            <td>Trạng thái</td>
+                            <td style="width: 100px;"></td>
+                        </tr>
+                        @php
+                            $totalDay = 0;
+                            $totalMonth = 0;
+                        @endphp
+
+                        @foreach($data as $row)
+                            <tr>
+                                <td>{{ getCustomerName($row->customer_id) }}</td>
+                                <td>{{ date("d/m/Y", strtotime($row->date)) }}</td>
+                                <td>{{ number_format($row->price) }}đ</td>
+                                <td style="text-align: center;">
+                                    @if($row->status == 1)
+                                        <span style="color: red; margin-left: -190px;" >Đã giao hàng</span>
+                                    @else
+                                        <span style="margin-left: -190px">Chưa giao hàng</span>
+                                    @endif
+                                </td>
+                                <td style="text-align:center;">
+                                    <a href="{{ url('backend/orders/detail/'.$row->id) }}" class="label label-warning">Chi tiết</a>
+                                </td>
+                            </tr>
+
+                            @php
+                                $totalDay += $row->price;
+                                $totalMonth += $row->price;
+                            @endphp
+                        @endforeach
+
+                        <tr style="font-weight: bold;">
+                            <td colspan="2">Tổng doanh thu:</td>
+                            <td>{{ number_format($totalMonth) }}đ</td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </table>
+
+                    <!-- <ul class="pagination" style="padding-left: 10px;">
+                        <li class="page-item">
+                            <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=1" class="page-link">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=2" class="page-link">2</a>
+                        </li>
+                    </ul> -->
                   <style type="text/css">
                       .page-link{
                         color: #51cbce;

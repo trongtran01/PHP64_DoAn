@@ -31,7 +31,7 @@
 	            <ul>
 	              <h2 style="margin-top: 8px;">DANH MỤC</h2>
 	              <li><a href="{{ asset('') }}">Trang chủ</a></li>
-	              <li><a href="#">Giới thiệu</a></li>
+	              <li><a href="{{ asset('introduce') }}">Giới thiệu</a></li>
 	              <li><a style="color: #CD2626;" href="#"><b>Sản phẩm</b></a></li>
 	              <li><a href="{{ asset('news') }}">Tin tức</a></li>
 	              <li><a href="{{ asset('contact') }}">Liên hệ</a></li>
@@ -86,7 +86,7 @@
                     <div class="logo-fb">
                         <i class="fa-brands fa-square-facebook fa-2xl" style="color: #3B5998;"></i>
                     </div>
-                    <li class="box-chat"><a href="#">Chat ngay để được tư vấn</a></li>
+                    <li class="box-chat"><a href="https://www.facebook.com/nnthai0762/" target="_blank">Chat ngay để được tư vấn</a></li>
                 </ul>
             </div>
 
