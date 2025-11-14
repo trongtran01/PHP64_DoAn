@@ -34,59 +34,52 @@
           <!-- /Menu-main-left -->
 
           <!-- Banner -->
-          <div style="margin-top: 130px" class="banner">
-            <img src="{{ asset('frontend/images/banner.webp') }}" class="banner-show">
-            <div class="next"><i class="fa-solid fa-circle-right"></i></div>
-            <div class="prev"><i class="fa-solid fa-circle-left"></i></div>
-          </div>
-          <script>
-            $(document).ready(function() {
-              let arr_banner = [];
-              arr_banner[0] = "frontend/images/banner.webp";
-              arr_banner[1] = "frontend/images/banner1.webp";
-              arr_banner[2] = "frontend/images/banner2.webp";
-              arr_banner[3] = "frontend/images/banner3.webp";
-              let n = 0;
+            <div style="margin-top: 130px" class="banner">
+                <img src="{{ asset($banners[0]->image ? 'upload/banners/' . $banners[0]->image : 'frontend/images/banner.webp') }}"
+                    class="banner-show">
 
-              // Hàm chuyển đổi hình ảnh trong banner
-              function changeBanner() {
-                $(".banner-show").fadeOut(function() {
-                  $(".banner-show").attr("src", arr_banner[n]);
-                  $(".banner-show").fadeIn();
+                <div class="next"><i class="fa-solid fa-circle-right"></i></div>
+                <div class="prev"><i class="fa-solid fa-circle-left"></i></div>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    let arr_banner = [
+                        @foreach($banners as $ban)
+                            "{{ asset('upload/banners/' . $ban->image) }}",
+                        @endforeach
+                    ];
+
+                    let n = 0;
+
+                    function changeBanner() {
+                        $(".banner-show").fadeOut(function() {
+                            $(".banner-show").attr("src", arr_banner[n]);
+                            $(".banner-show").fadeIn();
+                        });
+
+                        n = (n + 1) % arr_banner.length;
+                    }
+
+                    setInterval(changeBanner, 3000);
+
+                    $(".next").on('click', function() {
+                        n = (n + 1) % arr_banner.length;
+
+                        $(".banner-show").fadeOut(function() {
+                            $(".banner-show").attr("src", arr_banner[n]).fadeIn();
+                        });
+                    });
+
+                    $(".prev").on('click', function() {
+                        n = (n - 1 + arr_banner.length) % arr_banner.length;
+
+                        $(".banner-show").fadeOut(function() {
+                            $(".banner-show").attr("src", arr_banner[n]).fadeIn();
+                        });
+                    });
                 });
-
-                n++;
-                if (n == arr_banner.length) {
-                  n = 0;
-                }
-              }
-
-              // Gọi hàm chuyển đổi sau mỗi 3 giây (hoặc thời gian mong muốn)
-              setInterval(changeBanner, 3000);
-
-              $(".next").on('click', function() {
-                n++;
-                if (n == arr_banner.length) {
-                  n = 0;
-                }
-                $(".banner-show").fadeOut(function() {
-                  $(".banner-show").attr("src", arr_banner[n]);
-                  $(".banner-show").fadeIn();
-                });
-              });
-
-              $(".prev").on('click', function() {
-                n--;
-                if (n < 0) {
-                  n = arr_banner.length - 1;
-                }
-                $(".banner-show").fadeOut(function() {
-                  $(".banner-show").attr("src", arr_banner[n]);
-                  $(".banner-show").fadeIn();
-                });
-              });
-            });
-          </script>
-          <!-- /Banner -->
+            </script>
+            <!-- /Banner -->
         </div>
         <!-- /Menu-main -->

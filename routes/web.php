@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BannerController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -116,6 +118,20 @@ Route::get('backend/orders',[OrdersController::class,'read']);
 Route::get('backend/orders/detail/{order_id}',[OrdersController::class,'detail']);
 //update trạng thái giao hàng
 Route::get('backend/orders/update/{id}',[OrdersController::class,'update']);
+
+// Banner management
+// Read
+Route::get('backend/banner',[BannerController::class,'read']);
+// Create
+Route::get('backend/banner/create',[BannerController::class,'create']);
+// Create post
+Route::post('backend/banner/create-post',[BannerController::class,'createPost']);
+// Update
+Route::get('backend/banner/update/{id}',[BannerController::class,'update']);
+// Update post
+Route::post('backend/banner/update-post/{id}',[BannerController::class,'updatePost']);
+// Delete
+Route::get('backend/banner/delete/{id}',[BannerController::class,'delete']);
 
 
 //--
