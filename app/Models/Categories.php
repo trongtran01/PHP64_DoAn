@@ -8,8 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Categories extends Model
 {
     use HasFactory;
-    // Khai báo table model để truy vấn
+
     protected $table = "categories";
-    // Nếu trong table categories không có 2 trường là create_at, update_at thì phải khai báo thêm dòng sau
+
     public $timestamps = false;
+
+    // Cho phép mass assignment cho các field
+    protected $fillable = [
+        'name',
+        'parent_id',
+        'display_at_home_page',
+    ];
 }
+

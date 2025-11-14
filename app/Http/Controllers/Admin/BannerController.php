@@ -4,50 +4,64 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Banner;
 
-// Khai báo class Banner
-use App\MyCustomClass\Banner;
-
-class BannerController extends Controller{
-    // Tạo biến $model (là một biến của class BannerController)
-    public $model;
-
-    // Hàm tạo
-    public function __construct(){
-        // Khởi tạo object của class Banner, sau đó gán vào biến $model
-        $this->model = new Banner();
+class BannerController extends Controller
+{
+    public function index()
+    {
+        $data = Banner::getAllPaginated(10);
+        return view('admin.banner.index', compact('data'));
     }
 
-    public function read(){
-        $data = $this->model->modelRead();
-        return view("admin.banner.read",["data"=>$data]);
+    public function create()
+    {
+        $action = route('admin.banner.store');
+        return view('admin.banner.form', compact('action'));
     }
 
-    public function update($id){
-        $record = $this->model->modelGetRow($id);
-        // Tạo biến $action để đưa vào thuộc tính action của thẻ form
-        $action = url("backend/banner/update-post/$id");
-        return view("admin.banner.create_update",["record"=>$record,"action"=>$action]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'nullable|string|max:255',
+            'short_description' => 'nullable|string|max:255',
+            'button_url' => 'nullable|url|max:255',
+            'photo' => 'required|image|max:2048',
+            'display_at_home_page' => 'nullable|boolean',
+        ]);
+
+        Banner::saveBanner($request->only(['title','short_description','button_url','display_at_home_page']), $request->file('photo'));
+
+        return redirect()->route('admin.banner.index')->with('success', 'Banner created successfully.');
     }
 
-    public function updatePost($id){
-        $this->model->modelUpdate($id);
-        return redirect(url("backend/banner"));
+    public function edit($id)
+    {
+        $record = Banner::findOrFail($id);
+        $action = route('admin.banner.update', $id);
+        return view('admin.banner.form', compact('record', 'action'));
     }
 
-    public function create(){
-        // Tạo biến $action để đưa vào thuộc tính action của thẻ form
-        $action = url("backend/banner/create-post/");
-        return view("admin.banner.create_update",["action"=>$action]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'nullable|string|max:255',
+            'short_description' => 'nullable|string|max:255',
+            'button_url' => 'nullable|url|max:255',
+            'photo' => 'nullable|image|max:2048',
+            'display_at_home_page' => 'nullable|boolean',
+        ]);
+
+        Banner::saveBanner($request->only(['title','short_description','button_url','display_at_home_page']), $request->file('photo'), $id);
+
+        return redirect()->route('admin.banner.index')->with('success', 'Banner updated successfully.');
     }
 
-    public function createPost(){
-        $this->model->modelCreate();
-        return redirect(url("backend/banner"));
-    }
+    public function destroy($id)
+    {
+        $banner = Banner::findOrFail($id);
+        $banner->deleteBanner();
 
-    public function delete($id){
-        $this->model->modelDelete($id);
-        return redirect(url("backend/banner"));
+        return redirect()->route('admin.banner.index')->with('success', 'Banner deleted successfully.');
     }
 }

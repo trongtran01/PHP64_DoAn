@@ -32,54 +32,21 @@
             </ul>
           </div>
           <!-- /Menu-main-left -->
-
-          <!-- Banner -->
-            <div style="margin-top: 130px" class="banner">
-                <img src="{{ asset($banners[0]->image ? 'upload/banners/' . $banners[0]->image : 'frontend/images/banner.webp') }}"
-                    class="banner-show">
-
-                <div class="next"><i class="fa-solid fa-circle-right"></i></div>
-                <div class="prev"><i class="fa-solid fa-circle-left"></i></div>
-            </div>
-
-            <script>
-                $(document).ready(function() {
-                    let arr_banner = [
-                        @foreach($banners as $ban)
-                            "{{ asset('upload/banners/' . $ban->image) }}",
-                        @endforeach
-                    ];
-
-                    let n = 0;
-
-                    function changeBanner() {
-                        $(".banner-show").fadeOut(function() {
-                            $(".banner-show").attr("src", arr_banner[n]);
-                            $(".banner-show").fadeIn();
-                        });
-
-                        n = (n + 1) % arr_banner.length;
-                    }
-
-                    setInterval(changeBanner, 3000);
-
-                    $(".next").on('click', function() {
-                        n = (n + 1) % arr_banner.length;
-
-                        $(".banner-show").fadeOut(function() {
-                            $(".banner-show").attr("src", arr_banner[n]).fadeIn();
-                        });
-                    });
-
-                    $(".prev").on('click', function() {
-                        n = (n - 1 + arr_banner.length) % arr_banner.length;
-
-                        $(".banner-show").fadeOut(function() {
-                            $(".banner-show").attr("src", arr_banner[n]).fadeIn();
-                        });
-                    });
-                });
-            </script>
-            <!-- /Banner -->
+          <div class="home-banners">
+              @foreach($banners as $banner)
+              <div class="banner-item">
+                  <img src="{{ asset('storage/banner/'.$banner->photo) }}" alt="{{ $banner->title }}">
+                  @if($banner->title || $banner->short_description)
+                  <div class="banner-content">
+                      <h3>{{ $banner->title }}</h3>
+                      <p>{{ $banner->short_description }}</p>
+                      @if($banner->button_url)
+                          <a href="{{ $banner->button_url }}" class="btn btn-primary">Xem ngay</a>
+                      @endif
+                  </div>
+                  @endif
+              </div>
+              @endforeach
+          </div>
         </div>
         <!-- /Menu-main -->

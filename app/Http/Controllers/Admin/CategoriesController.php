@@ -4,48 +4,104 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// Sử dụng model
 use App\Models\Categories;
 
 class CategoriesController extends Controller
 {
-    public function read(Request $request){
-        //lấy các bản ghi, phân 100 bản ghi trên 1 trang
-        $data = Categories::where("parent_id","=","0")->orderBy("id","desc")->paginate(100);
-        return view("admin.categories.read",["data"=>$data]);
-    }
-    public function update(Request $request,$id){
-        // Lấy 1 bản ghi
-        $record = Categories::where("id", "=", $id)->first();
-        // Tạo biến $action để đưa vào thuộc tính action của form
-        $action = url('backend/categories/update-post/'.$id);
-        return view("admin.categories.create_update", ["record"=>$record, "action"=>$action]);
-    }
-    public function updatePost(Request $request,$id){
-        $name = $request->get("name");
-        $parent_id = $request->get("parent_id");
-        $display_at_home_page = $request->get("display_at_home_page") != "" ? 1 : 0;
-        // Upadate name
-        Categories::where("id", "=", $id)->update(["name"=>$name, "parent_id"=> $parent_id, "display_at_home_page"=>$display_at_home_page]);
-        return redirect(url('backend/categories'));
-    }
-    public function create(Request $request){
-        // Tạo biến $action để đưa vào thuộc tính action của form
-        $action = url('backend/categories/create-post');
-        return view("admin.categories.create_update",["action"=>$action]);
-    }
-    public function createPost(Request $request){
-        $name = $request->get("name");
-        $parent_id = $request->get("parent_id");
-        $display_at_home_page = $request->get("display_at_home_page") != "" ? 1 : 0;
-        // Upadate name
-        Categories::insert(["name"=>$name, "parent_id"=> $parent_id, "display_at_home_page"=>$display_at_home_page]);
-        return redirect(url('backend/categories'));
-    }
-    public function delete(Request $request,$id){
-        // Xóa bản ghi
-        $record = Categories::where("id", "=", $id)->orWhere("parent_id","=",$id)->delete();
-        return redirect(url('backend/categories'));
+    /**
+     * Danh sách Category
+     */
+    public function index()
+    {
+        $data = Categories::where('parent_id', 0)
+            ->orderByDesc('id')
+            ->paginate(50);
 
+        return view('admin.categories.index', compact('data'));
+    }
+
+    /**
+     * Form tạo mới Category
+     */
+    public function create()
+    {
+        $parents = Categories::where('parent_id', 0)->get();
+        return view('admin.categories.form', [
+            'action' => route('admin.categories.store'),
+            'record' => null,
+            'parents' => $parents,
+        ]);
+    }
+
+    /**
+     * Xử lý lưu Category mới
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:200',
+        ]);
+
+        Categories::create([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id ?? 0,
+            'display_at_home_page' => $request->has('display_at_home_page') ? 1 : 0
+        ]);
+
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Tạo category thành công');
+    }
+
+    /**
+     * Form sửa Category
+     */
+    public function edit($id)
+    {
+        $record = Categories::findOrFail($id);
+        $parents = Categories::where('parent_id', 0)
+                     ->where('id', '!=', $id)
+                     ->get();
+
+        return view('admin.categories.form', [
+            'action' => route('admin.categories.update', $id),
+            'record' => $record,
+            'parents' => $parents,
+        ]);
+    }
+
+    /**
+     * Xử lý cập nhật Category
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|max:200',
+        ]);
+
+        $record = Categories::findOrFail($id);
+
+        $record->update([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id ?? 0,
+            'display_at_home_page' => $request->has('display_at_home_page') ? 1 : 0
+        ]);
+
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Cập nhật category thành công');
+    }
+
+    /**
+     * Xóa Category + Category con
+     */
+    public function destroy($id)
+    {
+        // Xóa category con trước
+        Categories::where('parent_id', $id)->delete();
+
+        // Xóa cha
+        Categories::where('id', $id)->delete();
+
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Xóa category thành công');
     }
 }

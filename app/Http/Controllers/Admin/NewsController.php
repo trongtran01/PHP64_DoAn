@@ -1,46 +1,91 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\News;
 
-//khai báo class News
-use App\MyCustomClass\News;
+class NewsController extends Controller
+{
+    /**
+     * Hiển thị danh sách tin tức
+     */
+    public function index()
+    {
+        $data = News::getAllPaginated(10); // Phân trang 10 bản ghi
+        return view('admin.news.index', compact('data'));
+    }
 
-class NewsController extends Controller{
-	//tạo biến $model (là một biến của class NewsController)
-	public $model;
-	//hàm tạo
-	public function __construct(){
-		//khởi tạo object của class News, sau đó gán vào biến $model (để từ biến $model có thể gọi đến bất cứ hàm nào của class News)
-		$this->model = new News();
-	}
-	public function read(){
-		$data = $this->model->modelRead();
-		return view("admin.news.read",["data"=>$data]);
-	}
-	public function update($id){
-		$record = $this->model->modelGetRow($id);
-		//tạo biến $action để đưa vào thuộc tính action của thẻ form
-		$action = url("backend/news/update-post/$id");
-		return view("admin.news.create_update",["record"=>$record,"action"=>$action]);
-	}
-	public function updatePost($id){
-		$this->model->modelUpdate($id);
-		return redirect(url("backend/news"));
-	}
-	public function create(){
-		//tạo biến $action để đưa vào thuộc tính action của thẻ form
-		$action = url("backend/news/create-post/");
-		return view("admin.news.create_update",["action"=>$action]);
-	}
-	public function createPost(){
-		$this->model->modelCreate();
-		return redirect(url("backend/news"));
-	}
-	public function delete($id){
-		$this->model->modelDelete($id);
-		return redirect(url("backend/news"));
-	}
+    /**
+     * Hiển thị form tạo tin tức
+     */
+    public function create()
+    {
+        $action = route('admin.news.store');
+        return view('admin.news.form', compact('action'));
+    }
+
+    /**
+     * Xử lý tạo tin tức
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'content' => 'nullable|string',
+            'hot' => 'nullable|boolean',
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
+        $data = $request->only(['name','description','content','hot']);
+        $file = $request->file('photo');
+
+        News::saveNews($data, $file);
+
+        return redirect()->route('admin.news.index')->with('success', 'News created successfully.');
+    }
+
+    /**
+     * Hiển thị form cập nhật
+     */
+    public function edit($id)
+    {
+        $record = News::findOrFail($id);
+        $action = route('admin.news.update', $id);
+        return view('admin.news.form', compact('record', 'action'));
+    }
+
+    /**
+     * Xử lý cập nhật tin tức
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'content' => 'nullable|string',
+            'hot' => 'nullable|boolean',
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
+        $data = $request->only(['name','description','content','hot']);
+        $file = $request->file('photo');
+
+        News::saveNews($data, $file, $id);
+
+        return redirect()->route('admin.news.index')->with('success', 'News updated successfully.');
+    }
+
+    /**
+     * Xóa tin tức
+     */
+    public function destroy($id)
+    {
+        $news = News::findOrFail($id);
+        $news->deleteNews();
+
+        return redirect()->route('admin.news.index')->with('success', 'News deleted successfully.');
+    }
 }

@@ -4,44 +4,91 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-// Khai báo  class Products
-use App\MyCustomClass\Products;
+use App\Models\Products;
+use App\Models\Categories;
 
 class ProductsController extends Controller
 {
-    // Tạo biến $model(Là 1 biến của ProductsController) 
-    public $model;
-    // Hàm tạo object của class Products, sau đó gán váo biến $model(để từ biến model có thể gọi bất cứ hàm nào của class products)
-    public function __construct(){
-        // Khởi tạo 
-        $this->model = new Products();
+    /**
+     * Hiển thị danh sách sản phẩm
+     */
+    public function index()
+    {
+        $data = Products::getAllPaginated(); // Phân trang 50 bản ghi
+        return view('admin.products.index', compact('data'));
     }
-    public function read(){
-        $data = $this->model->modelRead();
-        return view("admin.products.read", ["data"=>$data]);
+
+    /**
+     * Hiển thị form tạo sản phẩm
+     */
+    public function create()
+    {
+        $categories = Categories::all(); // Lấy tất cả category
+        $action = route('admin.products.store'); // route resource chuẩn
+        return view('admin.products.form', compact('categories', 'action'));
     }
-    public function update($id){
-        $record = $this->model->modelGetRow($id);
-        // Tạo biến $action để đưa vào thuộc tính action của thẻ form
-        $action = url("backend/products/update-post/$id");
-        return view("admin.products.create_update",["record"=>$record, "action"=>$action]);
+
+    /**
+     * Xử lý tạo sản phẩm
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|integer',
+            'price' => 'required|numeric',
+            'discount' => 'nullable|numeric',
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
+        $data = $request->only(['name','category_id','price','discount','hot','description','content']);
+        $file = $request->file('photo');
+
+        Products::saveProduct($data, $file);
+
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
-    public function updatePost($id){
-        $this->model->modelUpdate($id);
-        return redirect(url("backend/products"));
+
+    /**
+     * Hiển thị form cập nhật sản phẩm
+     */
+    public function edit($id)
+    {
+        $record = Products::findOrFail($id);
+        $categories = Categories::all(); // Lấy category để select
+        $action = route('admin.products.update', $id); // route resource chuẩn
+        return view('admin.products.form', compact('record', 'categories', 'action'));
     }
-    public function create(){
-        //tạo biến $action để đưa vào thuộc tính action của thẻ form
-        $action = url("backend/products/create-post/");
-        return view("admin.products.create_update",["action"=>$action]);
+
+    /**
+     * Xử lý cập nhật sản phẩm
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|integer',
+            'price' => 'required|numeric',
+            'discount' => 'nullable|numeric',
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
+        $data = $request->only(['name','category_id','price','discount','hot','description','content']);
+        $file = $request->file('photo');
+
+        Products::saveProduct($data, $file, $id);
+
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
-    public function createPost(){
-        $this->model->modelCreate();
-        return redirect(url("backend/products"));
-    }
-    public function delete($id){
-        $this->model->modelDelete($id);
-        return redirect(url("backend/products"));
+
+    /**
+     * Xóa sản phẩm
+     */
+    public function destroy($id)
+    {
+        $product = Products::findOrFail($id);
+        $product->deleteProduct();
+
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }
