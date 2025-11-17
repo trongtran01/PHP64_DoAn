@@ -29,13 +29,15 @@
         <label>Ảnh banner</label>
         <input type="file" name="photo" class="form-control">
         @if(isset($record) && $record->photo)
-            <img src="{{ asset('storage/banners/'.$banner->photo) }}" alt="{{ $banner->title }}">
+            <img src="{{ asset('storage/banner/'.$record->photo) }}" alt="{{ $record->title }}">
         @endif
     </div>
 
     <div class="mb-3 form-check">
-        <input type="checkbox" name="display_at_home_page" @if(isset($record) && $record->display_at_home_page) checked @endif>
-        <label class="form-check-label">Hiển thị ở trang chủ</label>
+        <input type="hidden" name="display_at_home_page" value="0">
+        <input type="checkbox" name="display_at_home_page" value="1" class="form-check-input" id="display_at_home_page" 
+            @if((isset($record) && $record->display_at_home_page) || old('display_at_home_page')) checked @endif>
+        <label class="form-check-label" for="display_at_home_page">Hiển thị ở trang chủ</label>
     </div>
 
     <button class="btn btn-primary">Lưu</button>
