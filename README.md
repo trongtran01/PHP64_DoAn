@@ -51,42 +51,53 @@ Dự án **Goods Shop Admin Panel** là một hệ thống quản trị cửa h�
 ## 🏗️ Cấu trúc thư mục quan trọng
 
 Dự án tuân theo cấu trúc chuẩn của Laravel, với các thư mục chính tập trung vào logic Admin:
-src/
- ├── app/
- │    ├── Http/
- │    │     ├── Controllers/
- │    │     │      └── Admin/
- │    │     │           ├── HomeController.php
- │    │     │           ├── UsersController.php
- │    │     │           ├── CategoriesController.php
- │    │     │           └── BannerController.php
- │    │     └── Middleware/check_login.php
- │    ├── Models/
- │    │     ├── User.php
- │    │     └── Categories.php
- │    └── …
- ├── resources/
- │    └── views/
- │          ├── admin/
- │          │      ├── layout.blade.php
- │          │      ├── home/
- │          │      │     └── index.blade.php
- │          │      ├── users/
- │          │      │     ├── index.blade.php
- │          │      │     └── create_update.blade.php
- │          │      ├── categories/
- │          │      │     ├── index.blade.php
- │          │      │     └── form.blade.php
- │          │      └── banners/
- │          │            ├── index.blade.php
- │          │            └── form.blade.php
- │          └── layouts/
- │                └── admin.blade.php
- ├── docker/
- │      ├── docker-compose.yml
- │      └── php-nginx configs
- └── routes/
-        └── web.php
+# Laravel Admin Panel Project
+
+Dự án PHP Laravel này là một **Admin Panel** quản lý **Users, Categories, Banners** với hệ thống phân quyền cơ bản, tích hợp CRUD đầy đủ và sử dụng layout chung.
+
+---
+
+## Cấu trúc thư mục
+
+```plaintext
+📂 src/
+ ├── 📂 app/
+ │    ├── 📂 Http/
+ │    │     ├── 📂 Controllers/
+ │    │     │      └── 📂 Admin/
+ │    │     │           ├── 📄 HomeController.php       # Controller trang chủ admin
+ │    │     │           ├── 📄 UsersController.php      # Controller quản lý Users
+ │    │     │           ├── 📄 CategoriesController.php # Controller quản lý Categories
+ │    │     │           └── 📄 BannerController.php     # Controller quản lý Banners
+ │    │     └── 📂 Middleware/
+ │    │            └── 📄 check_login.php              # Middleware kiểm tra đăng nhập
+ │    ├── 📂 Models/
+ │    │     ├── 📄 User.php                             # Model User
+ │    │     └── 📄 Categories.php                       # Model Categories
+ │    └── … (các Models khác)
+ ├── 📂 resources/
+ │    └── 📂 views/
+ │          ├── 📂 admin/
+ │          │      ├── 📄 layout.blade.php            # Layout chung admin
+ │          │      ├── 📂 home/
+ │          │      │     └── 📄 index.blade.php       # Trang Dashboard
+ │          │      ├── 📂 users/
+ │          │      │     ├── 📄 index.blade.php       # Danh sách Users
+ │          │      │     └── 📄 create_update.blade.php # Form tạo/sửa User
+ │          │      ├── 📂 categories/
+ │          │      │     ├── 📄 index.blade.php       # Danh sách Categories
+ │          │      │     └── 📄 form.blade.php        # Form tạo/sửa Category
+ │          │      └── 📂 banners/
+ │          │            ├── 📄 index.blade.php       # Danh sách Banners
+ │          │            └── 📄 form.blade.php        # Form tạo/sửa Banner
+ │          └── 📂 layouts/
+ │                └── 📄 admin.blade.php             # Layout chính
+ ├── 📂 docker/
+ │      ├── 📄 docker-compose.yml                      # Docker Compose config
+ │      └── … (cấu hình PHP + Nginx)
+ └── 📂 routes/
+        └── 📄 web.php                                 # File định nghĩa route web
+
 
 # 🚀 Hướng dẫn chạy dự án Laravel bằng Docker
 
