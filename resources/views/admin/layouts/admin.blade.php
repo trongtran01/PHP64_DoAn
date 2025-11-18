@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="{{ asset('admin/img/lrvlogo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('admin/img/caphe.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>@yield('title')</title>
@@ -23,7 +23,7 @@
         <div class="logo">
             <a href="#" class="simple-text logo-normal">
                 <div class="logo-image-big">
-                    <img src="{{ asset('admin/img/logo_light.jpeg') }}">
+                    <img src="{{ asset('admin/img/logo.png') }}">
                 </div>
             </a>
         </div>

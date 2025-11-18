@@ -18,11 +18,6 @@
             </div>
             @endforeach
         </div>
-
-        <!-- Navigation -->
-        <button class="prev">&#10094;</button>
-        <button class="next">&#10095;</button>
-
         <!-- Pagination -->
         <div class="pagination"></div>
     </div>
@@ -36,6 +31,7 @@
     height: 700px;
     margin: 0 auto;
     overflow: hidden;
+    margin-top: 50px;
 }
 
 .slides-wrapper {
@@ -82,23 +78,6 @@
     padding: 10px 20px;
 }
 
-/* Navigation buttons */
-.prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    background: rgba(0,0,0,0.4);
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    z-index: 10;
-}
-.prev { left: 10px; }
-.next { right: 10px; }
-
 /* Pagination bullets */
 .pagination {
     position: absolute;
@@ -120,14 +99,21 @@
 .pagination .active {
     background: #fff;
 }
+@media (max-width:768px) {
+    .home-banners {
+        margin-top: 0;
+        height: auto;
+    }
+    .slides-wrapper {
+        height: auto;
+    }
+}
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const slides = document.querySelectorAll('.slide');
     const slidesWrapper = document.querySelector('.slides-wrapper');
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
     const paginationContainer = document.querySelector('.pagination');
     let currentIndex = 0;
     const total = slides.length;
@@ -150,18 +136,6 @@ document.addEventListener('DOMContentLoaded', function () {
         dots.forEach(dot => dot.classList.remove('active'));
         dots[currentIndex].classList.add('active');
     }
-
-    prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + total) % total;
-        updateSlider();
-        resetInterval();
-    });
-
-    nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % total;
-        updateSlider();
-        resetInterval();
-    });
 
     // Tự động slide
     let slideInterval = setInterval(() => {

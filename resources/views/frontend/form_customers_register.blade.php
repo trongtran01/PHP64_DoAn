@@ -7,7 +7,7 @@
     <title>Đăng ký</title>
     <link rel="stylesheet" href="{{ asset('Frontend/css/register.css') }}">
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('frontend/images/logo_title.jpeg') }}" type="image/png" class="favicon-image">
+    <link rel="icon" href="{{ asset('frontend/images/caphe.png') }}" type="image/png" class="favicon-image">
     <style type="text/css">
         .favicon-image{
             width: 80px;

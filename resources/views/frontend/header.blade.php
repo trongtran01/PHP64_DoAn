@@ -30,6 +30,56 @@
 <header class="main-header">
     <div class="container">
         <div class="header-content">
+            <!-- MOBILE MENU -->
+            <div class="mobile-menu" id="mobileMenu">
+
+                <div class="mobile-menu-header">
+                    <span>MENU</span>
+                    <button id="closeMobileMenu"><i class="fas fa-times"></i></button>
+                </div>
+
+                @php
+                    // nếu bạn đã load $categories ở chỗ khác thì đoạn này sẽ trả về cùng dữ liệu,
+                    // nếu chưa thì nó sẽ query trực tiếp (tạm thời ok, nhưng nên đưa vào controller)
+                    $categories = isset($categories) ? $categories : DB::table('categories')
+                        ->where('parent_id', 0)
+                        ->orderBy('id', 'desc')
+                        ->get();
+                @endphp
+
+                <ul class="mobile-menu-list">
+
+                    <li><a href="{{ asset('') }}">Trang chủ</a></li>
+                    <li><a href="{{ asset('introduce') }}">Giới thiệu</a></li>
+
+                    <li class="mobile-has-dropdown">
+                        <a class="dropdown-toggle-mobile">Sản phẩm <i class="fas fa-chevron-down"></i></a>
+
+                        @if(isset($categories) && $categories->count() > 0)
+                        <ul class="mobile-submenu">
+                            @foreach($categories as $row)
+                                <li>
+                                    <a href="{{ url('products/category/'.$row->id) }}">{{ $row->name }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        @endif
+                    </li>
+
+                    <li><a href="{{ asset('news') }}">Tin tức</a></li>
+                    <li><a href="{{ asset('contact') }}">Liên hệ</a></li>
+
+                    <!-- User section -->
+                    @if(isset($customer_email))
+                    <li><a href="{{ url('customers/profile') }}">Tài khoản</a></li>
+                    <li><a href="{{ url('customers/logout') }}">Đăng xuất</a></li>
+                    @else
+                    <li><a href="{{ url('customers/login') }}">Đăng nhập</a></li>
+                    @endif
+
+                </ul>
+            </div>
+
             <!-- Logo -->
             <div class="logo">
                 <img src="{{ asset('frontend/images/logo.png') }}" alt="Logo">
@@ -81,6 +131,10 @@
 
             <!-- User Actions -->
             <div class="header-actions">
+                <div class="mobile-burger">
+                    <button id="burgerBtn"><i class="fas fa-bars"></i></button>
+                </div>
+
                 @php
                     $customer_email = session()->get('customer_email');
                     $customer_name = session()->get('customer_name');
@@ -180,7 +234,7 @@
                 </div>
                 <div class="feature-content">
                     <h3>Thanh toán đa dạng</h3>
-                    <p>Tiền mặt, thẻ, chuyển khoản</p>
+                    <p>Đa dạng phương thức thanh toán</p>
                 </div>
             </div>
             
@@ -190,7 +244,8 @@
                 </div>
                 <div class="feature-content">
                     <h3>Hỗ trợ 24/7</h3>
-                    <p>Hotline: <strong>0965 814 299</strong></p>
+                    <p>Hotline:</p>
+                    <strong>0965 814 299</strong>
                 </div>
             </div>
         </div>
@@ -362,7 +417,7 @@
 /* Main Header */
 .main-header {
     background: var(--white);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-lg);
     position: sticky;
     top: 0;
     z-index: 999;
@@ -813,6 +868,7 @@
     
     .search-container {
         flex: 1 1 100%;
+        width: 100%;
     }
     
     .features-grid {
@@ -823,7 +879,108 @@
         flex-direction: column;
         text-align: center;
     }
+    .features-section {
+        padding: 20px 0;
+    }
+    .feature-item {
+        gap: 10px;
+        padding: 10px;
+    }
 }
+/* =============== BURGER BUTTON =============== */
+.mobile-burger {
+    display: none;
+}
+.mobile-burger button {
+    background: none;
+    border: none;
+    font-size: 26px;
+    color: #242052;
+    cursor: pointer;
+}
+
+/* SHOW BURGER ON MOBILE */
+@media(max-width: 992px) {
+    .main-nav,
+    .header-actions .user-menu,
+    .header-actions .cart-menu {
+        display: none;
+    }
+    .mobile-burger {
+        display: block;
+    }
+}
+
+/* =============== MOBILE MENU =============== */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -90%;
+    width: 90%;
+    height: 100vh;
+    background: #ffffff;
+    padding: 20px;
+    transition: left .35s ease;
+    z-index: 9999;
+    border-right: 1px solid #000;
+}
+.mobile-menu.active {
+    left: 0;
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.mobile-menu-header span {
+    font-size: 20px;
+    font-weight: bold;
+}
+.mobile-menu-header button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* LINKS */
+.mobile-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.mobile-menu-list li {
+    margin: 12px 0;
+}
+.mobile-menu-list a {
+    font-size: 17px;
+    text-decoration: none;
+    color: #242052;
+    display: block;
+}
+
+/* DROPDOWN */
+.mobile-has-dropdown .dropdown-toggle-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.mobile-submenu {
+    display: none;
+    margin-left: 10px;
+    list-style: none;
+}
+.mobile-submenu li a {
+    font-size: 15px;
+    color: #444;
+}
+.mobile-has-dropdown.open .mobile-submenu {
+    display: block;
+}
+
 </style>
 
 <script>
@@ -869,5 +1026,33 @@ document.addEventListener('click', function(event) {
     if (searchContainer && !searchContainer.contains(event.target)) {
         searchResults.style.display = 'none';
     }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const burgerBtn = document.getElementById("burgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const closeBtn = document.getElementById("closeMobileMenu");
+
+    // mở menu
+    burgerBtn.addEventListener("click", () => {
+        mobileMenu.classList.add("active");
+        document.body.style.overflow = "hidden"; // khóa scroll
+    });
+
+    // đóng menu
+    closeBtn.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+        document.body.style.overflow = "auto";
+    });
+
+    // dropdown cho mobile
+    document.querySelectorAll(".mobile-has-dropdown").forEach(item => {
+        item.querySelector(".dropdown-toggle-mobile").addEventListener("click", () => {
+            item.classList.toggle("open");
+        });
+    });
+
 });
 </script>
