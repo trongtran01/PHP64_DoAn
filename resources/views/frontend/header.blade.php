@@ -478,7 +478,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    min-width: 220px;
+    min-width: 300px;
     background: var(--white);
     border-radius: 12px;
     box-shadow: var(--shadow-lg);
