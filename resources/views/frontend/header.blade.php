@@ -50,7 +50,7 @@
                 <ul class="mobile-menu-list">
 
                     <li><a href="{{ asset('') }}">Trang chủ</a></li>
-                    <li><a href="{{ asset('introduce') }}">Giới thiệu</a></li>
+                    <li><a href="{{ asset('introduce') }}">Về chúng tôi</a></li>
 
                     <li class="mobile-has-dropdown">
                         <a class="dropdown-toggle-mobile">Sản phẩm <i class="fas fa-chevron-down"></i></a>
@@ -67,7 +67,7 @@
                     </li>
 
                     <li><a href="{{ asset('news') }}">Tin tức</a></li>
-                    <li><a href="{{ asset('contact') }}">Liên hệ</a></li>
+                    <li><a href="{{ asset('contact') }}">Tìm hiểu thêm</a></li>
 
                     <!-- User section -->
                     @if(isset($customer_email))
@@ -92,7 +92,7 @@
                         <a href="{{ asset('') }}" class="nav-link">TRANG CHỦ</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ asset('introduce') }}" class="nav-link">GIỚI THIỆU</a>
+                        <a href="{{ asset('introduce') }}" class="nav-link">VỀ CHÚNG TÔI</a>
                     </li>
                     <li class="nav-item has-dropdown">
                         <a href="#" class="nav-link">
@@ -124,7 +124,7 @@
                         <a href="{{ asset('news') }}" class="nav-link">TIN TỨC</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ asset('contact') }}" class="nav-link">LIÊN HỆ</a>
+                        <a href="{{ asset('contact') }}" class="nav-link">TÌM HIỂU THÊM</a>
                     </li>
                 </ul>
             </nav>
