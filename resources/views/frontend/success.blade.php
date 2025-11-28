@@ -27,7 +27,7 @@
             border: none;
         }
         .modal-confirm .modal-header {
-            background: #cd2626;
+            background: #242052;
             border-bottom: none;
             position: relative;
             text-align: center;
@@ -73,7 +73,7 @@
         .modal-confirm .btn {
             color: #fff;
             border-radius: 4px;
-            background: #cd2626;
+            background: #242052;
             text-decoration: none;
             transition: all 0.4s;
             line-height: normal;
@@ -85,7 +85,7 @@
             margin-bottom: 20px;
         }
         .modal-confirm .btn:hover, .modal-confirm .btn:focus {
-            background: #eda645;
+            background: rgba(136, 8, 240, 1);
             outline: none;
         }
         .modal-confirm .btn span {

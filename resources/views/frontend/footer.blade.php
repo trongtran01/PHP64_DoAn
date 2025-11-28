@@ -62,7 +62,7 @@
   
   <div class="footer-bottom-bar">
     <div class="footer-container">
-        <p>LAVIET.COFFEE PRIVACY POLICY ©2017 LAVIET CORPORATION. ALL RIGHTS RESERVED. | DESIGN WITH LOVE BY VIETSUNCO</p>
+        <p>LAVIET.COFFEE PRIVACY POLICY ©2017 LAVIET CORPORATION. ALL RIGHTS RESERVED. | DESIGN WITH LOVE BY DVH</p>
     </div>
   </div>
 </footer>

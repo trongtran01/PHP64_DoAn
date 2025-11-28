@@ -13,7 +13,8 @@ class CartController extends Controller
     // Thêm sản phẩm  vào giỏ hàng
     public function buy(Request $request, $id){
         // Gọi hàm là cartAdd từ class Cart
-        Cart::cartAdd($id);
+        $quantity = $request->input('quantity', 1);
+        Cart::cartAdd($id, $quantity);
         return redirect(url("cart"));
     }
     // Hiển thị danh sách giỏ hàng

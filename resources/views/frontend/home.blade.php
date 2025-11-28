@@ -67,7 +67,7 @@
                             @endif
 
                             <a href="{{ url('products/detail/'.$row->id) }}" class="product-img-box">
-                                <img src="{{ asset('upload/products/'.$row->photo) }}" alt="{{ $row->name }}">
+                                <img src="{{ asset('storage/products/'.$row->photo) }}" alt="{{ $row->name }}">
                             </a>
 
                             <h4 class="product-name">{{ $row->name }}</h4>
@@ -112,7 +112,7 @@
                 <div class="featured-news-post">
                     <a href="{{ url('news/detail/'.$featuredNews->id) }}">
                         <div class="news-image-lg-container">
-                            <img src="{{ asset('upload/news/'.$featuredNews->photo) }}" alt="{{ $featuredNews->name }}">
+                            <img src="{{ asset('storage/news/'.$featuredNews->photo) }}" alt="{{ $featuredNews->name }}">
                         </div>
                         <h3 class="news-title-lg">{{ $featuredNews->name }}</h3>
                     </a>
@@ -130,7 +130,7 @@
                     <div class="small-news-item">
                         <a href="{{ url('news/detail/'.$row->id) }}" class="small-news-link">
                             <div class="news-image-sm-container">
-                                <img src="{{ asset('upload/news/'.$row->photo) }}" alt="{{ $row->name }}">
+                                <img src="{{ asset('storage/news/'.$row->photo) }}" alt="{{ $row->name }}">
                             </div>
                             <h4 class="news-title-sm">{{ $row->name }}</h4>
                         </a>
@@ -300,7 +300,7 @@
 
 .product-img-box {
     display: block;
-    height: 180px;
+    height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -443,17 +443,28 @@
 .news-image-lg-container img {
     width:100%;
     height:100%;
+    object-fit: cover;
 }
 
 .small-news-list { display:flex; flex-direction:column; gap:15px; }
 .small-news-item { border-bottom:1px solid #efeeff; padding-bottom:15px; }
 .small-news-link { display:flex; gap:10px; text-decoration:none; }
-.news-image-sm-container { width:100px; height:80px; overflow:hidden; border-radius:4px; }
-.news-image-sm-container img { width:100%; height:100%; object-fit:cover; }
+.news-image-sm-container {
+    width:100px;
+    height:80px;
+    overflow:hidden;
+    border-radius:4px; 
+}
+.news-image-sm-container img { 
+    width:100%;
+    height:100%;
+    object-fit:cover; 
+}
 
 .news-title-sm, .news-title-lg {
     color:#242052;
     margin-bottom: 10px;
+    width: 75%;
 }
 </style>
 <script>

@@ -1,131 +1,438 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tin tức</title>
-    <!-- Load font awsome online -->
+    <title>{{ $record->name }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('frontend/css/new.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Favicon -->
     <link rel="icon" href="{{ asset('frontend/images/caphe.png') }}" type="image/png" class="favicon-image">
-    <style type="text/css">
-        .favicon-image{
+    <style>
+        .favicon-image {
             width: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb-section {
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .breadcrumb-list {
+            list-style: none;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .breadcrumb-list a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-list a:hover {
+            color: #242052;
+        }
+
+        .breadcrumb-list .active {
+            color: #242052;
+            font-weight: 600;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar-title {
+            font-size: 20px;
+            color: #242052;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #242052;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 12px;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: #242052;
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        /* Support Box */
+        .support-box {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #242052 0%, #3a3478 100%);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .support-box h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .support-box .fb-icon {
+            font-size: 50px;
+            color: #3B5998;
+            background: #fff;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 15px auto;
+        }
+
+        .support-box a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #fff;
+            color: #242052;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .support-box a:hover {
+            transform: scale(1.05);
+        }
+
+        /* Content Area */
+        .article-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .article-title {
+            font-size: 36px;
+            color: #242052;
+            line-height: 1.3;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 25px;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            color: #666;
+            font-size: 15px;
+        }
+
+        .article-meta i {
+            color: #242052;
+            margin-right: 8px;
+        }
+
+        .article-description {
+            background: #f8f9fa;
+            padding: 25px;
+            border-left: 4px solid #242052;
+            border-radius: 8px;
+            margin-bottom: 35px;
+        }
+
+        .article-description p {
+            color: #333;
+            line-height: 1.8;
+            font-size: 17px;
+            font-weight: 500;
+        }
+
+        .article-content {
+            color: #666;
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+        }
+
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .article-content h2,
+        .article-content h3 {
+            color: #242052;
+            margin-top: 35px;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: #242052;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 40px;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            background: #3a3478;
+            transform: translateX(-5px);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: #242052;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 250px 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .sidebar.active {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 0 10px;
+            }
+
+            .article-section {
+                padding: 30px;
+            }
+
+            .article-title {
+                font-size: 28px;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .article-section {
+                padding: 20px;
+            }
+
+            .article-title {
+                font-size: 24px;
+            }
+
+            .article-description {
+                padding: 20px;
+            }
+
+            .breadcrumb-section {
+                padding: 12px 15px;
+            }
         }
     </style>
 </head>
 <body>
-<div class="news-detail-container">
-    <!-- Load header của trang web vào đây -->
     @include("frontend.header")
-    <div class="menu-main-left">
-        <ul><h2>DANH MỤC TIN TỨC</h2>
-            <li><a href="#">Trang chủ</a></li>
-            <li><a href="#">Giới thiệu</a></li>
-            <li><a href="#">Sản phẩm</a></li>
-            <li><a style="color: #CD2626;" href="#"><b>Tin tức</b></a></li>
-            <li><a href="#">Liên hệ</a></li>
-        </ul>
-    </div>
-    <!-- Product detail -->
-    <h1 class="news-title" style="color: #cd2626; font-weight: bold">{!! $record->name !!}</h1>
 
-    <div class="new-detail">
-        <div class="new-description">
-            <div class="description">
-                <p>{!! $record->description !!}</p>
-            </div>
-        </div>
-        <div class="new-content">
-            <div class="content">
-                <p>{!! $record->content !!}</p>
-            </div>
-        </div>
-    </div>
-    <style>
-        .new-detail {
-            width: 900px;
-            color: #3C4858;
-            margin-top: 300px;
-            margin-left: 304px;
-        }
-        .new-detail img {
-            width: 700px;
-        }
-        .new-description {
-            margin-top: -650px;
-        }
-        .new-content {
-            position: relative;
-            font-weight: lighter;
-        }
-        .image {
-            text-align: center;
-        }
-    </style>
-
-    <div class="support1">
-        <ul>
-            <h3>Hỗ trợ trực tuyến</h3>
-            <li><b>Hỗ trợ bán hàng</b></li>
-            <br>
-            <div class="logo-fb-1">
-                <i class="fa-brands fa-square-facebook fa-2xl" style="color: #3B5998;"></i>
-            </div>
-            <li class="box-chat"><a href="#">Chat ngay để được tư vấn</a></li>
-        </ul>
-    </div>
-    <!-- Footer -->
-    <div class="footer">
-        <div class="info">
-            <ul><h2>THÔNG TIN CÔNG TY</h2>
-                <li><a href="#">Trang chủ</a></li>
-                <li><a href="#">Giới thiệu</a></li>
-                <li><a href="#">Sản phẩm</a></li>
-                <li><a href="#">Tin tức</a></li>
-                <li><a href="#">Liên hệ</a></li>
-            </ul>
-
-            <ul><h2>HỖ TRỢ KHÁCH HÀNG</h2>
-                <li><a href="#">Trang chủ</a></li>
-                <li><a href="#">Giới thiệu</a></li>
-                <li><a href="#">Sản phẩm</a></li>
-                <li><a href="#">Tin tức</a></li>
-                <li><a href="#">Liên hệ</a></li>
-            </ul>
-
-            <ul><h2>CHÍNH SÁCH MUA HÀNG</h2>
-                <li><a href="#">Trang chủ</a></li>
-                <li><a href="#">Giới thiệu</a></li>
-                <li><a href="#">Sản phẩm</a></li>
-                <li><a href="#">Tin tức</a></li>
-                <li><a href="#">Liên hệ</a></li>
-            </ul>
-
-            <ul class="footer4"><h2>KÊNH THÔNG TIN</h2>
-                <li>Suplement Brothers là thương hiệu cung cấp <br> thực phẩm bổ sung nổi tiếng tại Hà Nội và <br> TP Hồ Chí Minh</li>
-                <div class="logo-footer"><a href="#"><i class="fa-brands fa-square-facebook fa-2xl" style="color: #346fd5;"></i></a></div>
-                <div class="logo-footer"><a href="#"><i class="fa-brands fa-square-google-plus fa-2xl" style="color: #d83b3b;"></i></a></div>
-                <div class="logo-footer"><a href="#"><i class="fa-brands fa-square-twitter fa-2xl" style="color: #0ea2e1;"></i></a></div>
-                <div class="logo-footer logo-footer__logo-bct"><img src="{{ asset('frontend/images/bct.png') }}" alt=""></div>
-
-        </div>
-        <div class="raw-company">
-            <ul><h2>CÔNG TY TNHH SUPLEMENT BROTHERS</h2>
-                <li>Trụ sở chính : Tầng 4 - Tòa nhà Hanoi Group - 442 Đội Cấn - Ba Đình - Hà Nội <br> Điện thoại : (04) 6674 2332 - (04) 3786 8904</li>
-                <li>Văn phòng đại diện : Lầu 3 - Tòa nhà Lữ Gia - Số 70 Lữ Gia - P.15 - Q.11 - TP. HCM <br> Điện thoại : (08) 6680 9686 - (04) 3866 6276</li>
+    <div class="page-wrapper">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-section">
+            <ul class="breadcrumb-list">
+                <li><a href="{{ asset('') }}"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+                <li><i class="fa-solid fa-chevron-right"></i></li>
+                <li><a href="{{ asset('news') }}">Tin tức</a></li>
+                <li><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="active">{{ \Illuminate\Support\Str::limit($record->name, 50) }}</li>
             </ul>
         </div>
 
-        <div class="last-footer">
-            © Bản quyền thuộc về Suplement Brothers | Cung cấp bởi <a href="#" style="color: #CD2626;">SUPLEMENT HOME</a>
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i> Menu
+        </button>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <h2 class="sidebar-title">
+                    <i class="fa-solid fa-list"></i>
+                    DANH MỤC
+                </h2>
+                <ul class="sidebar-menu">
+                    <li><a href="{{ asset('') }}"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+                    <li><a href="#"><i class="fa-solid fa-info-circle"></i> Về chúng tôi</a></li>
+                    <li><a href="#"><i class="fa-solid fa-shopping-bag"></i> Sản phẩm</a></li>
+                    <li><a href="{{ asset('news') }}" class="active"><i class="fa-solid fa-newspaper"></i> Tin tức</a></li>
+                    <li><a href="{{ asset('contact') }}"><i class="fa-solid fa-phone"></i> Tìm hiểu thêm</a></li>
+                </ul>
+
+                <!-- Support Box -->
+                <div class="support-box">
+                    <h3>Hỗ trợ trực tuyến</h3>
+                    <p style="margin-bottom: 10px;">Hỗ trợ bán hàng</p>
+                    <div class="fb-icon">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </div>
+                    <a href="#">Chat ngay để được tư vấn</a>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <article class="article-section">
+                <h1 class="article-title">{!! $record->name !!}</h1>
+
+                <div class="article-meta">
+                    <span><i class="fas fa-user"></i>Tác giả</span>
+                    <span><i class="fas fa-calendar"></i>{{ date('d/m/Y') }}</span>
+                    <span><i class="fas fa-eye"></i>{{ rand(100, 1000) }} lượt xem</span>
+                </div>
+
+                <div class="article-description">
+                    <p>{!! $record->description !!}</p>
+                </div>
+
+                <div class="article-content">
+                    {!! $record->content !!}
+                </div>
+
+                <a href="{{ asset('news') }}" class="back-button">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Quay lại danh sách tin tức
+                </a>
+            </article>
         </div>
     </div>
-</div>
+
+    @include("frontend.footer")
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth <= 992) {
+                const sidebar = document.getElementById('sidebar');
+                const toggleBtn = document.querySelector('.mobile-menu-toggle');
+                
+                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+    </script>
 </body>
 </html>

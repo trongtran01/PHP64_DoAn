@@ -17,7 +17,10 @@ class ManageCustomersController extends Controller
     // Form chỉnh sửa
     public function edit($id) {
         $customer = Customer::findOrFail($id);
-        return view('admin.customers.form', compact('customer'));
+
+        $action = route('admin.customers.update', $customer->id); // thêm action
+
+        return view('admin.customers.form', compact('customer', 'action'));
     }
 
     // Cập nhật khách hàng
@@ -33,7 +36,7 @@ class ManageCustomersController extends Controller
         ]);
 
         $data = $request->only(['name','email','phone','address']);
-        if($request->filled('password')){
+        if ($request->filled('password')) {
             $data['password'] = $request->password;
         }
 

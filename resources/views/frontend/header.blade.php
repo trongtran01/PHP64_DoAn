@@ -168,7 +168,7 @@
                         <span class="cart-badge">{{ Cart::cartNumber() }}</span>
                     </a>
                     <div class="cart-dropdown">
-                        <div class="cart-header">
+                        <div class="cart-header-1">
                             <h3>Giỏ hàng của bạn</h3>
                         </div>
                         <div class="cart-items">
@@ -176,7 +176,7 @@
                             @foreach($cart as $product)
                             <div class="cart-item">
                                 <div class="cart-item-image">
-                                    <img src="{{ asset('upload/products/'.$product['photo']) }}" 
+                                    <img src="{{ asset('storage/products/'.$product['photo']) }}" 
                                          alt="{{ $product['name'] }}">
                                 </div>
                                 <div class="cart-item-info">
@@ -670,12 +670,12 @@
     transform: translateY(0);
 }
 
-.cart-header {
+.cart-header-1 {
     padding: 20px;
     border-bottom: 2px solid var(--light-purple);
 }
 
-.cart-header h3 {
+.cart-header-1 h3 {
     color: var(--primary-color);
     font-size: 16px;
 }
@@ -741,7 +741,7 @@
 }
 
 .cart-item-remove:hover {
-    color: #EF4444;
+    color: #242052;
 }
 
 .cart-footer {

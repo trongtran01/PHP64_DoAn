@@ -23,33 +23,30 @@ class Banner extends Model
      */
     public static function getAllPaginated($perPage = 50)
     {
-        return self::orderBy('id', 'desc')->paginate($perPage);
+        return self::orderByDesc('id')->paginate($perPage);
     }
 
     /**
-     * Tạo hoặc cập nhật banner
+     * Lưu banner (tạo mới hoặc cập nhật)
      */
-    public static function saveBanner($data, $file = null, $id = null)
+    public static function saveBanner(array $data, $file = null, $id = null)
     {
         if ($id) {
-            $banner = self::find($id);
-            if (!$banner) return null;
+            $banner = self::findOrFail($id);
         } else {
             $banner = new self();
         }
 
+        // Gán dữ liệu từ controller
         $banner->fill($data);
-        $banner->display_at_home_page = isset($data['display_at_home_page']) ? 1 : 0;
 
+        // Xử lý upload ảnh nếu có
         if ($file) {
-            // Xóa ảnh cũ nếu có
             if ($banner->photo && Storage::exists('public/banner/'.$banner->photo)) {
                 Storage::delete('public/banner/'.$banner->photo);
             }
-
-            // Lưu ảnh mới
             $filename = time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public/banner', $filename); // giống Products
+            $file->storeAs('public/banner', $filename);
             $banner->photo = $filename;
         }
 

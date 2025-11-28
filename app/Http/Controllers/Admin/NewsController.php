@@ -35,11 +35,12 @@ class NewsController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'content' => 'nullable|string',
-            'hot' => 'nullable|boolean',
+            'hot' => 'nullable',
             'photo' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->only(['name','description','content','hot']);
+        $data = $request->only(['name','description','content']);
+        $data['hot'] = $request->has('hot') ? 1 : 0;
         $file = $request->file('photo');
 
         News::saveNews($data, $file);
@@ -66,11 +67,12 @@ class NewsController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'content' => 'nullable|string',
-            'hot' => 'nullable|boolean',
+            'hot' => 'nullable',
             'photo' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->only(['name','description','content','hot']);
+        $data = $request->only(['name','description','content']);
+        $data['hot'] = $request->has('hot') ? 1 : 0;
         $file = $request->file('photo');
 
         News::saveNews($data, $file, $id);

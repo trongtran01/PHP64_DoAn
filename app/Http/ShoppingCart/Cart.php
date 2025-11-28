@@ -8,35 +8,17 @@ use DB;
 
 trait Cart {
 
-    public static function cartAdd($id){
+    public static function cartAdd($id, $quantity = 1){
         $cart = Session::get('cart');
         if(isset($cart[$id])){
-            $cart[$id]['quantity']++;
+            $cart[$id]['quantity'] += $quantity; // Cộng thêm quantity
         } else {
             $product = DB::table("products")->find($id);
             $cart[$id] = [
                 'id' => $id,
                 'name' => $product->name,
                 'photo' => $product->photo,
-                'quantity' => 1,
-                'price' => $product->price,
-                'discount' => $product->discount
-            ];
-        }
-        Session::put('cart', $cart);
-    }
-
-    public static function cartAddWithNumber($id, $quantity){
-        $cart = Session::get('cart');
-        if(isset($cart[$id])){
-            $cart[$id]['quantity'] += $quantity;
-        } else {
-            $product = Product::find($id);
-            $cart[$id] = [
-                'id' => $id,
-                'name' => $product->name,
-                'photo' => $product->photo,
-                'quantity' => $quantity,
+                'quantity' => $quantity, // Dùng quantity truyền vào
                 'price' => $product->price,
                 'discount' => $product->discount
             ];

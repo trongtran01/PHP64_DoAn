@@ -43,7 +43,6 @@ class News extends Model
         }
 
         $news->fill($data);
-        $news->hot = isset($data['hot']) ? 1 : 0;
 
         // Upload ảnh
         if ($file) {

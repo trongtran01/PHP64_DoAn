@@ -32,10 +32,14 @@
             <img src="{{ asset('storage/news/'.$record->photo) }}" alt="photo" width="120" class="mt-2">
         @endif
     </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" name="hot" @if(isset($record) && $record->hot) checked @endif>
-        <label class="form-check-label" for="hotCheck">Tin hot</label>
+
+    <div class="mb-3">
+        <label>
+            <input type="checkbox" name="hot" @if(isset($record) && $record->hot) checked @endif>
+            Tin hot
+        </label>
     </div>
+    
     <button class="btn btn-primary">Lưu</button>
 </form>
 @endsection
