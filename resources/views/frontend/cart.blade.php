@@ -104,16 +104,18 @@
                 <h3 class="block-title"><i class="fa-solid fa-credit-card"></i> Chọn phương thức thanh toán</h3>
                 <div class="options">
                     <label class="option-item">
-                        <input type="radio" name="payment_method" value="cod" required>
+                        <input type="radio" name="payment_method" value="cod" required checked>
                         <i class="fa-solid fa-truck"></i> Thanh toán khi nhận hàng
                     </label>
-                    <label class="option-item">
-                        <input type="radio" name="payment_method" value="stripe">
+                    <label class="option-item disabled" title="Tính năng đang phát triển">
+                        <input type="radio" name="payment_method" value="stripe" disabled>
                         <i class="fa-brands fa-stripe-s"></i> Stripe
+                        <span class="badge-coming-soon">Coming Soon...</span>
                     </label>
-                    <label class="option-item">
-                        <input type="radio" name="payment_method" value="paypal">
+                    <label class="option-item disabled" title="Tính năng đang phát triển">
+                        <input type="radio" name="payment_method" value="paypal" disabled>
                         <i class="fa-brands fa-paypal"></i> PayPal
+                        <span class="badge-coming-soon">Coming Soon...</span>
                     </label>
                 </div>
             </div>
