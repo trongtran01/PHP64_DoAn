@@ -145,7 +145,7 @@
                         <div class="user-dropdown">
                             <button class="user-btn">
                                 <i class="far fa-user-circle"></i>
-                                <span>{{ $customer_name ?? $customer_email }}</span>
+                                <span>Hi, {{ $customer_name }}</span>
                             </button>
                             <div class="user-dropdown-content">
                                 <a href="{{ url('customers/profile') }}">Tài khoản</a>

@@ -132,3 +132,9 @@ Route::get('introduce',function(){
     return view('frontend.introduce');
 });
 
+// Trang checkout cho guest
+Route::get('/checkout/guest', [CartController::class, 'guestCheckout'])->name('guest.checkout');
+
+// Submit đơn hàng guest
+Route::post('/checkout/guest', [CartController::class, 'guestOrder'])->name('guest.order.post');
+

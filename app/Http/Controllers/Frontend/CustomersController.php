@@ -20,6 +20,7 @@ class CustomersController extends Controller
             if(Hash::check($password,$record->password)){
                 session()->put("customer_email",$record->email);
                 session()->put("customer_id",$record->id);
+                session()->put("customer_name", $record->name);
                 return redirect(url(''));
             }
         }

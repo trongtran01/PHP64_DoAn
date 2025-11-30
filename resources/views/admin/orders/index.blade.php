@@ -15,6 +15,7 @@
                             <thead>
                                 <tr>
                                     <th>Tên khách hàng</th>
+                                    <th>Email</th>
                                     <th>Thời gian</th>
                                     <th>Giá tiền</th>
                                     <th>Trạng thái</th>
@@ -24,10 +25,17 @@
                             <tbody>
                                 @foreach($orders as $order)
                                     @php
-                                        $customer = DB::table('customers')->where('id', $order->customer_id)->first();
+                                        // Nếu có customer_id => lấy từ bảng customers
+                                        if($order->customer_id) {
+                                            $customer = DB::table('customers')->where('id', $order->customer_id)->first();
+                                        } else {
+                                            // Nếu là guest => lấy từ bảng guest_customers
+                                            $customer = DB::table('guest_customers')->where('id', $order->guest_customer_id)->first();
+                                        }
                                     @endphp
                                     <tr>
-                                        <td>{{ $customer->name ?? '' }}</td>
+                                        <td>{{ $customer->name ?? 'N/A' }}</td>
+                                        <td>{{ $customer->email ?? 'N/A' }}</td>
                                         <td>{{ date('d/m/Y', strtotime($order->date)) }}</td>
                                         <td>{{ number_format($order->price) }} đ</td>
                                         <td>
