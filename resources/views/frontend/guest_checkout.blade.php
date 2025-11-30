@@ -265,74 +265,83 @@ textarea.form-control {
 </head>
 <body>
     @include("frontend.header")
-<div class="page-wrapper">
-    <!-- Breadcrumb -->
-    <div class="breadcrumb-section">
-        <ul class="breadcrumb-list">
-            <li><a href="{{ asset('') }}"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
-            <li><i class="fa-solid fa-chevron-right"></i></li>
-            <li class="active">Thanh toán</li>
-        </ul>
-    </div>
+    <!-- Thêm vào sau checkout-header -->
+    <div class="page-wrapper">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-section">
+            <ul class="breadcrumb-list">
+                <li><a href="{{ asset('') }}"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+                <li><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="active">Thanh toán</li>
+            </ul>
+        </div>
 
-    <!-- Checkout Header -->
-    <div class="checkout-header">
-        <i class="fa-solid fa-credit-card cart-icon"></i>
-        <div>
-            <h1>Thông tin thanh toán</h1>
-            <p>Hoàn tất thông tin để đặt hàng</p>
+        <!-- Checkout Header -->
+        <div class="checkout-header">
+            <i class="fa-solid fa-credit-card cart-icon"></i>
+            <div>
+                <h1>Thông tin thanh toán</h1>
+                <p>Hoàn tất thông tin để đặt hàng</p>
+            </div>
+        </div>
+        <div class="card-block mb-3">
+            <h3 class="block-title"><i class="fa-solid fa-shipping-fast"></i> Phương thức vận chuyển đã chọn</h3>
+            <div class="alert alert-info">
+                <strong>{{ $shipping_method == 'fast' ? 'Nhanh (Vận chuyển trong ngày)' : 'Tiêu chuẩn (2-3 ngày)' }}</strong>
+                <br>
+                Phí vận chuyển: {{ number_format($shipping_price) }}₫
+            </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="checkout-section card-block">
+
+            @if ($errors->any())
+                <div class="alert alert-danger mb-3">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger mb-3">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <form action="{{ route('guest.order.post') }}" method="post">
+                @csrf
+
+                <div class="form-group">
+                    <label>Họ tên *</label>
+                    <input type="text" name="name" class="form-control" required value="{{ old('name') }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Số điện thoại *</label>
+                    <input type="text" name="phone" class="form-control" required value="{{ old('phone') }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Email (không bắt buộc)</label>
+                    <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Địa chỉ giao hàng *</label>
+                    <textarea name="address" class="form-control" required>{{ old('address') }}</textarea>
+                </div>
+
+                <button type="submit" class="btn-primary mt-3">
+                    <i class="fa-solid fa-check"></i>
+                    Hoàn tất đặt hàng
+                </button>
+            </form>
         </div>
     </div>
-
-    <!-- Checkout Form -->
-    <div class="checkout-section card-block">
-
-        @if ($errors->any())
-            <div class="alert alert-danger mb-3">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="alert alert-danger mb-3">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <form action="{{ route('guest.order.post') }}" method="post">
-            @csrf
-
-            <div class="form-group">
-                <label>Họ tên *</label>
-                <input type="text" name="name" class="form-control" required value="{{ old('name') }}">
-            </div>
-
-            <div class="form-group">
-                <label>Số điện thoại *</label>
-                <input type="text" name="phone" class="form-control" required value="{{ old('phone') }}">
-            </div>
-
-            <div class="form-group">
-                <label>Email (không bắt buộc)</label>
-                <input type="email" name="email" class="form-control" value="{{ old('email') }}">
-            </div>
-
-            <div class="form-group">
-                <label>Địa chỉ giao hàng *</label>
-                <textarea name="address" class="form-control" required>{{ old('address') }}</textarea>
-            </div>
-
-            <button type="submit" class="btn-primary mt-3">
-                <i class="fa-solid fa-check"></i>
-                Hoàn tất đặt hàng
-            </button>
-        </form>
-    </div>
-</div>
-@include("frontend.footer")
+    @include("frontend.footer")
 
 </body>

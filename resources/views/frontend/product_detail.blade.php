@@ -675,9 +675,9 @@
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star empty"></i>
+                        <i class="fa-solid fa-star"></i>
                     </div>
-                    <span class="rating-count">4.0 | <a href="#reviews">128 đánh giá</a></span>
+                    <span class="rating-count">4.99 | <a href="#reviews">128 đánh giá</a></span>
                 </div>
 
                 <!-- Price -->
@@ -798,8 +798,7 @@
     <div class="full-width-section">
         <div class="content-container">
             <div class="content-header">
-                <h2>Thông tin chi tiết về sản phẩm</h2>
-                <p>Tìm hiểu thêm về sản phẩm này</p>
+                <h2>Mô tả chi tiết về sản phẩm</h2>
             </div>
             <div class="content-body">
                 {!! $record->content !!}

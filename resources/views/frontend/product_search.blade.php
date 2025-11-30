@@ -381,7 +381,7 @@
         }
 
         .product-name:hover {
-            color: #CD2626;
+            color: #918af7ff;
         }
 
         .price-container {

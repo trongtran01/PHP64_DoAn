@@ -50,10 +50,25 @@ class CartController extends Controller
     // Form checkout cho khách vãng lai
     public function guestCheckout()
     {
-        return view("frontend.guest_checkout");
+        $customer_id = session()->get("customer_id");
+        
+        // Nếu đã đăng nhập thì redirect về order bình thường
+        if (isset($customer_id)) {
+            return redirect()->route("cart.order");
+        }
+        
+        // Kiểm tra có shipping method trong session không
+        $shipping_method = session('cart_shipping_method', null);
+        $shipping_price = session('cart_shipping_price', 0);
+        
+        // Nếu chưa có shipping method, redirect về cart
+        if (!$shipping_method) {
+            return redirect(url("cart"))->with("error", "Vui lòng chọn phương thức vận chuyển trước!");
+        }
+
+        return view("frontend.guest_checkout", compact('shipping_method','shipping_price'));
     }
 
-    // Xử lý đặt hàng của khách vãng lai
     public function guestOrder(Request $request)
     {
         $cart = \App\Http\ShoppingCart\Cart::cartList();
@@ -62,7 +77,7 @@ class CartController extends Controller
             return redirect(url("cart"))->with("error", "Giỏ hàng trống!");
         }
 
-        // Validate input khách vãng lai
+        // Validate thông tin khách vãng lai
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:50',
@@ -70,7 +85,16 @@ class CartController extends Controller
             'address' => 'required|string|max:1000',
         ]);
 
-        // Lưu thông tin khách vãng lai vào bảng guest_customers
+        // LẤY SHIPPING TỪ SESSION (đã được lưu từ trang cart)
+        $shipping_method = session('cart_shipping_method');
+        $shipping_price = session('cart_shipping_price', 0);
+
+        // Nếu không có shipping trong session, redirect về cart
+        if (!$shipping_method) {
+            return redirect(url("cart"))->with('error', 'Vui lòng chọn phương thức vận chuyển!');
+        }
+
+        // Lưu thông tin khách vãng lai
         $guestId = DB::table('guest_customers')->insertGetId([
             'name' => $request->name,
             'phone' => $request->phone,
@@ -80,16 +104,18 @@ class CartController extends Controller
             'updated_at' => now(),
         ]);
 
-        // Tạo đơn hàng và liên kết với guest_customer_id
+        // Tạo đơn hàng
         $orderId = DB::table('orders')->insertGetId([
-            'customer_id' => null,                  // Khách vãng lai
+            'customer_id' => null,
             'guest_customer_id' => $guestId,
             'date' => now(),
-            'price' => \App\Http\ShoppingCart\Cart::cartTotal(),
-            'status' => 0,                           // trạng thái mặc định
+            'price' => \App\Http\ShoppingCart\Cart::cartTotal() + $shipping_price,
+            'shipping_method' => $shipping_method,
+            'shipping_price' => $shipping_price,
+            'status' => 0,
         ]);
 
-        // Lưu chi tiết sản phẩm vào orderdetails
+        // Lưu chi tiết sản phẩm
         foreach ($cart as $product) {
             $price = $product['price'] - ($product['price'] * $product['discount']) / 100;
             DB::table('orderdetails')->insert([
@@ -100,24 +126,40 @@ class CartController extends Controller
             ]);
         }
 
-        // Xóa giỏ hàng
+        // Xóa giỏ hàng và session shipping
         \App\Http\ShoppingCart\Cart::cartDestroy();
+        session()->forget(['cart_shipping_method', 'cart_shipping_price']);
 
         return redirect(route("success"))->with('cartUrl', url("cart"));
     }
 
+    public function updateShipping(Request $request){
+        $shipping_method = $request->input('shipping_method');
+        $shipping_price = $request->input('shipping_price', 0);
+
+        // Lưu vào session để backend tính tổng khi order
+        session([
+            'cart_shipping_method' => $shipping_method,
+            'cart_shipping_price' => $shipping_price,
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
     // Thanh toán đơn hàng
-    public function order()
+    public function order(Request $request)
     {
         $customer_id = session()->get("customer_id");
 
         if (!isset($customer_id)) {
-            // Chuyển sang checkout guest
             return redirect()->route("guest.checkout");
         }
 
-        // Nếu là khách đã đăng nhập → xử lý như cũ
-        Cart::cartOrder();
+        $shipping_method = $request->input('shipping_method', session('cart_shipping_method'));
+        $shipping_price = $request->input('shipping_price', session('cart_shipping_price', 0));
+
+        Cart::cartOrder($shipping_method, $shipping_price);
+
         return redirect(route("success"))->with('cartUrl', url("cart"));
     }
 

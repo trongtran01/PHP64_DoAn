@@ -118,9 +118,11 @@ Route::get('cart/destroy',[CartController::class,'destroy']);
 // Cập nhật số lượng sản phẩm trong giỏ hàng
 Route::post('cart/update',[CartController::class,'update']);
 // Thanh toán đơn hàng
-Route::get('cart/order',[CartController::class,'order']);
+Route::post('cart/order', [CartController::class, 'order'])->name('cart.order');
 // Chuyển đến trang thanh toán thành công
 Route::get('cart/success', [CartController::class, 'success'])->name('success');
+Route::post('cart/update-shipping', [CartController::class, 'updateShipping']);
+Route::post('cart/set-shipping-session', [CartController::class, 'updateShipping'])->name('cart.setShippingSession');
 
 //contact
 Route::get('contact',function(){

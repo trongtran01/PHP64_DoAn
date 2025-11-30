@@ -29,8 +29,16 @@
                     <td>{{ date('d/m/Y', strtotime($order->date)) }}</td>
                 </tr>
                 <tr>
+                    <td>Giá sản phẩm</td>
+                    <td>{{ number_format($order->price - ($order->shipping_price ?? 0)) }} đ</td>
+                </tr>
+                <tr>
+                    <td>Phí vận chuyển</td>
+                    <td>{{ number_format($order->shipping_price ?? 0) }} đ</td>
+                </tr>
+                <tr>
                     <td>Tổng giá</td>
-                    <td>{{ number_format($order->price) }} đ</td>
+                    <td>{{ number_format($order->price ?? 0) }} đ</td>
                 </tr>
                 <tr>
                     <td>Trạng thái giao hàng</td>
@@ -41,12 +49,11 @@
     </div>
 
     <div class="card">
-        <div class="card-header">Chi tiết sản phẩm</div>
+        <div class="card-header">Chi tiết đơn hàng</div>
         <div class="card-body">
             <table class="table table-bordered table-hover text-center">
                 <thead>
                     <tr>
-                        <th>Ảnh</th>
                         <th>Tên sản phẩm</th>
                         <th>Giá</th>
                         <th>Giảm giá</th>
@@ -56,11 +63,6 @@
                 <tbody>
                     @foreach($products as $p)
                         <tr>
-                            <td>
-                                @if($p->photo && file_exists(public_path('upload/products/'.$p->photo)))
-                                    <img src="{{ asset('upload/products/'.$p->photo) }}" width="100">
-                                @endif
-                            </td>
                             <td>{{ $p->name }}</td>
                             <td>{{ number_format($p->price) }} đ</td>
                             <td>{{ $p->discount }}%</td>

@@ -17,7 +17,9 @@
                                     <th>Tên khách hàng</th>
                                     <th>Email</th>
                                     <th>Thời gian</th>
-                                    <th>Giá tiền</th>
+                                    <th>Giá sản phẩm</th>
+                                    <th>Phí vận chuyển</th>
+                                    <th>Tổng cộng</th>
                                     <th>Trạng thái</th>
                                     <th>Hành động</th>
                                 </tr>
@@ -25,19 +27,25 @@
                             <tbody>
                                 @foreach($orders as $order)
                                     @php
-                                        // Nếu có customer_id => lấy từ bảng customers
+                                        // Lấy thông tin khách hàng
                                         if($order->customer_id) {
                                             $customer = DB::table('customers')->where('id', $order->customer_id)->first();
                                         } else {
-                                            // Nếu là guest => lấy từ bảng guest_customers
                                             $customer = DB::table('guest_customers')->where('id', $order->guest_customer_id)->first();
                                         }
+
+                                        // Tính tổng tiền: price trong DB đã bao gồm sản phẩm, thêm shipping_price
+                                        $productPrice = $order->price - ($order->shipping_price ?? 0);
+                                        $shippingPrice = $order->shipping_price ?? 0;
+                                        $total = $productPrice + $shippingPrice;
                                     @endphp
                                     <tr>
                                         <td>{{ $customer->name ?? 'N/A' }}</td>
                                         <td>{{ $customer->email ?? 'N/A' }}</td>
                                         <td>{{ date('d/m/Y', strtotime($order->date)) }}</td>
-                                        <td>{{ number_format($order->price) }} đ</td>
+                                        <td>{{ number_format($productPrice) }} đ</td>
+                                        <td>{{ number_format($shippingPrice) }} đ</td>
+                                        <td>{{ number_format($total) }} đ</td>
                                         <td>
                                             @if($order->status == 1)
                                                 <span class="text-success">Đã giao hàng</span>

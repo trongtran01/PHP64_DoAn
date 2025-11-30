@@ -72,23 +72,26 @@ trait Cart {
         Session::forget('cart');
     }
 
-    public static function cartOrder(){
-        //$customer = Session::get('customer');
+    public static function cartOrder($shipping_method = null, $shipping_price = 0){
         $customer_id = Session::get('customer_id');
-        //---
         $cart = Session::get('cart');
 
-        // Insert record into orders table
+        // Nếu không truyền, lấy từ session
+        if(!$shipping_method) {
+            $shipping_method = Session::get('cart_shipping_method');
+            $shipping_price = Session::get('cart_shipping_price', 0);
+        }
+
         $orderId = DB::table('orders')->insertGetId([
             'customer_id' => $customer_id,
-            'price' => \App\Http\ShoppingCart\Cart::cartTotal(),
+            'price' => self::cartTotal() + $shipping_price,  // tổng cộng
+            'shipping_method' => $shipping_method,
+            'shipping_price' => $shipping_price,
             'status' => 0,
             'date' => now(),
         ]);
 
-        // Insert record into order_details table
         foreach ($cart as $product) {
-            //tính lại giá thành sản phẩm sau khi giảm giá
             $price = $product['price'] - ($product['price'] * $product['discount'])/100;
             DB::table('orderdetails')->insert([
                 'order_id' => $orderId,
@@ -98,8 +101,9 @@ trait Cart {
             ]);
         }
 
-        // Clear cart
         Session::forget('cart');
+        Session::forget('cart_shipping_method');
+        Session::forget('cart_shipping_price');
     }
 
 }       

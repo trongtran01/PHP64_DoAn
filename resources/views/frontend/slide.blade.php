@@ -91,13 +91,13 @@
 .pagination span {
     width: 12px;
     height: 12px;
-    background: rgba(255,255,255,0.5);
+    background: #efeeff;
     border-radius: 50%;
     cursor: pointer;
 }
 
 .pagination .active {
-    background: #fff;
+    background: #242052;
 }
 @media (max-width:768px) {
     .home-banners {

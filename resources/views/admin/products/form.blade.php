@@ -39,12 +39,12 @@
 
     <div class="mb-3">
         <label>Tiêu đề sản phẩm</label>
-        <textarea name="description" class="form-control">{{ $record->description ?? old('description') }}</textarea>
+        <textarea name="description" class="form-control" id="description-editor">{{ $record->description ?? old('description') }}</textarea>
     </div>
 
     <div class="mb-3">
         <label>Mô tả sản phẩm</label>
-        <textarea name="content" class="form-control">{{ $record->content ?? old('content') }}</textarea>
+        <textarea name="content" class="form-control" id="content-editor">{{ $record->content ?? old('content') }}</textarea>
     </div>
 
     <div class="mb-3">
@@ -64,4 +64,17 @@
 
     <button class="btn btn-primary">Lưu</button>
 </form>
+@endsection
+
+@section('scripts')
+<script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#description-editor'))
+        .catch(error => { console.error(error); });
+
+    ClassicEditor
+        .create(document.querySelector('#content-editor'))
+        .catch(error => { console.error(error); });
+</script>
 @endsection
