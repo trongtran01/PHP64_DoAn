@@ -194,7 +194,7 @@
                             @endforeach
                         </div>
                         <div class="cart-footer">
-                            <a href="{{ url('cart/order') }}" class="checkout-btn">Thanh toán</a>
+                            <a href="{{ url('cart') }}" class="checkout-btn">Thanh toán</a>
                         </div>
                     </div>
                 </div>

@@ -124,6 +124,11 @@ Route::get('cart/success', [CartController::class, 'success'])->name('success');
 Route::post('cart/update-shipping', [CartController::class, 'updateShipping']);
 Route::post('cart/set-shipping-session', [CartController::class, 'updateShipping'])->name('cart.setShippingSession');
 
+// Stripe
+Route::get('stripe/success', [CartController::class, 'stripeSuccess'])->name('stripe.success');
+Route::get('stripe/cancel', [CartController::class, 'stripeCancel'])->name('stripe.cancel');
+Route::get('stripe/success', [CartController::class, 'stripeSuccess']);
+
 //contact
 Route::get('contact',function(){
     return view('frontend.contact');
