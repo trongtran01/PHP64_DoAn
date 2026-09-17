@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{{ asset('Frontend/css/style.css') }}">
-    <link rel="icon" href="{{ asset('frontend/images/caphe.png') }}" type="image/png" class="favicon-image">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('frontend/images/icon.svg') }}">
     <style type="text/css">
 .page-wrapper {
     max-width: 1440px;

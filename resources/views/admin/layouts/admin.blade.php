@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="{{ asset('admin/img/caphe.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('admin/img/icon.svg') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>@yield('title')</title>

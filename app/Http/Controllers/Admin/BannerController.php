@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Banner;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class BannerController extends Controller
 {
-    /**
-     * Danh sách banner
-     */
-    public function index()
+    public function index(): View
     {
-        $data = Banner::getAllPaginated(10);
+        $data = Banner::query()
+            ->latest()
+            ->paginate(10);
+
         return view('admin.banner.index', compact('data'));
     }
 
-    /**
-     * Form tạo mới banner
-     */
-    public function create()
+    public function create(): View
     {
         return view('admin.banner.form', [
             'action' => route('admin.banner.store'),
@@ -28,71 +28,87 @@ class BannerController extends Controller
         ]);
     }
 
-    /**
-     * Lưu banner mới
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'nullable|string|max:255',
-            'short_description' => 'nullable|string|max:255',
-            'button_url' => 'nullable|url|max:255',
-            'photo' => 'required|image|max:2048',
-            'display_at_home_page' => 'nullable',
+        $validated = $request->validate([
+            'title' => ['nullable', 'string', 'max:255'],
+            'short_description' => ['nullable', 'string', 'max:500'],
+            'button_url' => ['nullable', 'string', 'max:255'],
+            'photo' => [
+                'required',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120',
+            ],
         ]);
 
-        $data = $request->only(['title', 'short_description', 'button_url']);
-        $data['display_at_home_page'] = $request->has('display_at_home_page') ? 1 : 0;
+        // Mặc định banner luôn hiển thị ở trang chủ.
+        $validated['display_at_home_page'] = 1;
 
-        Banner::saveBanner($data, $request->file('photo'));
+        Banner::saveBanner(
+            $validated,
+            $request->file('photo')
+        );
 
-        return redirect()->route('admin.banner.index')
-            ->with('success', 'Banner created successfully.');
+        return redirect()
+            ->route('admin.banner.index')
+            ->with('success', 'Tạo banner thành công.');
     }
-
-    /**
-     * Form chỉnh sửa banner
-     */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $record = Banner::findOrFail($id);
+
         return view('admin.banner.form', [
             'record' => $record,
-            'action' => route('admin.banner.update', $id),
+            'action' => route('admin.banner.update', $record->id),
         ]);
     }
 
-    /**
-     * Cập nhật banner
-     */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'title' => 'nullable|string|max:255',
-            'short_description' => 'nullable|string|max:255',
-            'button_url' => 'nullable|url|max:255',
-            'photo' => 'nullable|image|max:2048',
-            'display_at_home_page' => 'nullable',
+        $validated = $request->validate([
+            'title' => ['nullable', 'string', 'max:255'],
+            'short_description' => ['nullable', 'string', 'max:500'],
+            'button_url' => ['nullable', 'string', 'max:255'],
+            'photo' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120',
+            ],
         ]);
 
-        $data = $request->only(['title', 'short_description', 'button_url']);
-        $data['display_at_home_page'] = $request->has('display_at_home_page') ? 1 : 0;
+        // Banner sau khi cập nhật vẫn luôn hiển thị.
+        $validated['display_at_home_page'] = 1;
 
-        Banner::saveBanner($data, $request->file('photo'), $id);
+        Banner::saveBanner(
+            $validated,
+            $request->file('photo'),
+            $id
+        );
 
-        return redirect()->route('admin.banner.index')
-            ->with('success', 'Banner updated successfully.');
+        return redirect()
+            ->route('admin.banner.index')
+            ->with('success', 'Cập nhật banner thành công.');
     }
 
-    /**
-     * Xóa banner
-     */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $banner = Banner::findOrFail($id);
-        $banner->deleteBanner();
 
-        return redirect()->route('admin.banner.index')
-            ->with('success', 'Banner deleted successfully.');
+        if (
+            $banner->photo
+            && Storage::disk('public')->exists('banner/' . $banner->photo)
+        ) {
+            Storage::disk('public')->delete(
+                'banner/' . $banner->photo
+            );
+        }
+
+        $banner->delete();
+
+        return redirect()
+            ->route('admin.banner.index')
+            ->with('success', 'Xóa banner thành công.');
     }
 }

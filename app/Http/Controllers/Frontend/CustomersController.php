@@ -4,50 +4,130 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Hash;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
-    public function login(){
-        return view("frontend.form_customers_login");
-    }
-    public function loginPost(){
-        $email = request()->get("email");
-        $password = request()->get("password");
-        $record = DB::table("customers")->where("email","=",$email)->first();
-        if(isset($record->email)){
-            if(Hash::check($password,$record->password)){
-                session()->put("customer_email",$record->email);
-                session()->put("customer_id",$record->id);
-                session()->put("customer_name", $record->name);
-                return redirect(url(''));
-            }
-        }
-        return redirect(url('customers/login?notify=invalid'));
-    }
-    public function register(){
-        return view("frontend.form_customers_register");
-    }
-    public function registerPost(){
-        $email = request()->get("email");
-        $password = request()->get("password");
-        $password = Hash::make($password);
-        $name = request()->get("name");
-        $phone = request()->get("phone");
-        $address = request()->get("address");
-        //kiểm tra xem email đã tồn tại chưa, nếu chưa thì mới cho insert
-        $check = DB::table("customers")->where("email","=",$email)->first();
-        if(!isset($check->email))
-            DB::table("customers")->insert(["email"=>$email,"name"=>$name,'password'=>$password,'phone'=>$phone,'address'=>$address]);
-        else
-            return redirect(url('customers/register?notify=invalid'));
-        return redirect(url('customers/login'));
-    }
-    public function logout(){
-        session()->remove("customer_email");
-        session()->remove("customer_id");
-        return redirect(url(''));
+    public function login()
+    {
+        return view('frontend.form_customers_login');
     }
 
+    public function loginPost(Request $request)
+    {
+        $validated = $request->validateWithBag('login', [
+            'email' => ['required', 'email', 'max:255'],
+            'password' => ['required', 'string'],
+        ], [
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không đúng định dạng.',
+            'email.max' => 'Email không được vượt quá 255 ký tự.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+        ]);
+
+        $customer = DB::table('customers')
+            ->where('email', $validated['email'])
+            ->first();
+
+        if (!$customer || !Hash::check($validated['password'], $customer->password)) {
+            return back()
+                ->withErrors([
+                    'credentials' => 'Email hoặc mật khẩu không chính xác.',
+                ], 'login')
+                ->onlyInput('email');
+        }
+
+        // Đổi session ID sau khi đăng nhập thành công
+        // để hạn chế session fixation.
+        $request->session()->regenerate();
+
+        $request->session()->put([
+            'customer_id' => $customer->id,
+            'customer_email' => $customer->email,
+            'customer_name' => $customer->name,
+        ]);
+
+        return redirect('/')
+            ->with('success', 'Đăng nhập thành công.');
+    }
+
+    public function register()
+    {
+        return view('frontend.form_customers_login');
+    }
+
+    public function registerPost(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => ['required', 'string', 'max:100'],
+                'email' => [
+                    'required',
+                    'email',
+                    'max:255',
+                    'unique:customers,email',
+                ],
+                'address' => ['nullable', 'string', 'max:255'],
+                'phone' => ['nullable', 'string', 'max:20'],
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'confirmed',
+                ],
+            ],
+            [
+                'name.required' => 'Vui lòng nhập họ và tên.',
+                'name.max' => 'Họ và tên không được vượt quá 100 ký tự.',
+
+                'email.required' => 'Vui lòng nhập email.',
+                'email.email' => 'Email không đúng định dạng.',
+                'email.unique' => 'Email này đã được sử dụng.',
+
+                'address.max' => 'Địa chỉ không được vượt quá 255 ký tự.',
+                'phone.max' => 'Số điện thoại không được vượt quá 20 ký tự.',
+
+                'password.required' => 'Vui lòng nhập mật khẩu.',
+                'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+                'password.confirmed' => 'Mật khẩu nhập lại không khớp.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator, 'register')
+                ->withInput()
+                ->with('active_form', 'register');
+        }
+
+        $validated = $validator->validated();
+
+        DB::table('customers')->insert([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'address' => $validated['address'] ?? null,
+            'phone' => $validated['phone'] ?? null,
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return redirect('customers/login')
+            ->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->forget([
+            'customer_id',
+            'customer_email',
+            'customer_name',
+        ]);
+
+        $request->session()->regenerate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }

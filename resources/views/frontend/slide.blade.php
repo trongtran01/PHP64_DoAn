@@ -32,6 +32,7 @@
     margin: 0 auto;
     overflow: hidden;
     margin-top: 50px;
+    border-radius: 8px;
 }
 
 .slides-wrapper {

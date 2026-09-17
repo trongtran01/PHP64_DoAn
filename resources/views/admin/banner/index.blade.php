@@ -13,7 +13,6 @@
         <th>Mô tả</th>
         <th>URL button</th>
         <th>Ảnh</th>
-        <th>Hiển thị home</th>
         <th>Actions</th>
     </tr>
 
@@ -28,7 +27,6 @@
                 <img src="{{ asset('storage/banner/'.$banner->photo) }}" width="100" alt="photo">
             @endif
         </td>
-        <td>{{ $banner->display_at_home_page ? 'Yes' : 'No' }}</td>
         <td>
             <a href="{{ route('admin.banner.edit', $banner->id) }}" class="btn btn-warning">Sửa</a>
             <form method="POST" action="{{ route('admin.banner.destroy', $banner->id) }}" style="display:inline-block;">

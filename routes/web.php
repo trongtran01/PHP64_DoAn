@@ -92,27 +92,32 @@ Route::prefix('backend/customers')->name('admin.customers.')->group(function() {
 Route::get("/", [HomeController::class, 'index'])->name('home');
 
 //Frontend Products
-Route::get('products/category/{category_id}',[ProductsFrontend::class,'category']);
-Route::get('products/detail/{id}',[ProductsFrontend::class,'detail']);
-Route::get('products/search',[ProductsFrontend::class,'search']);
-Route::get('products/ajax-search',[ProductsFrontend::class,'ajax']);
-Route::get('products/rating/{id}',[ProductsFrontend::class,'rating']);
+Route::get('products/category/{category_id}',[ProductsFrontend::class,'category'])->name('products.category');
+Route::get('products/detail/{id}',[ProductsFrontend::class,'detail'])->name('products.detail');
+Route::get('products/search',[ProductsFrontend::class,'search'])->name('products.search');
+Route::get('products/ajax-search',[ProductsFrontend::class,'ajax'])->name('products.ajax-search');
+Route::get('products/rating/{id}',[ProductsFrontend::class,'rating'])->name('products.rating');
 
 //Frontend New
-Route::get('/news', [App\Http\Controllers\Frontend\NewsController::class, 'index']);
-Route::get('news/detail/{id}',[NewsFrontend::class,'detail']);
-Route::get('customers/login',[CustomersController::class,'login']);
-Route::post('customers/login-post',[CustomersController::class,'loginPost']);
-Route::get('customers/register',[CustomersController::class,'register']);
-Route::post('customers/register-post',[CustomersController::class,'registerPost']);
-Route::get('customers/logout',[CustomersController::class,'logout']);
+Route::get('/news', [NewsFrontend::class, 'index'])->name('news.index');
+Route::get('news/detail/{id}',[NewsFrontend::class,'detail'])->name('news.detail');
+Route::get('customers/login',[CustomersController::class,'login'])->name('customers.login');
+Route::post('customers/login-post',[CustomersController::class,'loginPost'])->name('customers.login-post');
+Route::get('customers/register',[CustomersController::class,'register'])->name('customers.register');
+Route::post('customers/register-post',[CustomersController::class,'registerPost'])->name('customers.register-post');
+Route::get('customers/logout',[CustomersController::class,'logout'])->name('customers.logout');
+// Chưa thấy route "customers/profile" và "customers/forgot-password" trong file gốc.
+// Header cần 2 route này để hiện menu "Tài khoản" / "Quên mật khẩu" khi đã đăng nhập — thêm tạm ở đây,
+// bạn cần viết method profile()/forgotPassword() tương ứng trong CustomersController.
+Route::get('customers/profile',[CustomersController::class,'profile'])->name('customers.profile');
+Route::get('customers/forgot-password',[CustomersController::class,'forgotPassword'])->name('customers.forgot-password');
 
 //Frontend Cart
-Route::get('cart',[CartController::class,'index']);
+Route::get('cart',[CartController::class,'index'])->name('cart.index');
 // Thêm sản phẩm vào giỏ hàng
-Route::get('cart/buy/{id}',[CartController::class,'buy']);
+Route::get('cart/buy/{id}',[CartController::class,'buy'])->name('cart.buy');
 // Xóa sản phẩm khỏi giỏ hàng
-Route::get('cart/delete/{id}',[CartController::class,'delete']);
+Route::get('cart/delete/{id}',[CartController::class,'delete'])->name('cart.delete');
 // Xóa toàn bộ sản phẩm khỏi giỏ hàng
 Route::get('cart/destroy',[CartController::class,'destroy']);
 // Cập nhật số lượng sản phẩm trong giỏ hàng
@@ -132,16 +137,15 @@ Route::get('stripe/success', [CartController::class, 'stripeSuccess']);
 //contact
 Route::get('contact',function(){
     return view('frontend.contact');
-});
+})->name('contact');
 
 //introduce
 Route::get('introduce',function(){
     return view('frontend.introduce');
-});
+})->name('introduce');
 
 // Trang checkout cho guest
 Route::get('/checkout/guest', [CartController::class, 'guestCheckout'])->name('guest.checkout');
 
 // Submit đơn hàng guest
 Route::post('/checkout/guest', [CartController::class, 'guestOrder'])->name('guest.order.post');
-

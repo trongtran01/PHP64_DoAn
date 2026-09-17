@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('frontend/images/caphe.png') }}" type="image/png" class="favicon-image">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('frontend/images/icon.svg') }}">
     <style type="text/css">
         .favicon-image{
             width: 80px;
