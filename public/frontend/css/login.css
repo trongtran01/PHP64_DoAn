@@ -1,0 +1,769 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    position: relative;
+    width: 900px;
+    max-width: 100%;
+    min-height: 700px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* Form Containers */
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    transition: all 0.6s ease-in-out;
+}
+
+.sign-in-container {
+    left: 0;
+    z-index: 2;
+}
+
+.sign-up-container {
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+}
+
+/* Active State */
+.container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+}
+
+.container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 2;
+}
+
+/* Form Styles */
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+    animation: fadeInDown 0.8s ease;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    background: #f8f8f8;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.btn {
+    width: 100%;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+}
+
+a {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+/* Overlay Container */
+.overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+}
+
+.container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+}
+
+.overlay {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-size: cover;
+    color: #fff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.container.right-panel-active .overlay {
+    transform: translateX(50%);
+}
+
+.overlay-panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left {
+    transform: translateX(-20%);
+}
+
+.container.right-panel-active .overlay-left {
+    transform: translateX(0);
+}
+
+.overlay-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.container.right-panel-active .overlay-right {
+    transform: translateX(20%);
+}
+
+.overlay-panel h1 {
+    color: #fff;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.overlay-panel p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.icon-welcome {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 30px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 12px 50px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.input-error {
+    border: 1px solid #dc3545 !important;
+}
+
+.error-message {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    color: #dc3545;
+    font-size: 12px;
+    text-align: left;
+}
+
+.form-alert {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.form-alert--error {
+    color: #842029;
+    background-color: #f8d7da;
+}
+
+.form-alert--success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+}
+
+/* ==================================================
+   RESPONSIVE: TABLET
+   768px - 1024px
+   ================================================== */
+@media (min-width: 768px) and (max-width: 1024px) {
+    body {
+        padding: 20px;
+    }
+
+    .container {
+        width: min(100%, 760px);
+        min-height: 620px;
+        border-radius: 6px;
+    }
+
+    .form-container {
+        padding: 0 32px;
+    }
+
+    .form-container form {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .container h1 {
+        margin-bottom: 22px;
+        font-size: 25px;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    .container .input-group {
+        margin-bottom: 14px;
+    }
+
+    .container input {
+        padding: 11px 15px;
+        border-radius: 6px;
+        font-size: 12px;
+    }
+
+    .container .btn {
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .container form > a {
+        margin-top: 12px;
+        font-size: 13px;
+    }
+
+    .overlay-panel {
+        padding: 0 30px;
+    }
+
+    .overlay-panel h1 {
+        margin-bottom: 14px;
+        font-size: 25px;
+    }
+
+    .overlay-panel p {
+        margin-bottom: 20px;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .icon-welcome {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 18px;
+    }
+
+    .btn-ghost {
+        padding: 11px 30px;
+        font-size: 13px;
+    }
+
+    .error-message {
+        font-size: 11px;
+    }
+
+    .form-alert {
+        padding: 9px 11px;
+        font-size: 12px;
+    }
+}
+
+/* ==================================================
+   RESPONSIVE: MOBILE
+   Dưới 768px
+   ================================================== */
+@media (max-width: 767px) {
+    body {
+        display: block;
+        min-height: 100vh;
+        padding: 12px;
+        overflow-x: hidden;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        width: min(100%, 400px);
+        min-height: 0;
+        margin: 12px auto;
+        overflow: hidden;
+        border: 0;
+        border-radius: 6px;
+        outline: 0;
+        background: #fff;
+    }
+
+    /* ======================
+       FORM
+       ====================== */
+    .form-container {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 36px 22px;
+        transform: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .form-container form {
+        width: 100%;
+        max-width: 330px;
+        margin: auto;
+    }
+
+    /* Mặc định hiển thị đăng nhập */
+    .sign-in-container {
+        display: flex;
+        opacity: 1;
+        z-index: 2;
+    }
+
+    .sign-up-container {
+        display: none;
+        opacity: 0;
+        z-index: 1;
+    }
+
+    /* Khi chuyển sang đăng ký */
+    .container.right-panel-active .sign-in-container {
+        display: none;
+        opacity: 0;
+        transform: none;
+    }
+
+    .container.right-panel-active .sign-up-container {
+        display: flex;
+        opacity: 1;
+        transform: none;
+    }
+
+    .container h1 {
+        margin-bottom: 22px;
+        font-size: 24px;
+        line-height: 1.25;
+        text-align: center;
+    }
+
+    .container .input-group {
+        margin-bottom: 13px;
+    }
+
+    .container input {
+        width: 100%;
+        min-height: 42px;
+        padding: 10px 14px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        background: #f8f8f8;
+        font-size: 14px;
+    }
+
+    .container input:focus {
+        border-color: #667eea;
+        background: #fff;
+        outline: none;
+        transform: none;
+        box-shadow: 0 3px 10px rgba(102, 126, 234, 0.14);
+    }
+
+    .container .btn {
+        width: 100%;
+        min-height: 43px;
+        padding: 11px 18px;
+        margin-top: 8px;
+        border-radius: 6px;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+    }
+
+    .container form > a {
+        margin-top: 10px;
+        font-size: 13px;
+    }
+
+    /* ======================
+       VALIDATION
+       ====================== */
+    .container input.input-error {
+        border-color: #dc3545 !important;
+    }
+
+    .error-message {
+        margin-top: 4px;
+        padding-left: 2px;
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    .form-alert {
+        padding: 9px 11px;
+        margin-bottom: 14px;
+        border-radius: 6px;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    /* ======================
+       OVERLAY
+       ====================== */
+    .overlay-container {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        min-height: 170px;
+        overflow: hidden;
+        border: 0;
+        outline: 0;
+        background: linear-gradient(
+            135deg,
+            #667eea 0%,
+            #764ba2 100%
+        );
+        box-shadow: none;
+        transform: none;
+        z-index: 3;
+    }
+
+    .container.right-panel-active .overlay-container {
+        transform: none;
+    }
+
+    .overlay {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        min-height: 170px;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .container.right-panel-active .overlay {
+        transform: none;
+    }
+
+    .overlay-panel {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        height: auto;
+        min-height: 170px;
+        padding: 22px 20px;
+        border: 0;
+        outline: 0;
+        box-shadow: none;
+        transform: none;
+    }
+
+    /* Mặc định hiện panel mời đăng ký */
+    .overlay-right {
+        display: flex;
+    }
+
+    .overlay-left {
+        display: none;
+    }
+
+    /* Khi đang đăng ký, hiện panel mời đăng nhập */
+    .container.right-panel-active .overlay-right {
+        display: none;
+        transform: none;
+    }
+
+    .container.right-panel-active .overlay-left {
+        display: flex;
+        transform: none;
+    }
+
+    .overlay-panel h1 {
+        margin-bottom: 8px;
+        font-size: 20px;
+        line-height: 1.3;
+    }
+
+    .overlay-panel p {
+        width: 100%;
+        max-width: 310px;
+        margin-bottom: 14px;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+    /* Mobile không cần hình SVG lớn */
+    .icon-welcome {
+        display: none;
+    }
+
+    .btn-ghost {
+        min-height: 40px;
+        padding: 9px 24px;
+        border: 0;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.16);
+        color: #fff;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        box-shadow: none;
+    }
+
+    .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+/* ==================================================
+   RESPONSIVE: SMALL MOBILE
+   Dưới 420px
+   ================================================== */
+@media (max-width: 420px) {
+    body {
+        padding: 8px;
+    }
+
+    .container {
+        margin: 8px auto;
+        border-radius: 6px;
+    }
+
+    .form-container {
+        padding: 30px 18px;
+    }
+
+    .form-container form {
+        max-width: 300px;
+    }
+
+    .container h1 {
+        margin-bottom: 20px;
+        font-size: 22px;
+    }
+
+    .container input {
+        min-height: 41px;
+        padding: 9px 13px;
+    }
+
+    .container .btn {
+        min-height: 42px;
+    }
+
+    .overlay-container,
+    .overlay,
+    .overlay-panel {
+        min-height: 155px;
+    }
+
+    .overlay-panel {
+        padding: 19px 16px;
+    }
+
+    .overlay-panel h1 {
+        font-size: 19px;
+    }
+
+    .overlay-panel p {
+        max-width: 280px;
+        font-size: 12px;
+    }
+}
+/* Password strenght */
+.password-strength {
+    display: none;
+    width: 100%;
+    margin-top: 8px;
+    text-align: left;
+}
+
+.password-strength.is-visible {
+    display: block;
+}
+
+.password-strength__bar {
+    width: 100%;
+    height: 5px;
+    overflow: hidden;
+    background-color: #e5e7eb;
+    border-radius: 999px;
+}
+
+.password-strength__progress {
+    width: 0;
+    height: 100%;
+    background-color: #d1d5db;
+    border-radius: inherit;
+    transition:
+        width 0.25s ease,
+        background-color 0.25s ease;
+}
+
+.password-strength__progress[data-level="weak"] {
+    background-color: #dc2626;
+}
+
+.password-strength__progress[data-level="medium"] {
+    background-color: #f59e0b;
+}
+
+.password-strength__progress[data-level="strong"] {
+    background-color: #16a34a;
+}
+
+.password-strength__content {
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.password-strength__text {
+    display: block;
+    font-weight: 600;
+}
+
+.password-strength__text[data-level="weak"] {
+    color: #dc2626;
+}
+
+.password-strength__text[data-level="medium"] {
+    color: #d97706;
+}
+
+.password-strength__text[data-level="strong"] {
+    color: #16a34a;
+}
+
+.password-strength__suggestion {
+    display: block;
+    margin-top: 2px;
+    color: #6b7280;
+}

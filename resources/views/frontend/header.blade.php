@@ -162,7 +162,6 @@
                                 </button>
                                 <div class="user-dropdown-content">
                                     <a href="{{ route('customers.profile') }}">Tài khoản</a>
-                                    <a href="{{ route('customers.forgot-password') }}">Quên mật khẩu</a>
                                     <a href="{{ route('customers.logout') }}">Đăng xuất</a>
                                 </div>
                             </div>

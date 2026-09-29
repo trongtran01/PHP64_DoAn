@@ -108,9 +108,26 @@
                     @enderror
                 </div>
 
-                <div class="input-group">
-                    <input type="password" name="password" placeholder="Mật khẩu"
-                        class="@error('password', 'register') input-error @enderror">
+                <div class="input-group password-field">
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Mật khẩu"
+                        data-password-input
+                        autocomplete="new-password"
+                        class="@error('password', 'register') input-error @enderror"
+                    >
+
+                    <div class="password-strength" data-password-strength>
+                        <div class="password-strength__bar">
+                            <div class="password-strength__progress"></div>
+                        </div>
+
+                        <div class="password-strength__content">
+                            <span class="password-strength__text"></span>
+                            <span class="password-strength__suggestion"></span>
+                        </div>
+                    </div>
 
                     @error('password', 'register')
                         <span class="error-message">{{ $message }}</span>
@@ -118,7 +135,12 @@
                 </div>
 
                 <div class="input-group">
-                    <input type="password" name="password_confirmation" placeholder="Nhập lại mật khẩu">
+                    <input
+                        type="password"
+                        name="password_confirmation"
+                        placeholder="Nhập lại mật khẩu"
+                        autocomplete="new-password"
+                    >
                 </div>
 
                 <button type="submit" class="btn">
@@ -204,7 +226,109 @@
         signInButton.addEventListener('click', () => {
             container.classList.remove('right-panel-active');
         });
+
+        document.querySelectorAll('[data-password-input]').forEach((passwordInput) => {
+            const passwordField = passwordInput.closest('.password-field');
+
+            if (!passwordField) {
+                return;
+            }
+
+            const strengthContainer = passwordField.querySelector(
+                '[data-password-strength]'
+            );
+
+            if (!strengthContainer) {
+                return;
+            }
+
+            const progress = strengthContainer.querySelector(
+                '.password-strength__progress'
+            );
+
+            const strengthText = strengthContainer.querySelector(
+                '.password-strength__text'
+            );
+
+            const suggestionText = strengthContainer.querySelector(
+                '.password-strength__suggestion'
+            );
+
+            const rules = [
+                {
+                    test: (value) => value.length >= 8,
+                    message: 'ít nhất 8 ký tự',
+                },
+                {
+                    test: (value) => /[a-z]/.test(value),
+                    message: 'chữ thường',
+                },
+                {
+                    test: (value) => /[A-Z]/.test(value),
+                    message: 'chữ hoa',
+                },
+                {
+                    test: (value) => /\d/.test(value),
+                    message: 'số',
+                },
+                {
+                    test: (value) => /[^A-Za-z0-9]/.test(value),
+                    message: 'ký tự đặc biệt',
+                },
+            ];
+
+            passwordInput.addEventListener('input', () => {
+                const value = passwordInput.value;
+
+                if (!value) {
+                    strengthContainer.classList.remove('is-visible');
+                    progress.style.width = '0';
+                    progress.dataset.level = 'empty';
+                    strengthText.textContent = '';
+                    suggestionText.textContent = '';
+
+                    return;
+                }
+
+                strengthContainer.classList.add('is-visible');
+
+                const missingRules = rules.filter((rule) => {
+                    return !rule.test(value);
+                });
+
+                const score = rules.length - missingRules.length;
+                const percentage = (score / rules.length) * 100;
+
+                progress.style.width = `${percentage}%`;
+
+                if (score <= 2) {
+                    strengthText.textContent = 'Mật khẩu yếu';
+                    progress.dataset.level = 'weak';
+                    strengthText.dataset.level = 'weak';
+                } else if (score <= 4) {
+                    strengthText.textContent = 'Mật khẩu trung bình';
+                    progress.dataset.level = 'medium';
+                    strengthText.dataset.level = 'medium';
+                } else {
+                    strengthText.textContent = 'Mật khẩu mạnh';
+                    progress.dataset.level = 'strong';
+                    strengthText.dataset.level = 'strong';
+                }
+
+                if (missingRules.length > 0) {
+                    const missingMessages = missingRules.map((rule) => {
+                        return rule.message;
+                    });
+
+                    suggestionText.textContent =
+                        `Cần thêm: ${missingMessages.join(', ')}.`;
+                } else {
+                    suggestionText.textContent =
+                        'Mật khẩu đã đáp ứng đầy đủ yêu cầu.';
+                }
+            });
+        });
     </script>
 
 </body>
-</htm
+</html>

@@ -13,33 +13,53 @@
             <div class="form-group">
                 <label>Tên</label>
                 <input type="text" name="name" class="form-control"
-                    value="{{ $customer->name ?? old('name') }}" required>
+                    value="{{ old('name', $customer->name ?? '') }}" required>
             </div>
 
             <div class="form-group">
                 <label>Email</label>
                 <input type="email" name="email" class="form-control"
-                    value="{{ $customer->email ?? old('email') }}" required>
+                    value="{{ old('email', $customer->email ?? '') }}" required>
             </div>
 
             <div class="form-group">
                 <label>Phone</label>
                 <input type="text" name="phone" class="form-control"
-                    value="{{ $customer->phone ?? old('phone') }}">
+                    value="{{ old('phone', $customer->phone ?? '') }}">
             </div>
 
             <div class="form-group">
                 <label>Address</label>
                 <input type="text" name="address" class="form-control"
-                    value="{{ $customer->address ?? old('address') }}">
+                    value="{{ old('address', $customer->address ?? '') }}">
             </div>
 
             <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control">
-                @if(isset($customer))
-                    <small>Bỏ trống nếu không muốn đổi mật khẩu</small>
-                @endif
+                <label for="password">Mật khẩu mới</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    autocomplete="new-password"
+                    class="form-control"
+                >
+
+                @error('password')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirmation">Xác nhận mật khẩu</label>
+
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    id="password_confirmation"
+                    autocomplete="new-password"
+                    class="form-control"
+                >
             </div>
 
             <button type="submit" class="btn btn-success">Lưu</button>

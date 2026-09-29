@@ -107,7 +107,6 @@ Route::get('customers/register',[CustomersController::class,'register'])->name('
 Route::post('customers/register-post',[CustomersController::class,'registerPost'])->name('customers.register-post');
 Route::get('customers/logout',[CustomersController::class,'logout'])->name('customers.logout');
 // Chưa thấy route "customers/profile" và "customers/forgot-password" trong file gốc.
-// Header cần 2 route này để hiện menu "Tài khoản" / "Quên mật khẩu" khi đã đăng nhập — thêm tạm ở đây,
 // bạn cần viết method profile()/forgotPassword() tương ứng trong CustomersController.
 Route::get('customers/profile',[CustomersController::class,'profile'])->name('customers.profile');
 Route::get('customers/forgot-password',[CustomersController::class,'forgotPassword'])->name('customers.forgot-password');
