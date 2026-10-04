@@ -1,286 +1,71 @@
-<footer class="footer two-tone-footer">
-  <div class="footer-top">
-    <div class="footer-container">
-      
-      <div class="footer-column footer-brand-info">
-        <h2>CÔNG TY TNHH CÀ PHÊ LÀ VIỆT</h2>
-        <div class="contact-block">
-          <strong>Số ĐKKD 5801206347 do Sở KHĐT Tp.Đà Lạt Cấp Ngày 29/08/2013</strong>
-          <strong>Địa chỉ: Số 95b Hai Bà Trưng, P6, Tp. Đà Lạt, Lâm Đồng</strong>
-          <strong>Điện thoại: 0263 3981 189</strong>
-        </div>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
 
-      <div class="footer-column">
-        <h2>THÔNG TIN & HỖ TRỢ</h2>
-        <ul class="link-list">
-          <li><a href="#">Trang chủ</a></li>
-          <li><a href="#">Giới thiệu</a></li>
-          <li><a href="#">Sản phẩm</a></li>
-          <li><a href="#">Tin tức</a></li>
-          <li><a href="#">Liên hệ</a></li>
-        </ul>
-        <h2 class="mt-20">CHÍNH SÁCH</h2>
-        <ul class="link-list">
-          <li><a href="#">Chính sách bảo mật</a></li>
-          <li><a href="#">Điều khoản sử dụng</a></li>
-          <li><a href="#">Phương thức thanh toán</a></li>
-        </ul>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('frontend/css/footer.css') }}">
+</head>
 
-      <div class="footer-column">
-        <h2>DỊCH VỤ KHÁCH HÀNG</h2>
-        <ul class="link-list">
-          <li><a href="#">Hướng dẫn mua hàng</a></li>
-          <li><a href="#">Chính sách đổi trả</a></li>
-          <li><a href="#">Bảo hành & bảo trì</a></li>
-          <li><a href="#">Câu hỏi thường gặp</a></li>
-          <li><a href="#">Liên hệ hỗ trợ</a></li>
-        </ul>
-        <h2 class="mt-20">PHÁP LÝ</h2>
-        <ul class="link-list">
-          <li><a href="#">Vận chuyển & giao hàng</a></li>
-          <li><a href="#">Khuyến mãi & ưu đãi</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-column footer-social-cert">
-        <h2>KẾT NỐI VỚI CHÚNG TÔI</h2>
-        <div class="footer-socials">
-          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
+<body>
+  <footer class="footer two-tone-footer">
+    <div class="footer-top">
+      <div class="footer-container">
+
+        <div class="footer-column footer-brand-info">
+          <h2>CÔNG TY TNHH CÀ PHÊ LÀ VIỆT</h2>
+          <div class="contact-block">
+            <div>Số ĐKKD 5801206347 do Sở KHĐT Tp.Đà Lạt Cấp Ngày 29/08/2013</div>
+            <div><b>Địa chỉ:</b> Số 95b Hai Bà Trưng, P6, Tp. Đà Lạt, Lâm Đồng</div>
+            <div><b>Điện thoại: </b> 0263 3981 189</div>
+          </div>
         </div>
-        
-        <div class="footer-cert">
-          <img src="{{ asset('frontend/images/bct.png') }}" alt="Chứng nhận Bộ Công Thương">
+
+        <div class="footer-column">
+          <ul class="link-list">
+            <li><a href="#">Chính sách thanh toán</a></li>
+            <li><a href="#">Chính sách vận chuyển</a></li>
+            <li><a href="#">Chính sách bảo hành</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <ul class="link-list">
+            <li><a href="#">Chính sách xử lý khiếu nại</a></li>
+            <li><a href="#">Chính sách đổi trả và hoàn tiền</a></li>
+            <li><a href="#">Chính sách bảo mật thông tin</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column footer-social-cert">
+          <h2>KẾT NỐI VỚI CHÚNG TÔI</h2>
+          <div class="footer-socials">
+            <a href="#" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="rgb(36, 32, 82)" d="M576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 440 146.7 540.8 258.2 568.5L258.2 398.2L205.4 398.2L205.4 320L258.2 320L258.2 286.3C258.2 199.2 297.6 158.8 383.2 158.8C399.4 158.8 427.4 162 438.9 165.2L438.9 236C432.9 235.4 422.4 235 409.3 235C367.3 235 351.1 250.9 351.1 292.2L351.1 320L434.7 320L420.3 398.2L351 398.2L351 574.1C477.8 558.8 576 450.9 576 320z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="rgb(36, 32, 82)" d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 412.3C544.9 375.3 544.9 264.5 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z"/></svg>
+            </a>
+            <a href="#" aria-label="Youtube">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="rgb(36, 32, 82)" d="M378 320.2L282.8 266.1L282.8 374.3L378 320.2zM480 96L160 96C124.7 96 96 124.7 96 160L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 160C544 124.7 515.3 96 480 96zM494.4 232.1C502 260.7 502 320.3 502 320.3C502 320.3 502 379.9 494.4 408.4C490.2 424.2 477.9 436.1 462.2 440.3C433.9 448 320 448 320 448C320 448 206.1 448 177.8 440.4C162.1 436.2 149.8 424.3 145.6 408.5C138 379.9 138 320.3 138 320.3C138 320.3 138 260.6 145.6 232.1C149.8 216.3 162.1 203.9 177.8 199.7C206.1 192 320 192 320 192C320 192 433.9 192 462.2 199.7C477.9 203.9 490.2 216.3 494.4 232.1z"/></svg>
+            </a>
+          </div>
+
+          <div class="footer-cert">
+            <img src="{{ asset('frontend/images/bct.png') }}" alt="Chứng nhận Bộ Công Thương">
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <div class="footer-bottom-bar">
-    <div class="footer-container">
+
+    <div class="footer-bottom-bar">
+      <div class="footer-container">
         <p>LAVIET.COFFEE PRIVACY POLICY ©2017 LAVIET CORPORATION. ALL RIGHTS RESERVED. | DESIGN WITH LOVE BY DVH</p>
+      </div>
     </div>
-  </div>
-</footer>
-
-<style>
-/* Màu sắc */
-/* #242052: Tím đậm (Màu nền bottom) */
-/* #ffffff: Trắng */
-/* #efeeff: Tím nhạt (Màu nền top) */
-
-.two-tone-footer {
-  padding: 0; 
-}
-
-/* ----------------- PHẦN TRÊN: MÀU NHẠT (#efeeff) ----------------- */
-.footer-top {
-  background: #efeeff; /* Màu nền nhạt */
-  color: #242052; /* Màu chữ đậm để tương phản */
-  padding: 60px 20px;
-}
-
-.footer-container {
-  display: grid;
-  /* Bố cục desktop: 1.5fr + 1fr + 1fr + 1fr */
-  grid-template-columns: 1.5fr repeat(3, 1fr); 
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.footer-column h2 {
-  font-size: 1.1rem;
-  /* Màu tiêu đề nổi bật: Màu đậm */
-  color: #242052; 
-  margin-bottom: 18px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Thêm đường kẻ dưới hiện đại cho tiêu đề */
-.footer-column h2::after {
-  content: '';
-  display: block;
-  width: 30px;
-  height: 2px;
-  /* Màu đường kẻ: Màu đậm */
-  background: #242052; 
-  margin-top: 5px;
-}
-
-.link-list {
-  list-style: none;
-  padding: 0;
-}
-
-.link-list li {
-  margin-bottom: 8px;
-}
-
-.link-list li a {
-  /* Màu liên kết mờ hơn */
-  color: rgba(36, 32, 82, 0.7); /* Màu tím đậm mờ */
-  text-decoration: none;
-  font-size: 0.95rem;
-  transition: color 0.2s, padding-left 0.2s;
-  display: inline-block;
-}
-
-.link-list li a:hover {
-  /* Màu nhấn phụ khi hover: Màu đậm hơn */
-  color: #242052; 
-  padding-left: 5px;
-}
-
-/* Style cho cột thông tin thương hiệu */
-.footer-brand-info h2 {
-    font-size: 1.4rem;
-    color: #242052;
-    margin-bottom: 10px;
-}
-.footer-brand-info h2::after {
-    display: none;
-}
-
-.brand-description {
-    font-size: 0.95rem;
-    color: rgba(36, 32, 82, 0.7);
-    margin-bottom: 25px;
-    line-height: 1.6;
-}
-
-.contact-block {
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: rgba(36, 32, 82, 0.7);
-}
-.contact-block strong {
-    /* Màu nổi bật cho tiêu đề phụ: Màu đậm nhất */
-    color: #242052; 
-    display: block;
-    margin-bottom: 25px;
-}
-.contact-block p {
-    margin: 0;
-}
-
-/* Style cho mạng xã hội */
-.footer-socials {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
-  margin-bottom: 30px;
-}
-
-.footer-socials a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  /* Viền đậm mờ */
-  border: 1px solid rgba(36, 32, 82, 0.3); 
-  color: #242052; /* Màu icon đậm */
-  font-size: 1.1rem;
-  border-radius: 50%;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s;
-}
-
-.footer-socials a:hover {
-  /* Đổi sang màu nhấn khi hover: Màu đậm */
-  background-color: #242052; 
-  color: #ffffff; /* Màu chữ đổi sang trắng */
-  border-color: #242052;
-  transform: translateY(-3px);
-}
-
-.footer-cert img {
-  max-width: 150px;
-  opacity: 0.8; /* Giữ mờ nhẹ, nhưng dễ thấy hơn trên nền sáng */
-  transition: opacity 0.3s;
-}
-.footer-cert img:hover {
-    opacity: 1;
-}
-
-.mt-20 {
-    margin-top: 20px;
-}
-
-/* ----------------- PHẦN DƯỚI: MÀU ĐẬM (#242052) ----------------- */
-.footer-bottom-bar {
-    background: #242052; /* Màu nền đậm */
-    color: #ffffff; /* Màu chữ trắng để tương phản */
-    padding: 20px 20px;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Đường kẻ phân cách nhẹ */
-    font-size: 0.9rem;
-}
-
-.footer-bottom-bar .footer-container {
-    /* Thiết lập lại grid 1 cột để căn giữa */
-    grid-template-columns: 1fr;
-    padding: 0;
-}
-
-.footer-bottom-bar p {
-    margin: 0;
-}
-
-.footer-bottom-bar strong {
-    color: #ffffff;
-}
-
-.footer-bottom-bar .brand-link {
-  /* Liên kết nổi bật: Màu nhạt (#efeeff) */
-  color: #efeeff; 
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 0.3s, border-bottom 0.3s;
-  border-bottom: 1px solid transparent; 
-}
-.footer-bottom-bar .brand-link:hover {
-  color: #ffffff; /* Đổi sang trắng khi hover */
-  border-bottom: 1px solid #ffffff; 
-}
-
-/* ----------------- RESPONSIVE ----------------- */
-
-/* Tablet (Từ 768px đến 1024px) */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .footer-container {
-    /* Chuyển sang bố cục 2 cột */
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 40px 20px;
-  }
-}
-
-/* Mobile (Dưới 767px) */
-@media (max-width: 767px) {
-  .footer-top {
-    padding: 40px 20px;
-  }
-  .footer-container {
-    /* Chuyển sang bố cục 1 cột */
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  /* Thay đổi thứ tự cột trên Mobile */
-  .footer-brand-info {
-    order: 4; 
-  }
-  .footer-socials {
-    justify-content: center; 
-  }
-  .footer-cert {
-    display: flex;
-    justify-content: center;
-  }
-}
-</style>
+  </footer>
+</body>

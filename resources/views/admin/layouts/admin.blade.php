@@ -46,6 +46,9 @@
                 <li class="{{ Request::is('backend/orders*') ? 'active' : '' }}">
                     <a href="{{ url('backend/orders') }}"><i class="fa fa-shopping-cart"></i><p>Đơn hàng</p></a>
                 </li>
+                <li class="{{ Request::is('backend/store-regions*') ? 'active' : '' }}">
+                    <a href="{{ url('backend/store-regions') }}"><i class="fa fa-map-marker"></i><p>Danh sách cửa hàng</p></a>
+                </li>
                 <li class="{{ Request::is('backend/banner*') ? 'active' : '' }}">
                     <a href="{{ url('backend/banner') }}"><i class="fa fa-image"></i><p>Banner</p></a>
                 </li>
