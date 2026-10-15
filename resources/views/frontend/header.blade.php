@@ -7,10 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('frontend/css/header.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/search.css') }}">
     <script src="{{ asset('frontend/js/header.js') }}" defer></script>
+    <script src="{{ asset('frontend/js/search.js') }}" defer></script>
 </head>
 
 <body>
@@ -18,6 +20,8 @@
     $rootCategories, $categoriesByParent, $customerEmail, $customerName, $cartCount, $cartItems
     được App\View\Composers\HeaderComposer tự động cung cấp (đăng ký trong ViewServiceProvider).
     --}}
+
+    {{-- TOP BAR: desktop = thanh thông báo mỏng. Mobile = giữ nguyên như cũ (giờ mở cửa + ô tìm kiếm). --}}
     <div class="top-bar">
         <div class="container">
             <div class="top-bar-content">
@@ -26,18 +30,14 @@
                     <span>Giờ mở cửa: 8:00 - 20:00</span>
                 </div>
 
-                {{-- data-* để header.js (file JS thuần) lấy URL mà không cần nhúng Blade vào .js --}}
-                <div class="search-container" data-search-url="{{ route('products.search') }}"
-                    data-ajax-search-url="{{ route('products.ajax-search') }}">
-                    <div class="search-wrapper">
-                        <input type="text" id="key" class="search-input" placeholder="Tìm kiếm sản phẩm..."
-                            autocomplete="off">
-                        <button class="search-btn" type="button" id="searchBtn">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                    <div id="searchResults" class="search-results" style="display:none;"></div>
+                {{-- Chỉ hiện trên desktop --}}
+                <div class="top-bar-info">
+                    <span><i class="fas fa-shipping-fast"></i>Miễn phí vận chuyển trong bán kính 50km</span>
+                    <span><i class="fas fa-headset"></i>Hotline: <strong>0965 814 299</strong></span>
                 </div>
+
+                {{-- Chỗ chứa ô tìm kiếm trên mobile (script bên dưới tự chuyển ô tìm kiếm vào đây khi < 993px) --}}
+                <div class="top-bar-search-slot" id="topBarSearchSlot"></div>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
                 {{-- Lớp phủ mờ phía sau menu, bấm vào để đóng (xử lý trong header.js) --}}
                 <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
 
-                {{-- MOBILE MENU --}}
+                {{-- MOBILE MENU (giữ nguyên) --}}
                 <div class="mobile-menu" id="mobileMenu">
                     <div class="mobile-menu-header">
                         <span>MENU</span>
@@ -110,6 +110,7 @@
                     </a>
                 </div>
 
+                {{-- DESKTOP NAV + MEGA MENU --}}
                 <nav class="main-nav">
                     <ul class="nav-list">
                         <li class="nav-item">
@@ -122,22 +123,30 @@
                             <a href="#" class="nav-link">
                                 SẢN PHẨM <i class="fas fa-chevron-down"></i>
                             </a>
-                            <ul class="dropdown-menu">
-                                @foreach($rootCategories as $category)
-                                    @php $subCategories = $categoriesByParent->get($category->id, collect()); @endphp
-                                    <li class="dropdown-item has-submenu">
-                                        <a href="{{ route('products.category', $category->id) }}">{{ $category->name }}</a>
-                                        @if($subCategories->isNotEmpty())
-                                            <ul class="submenu">
-                                                @foreach($subCategories as $sub)
-                                                    <li><a href="{{ route('products.category', $sub->id) }}">{{ $sub->name }}</a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
+
+                            @if($rootCategories->isNotEmpty())
+                                <div class="mega-menu">
+                                    <div class="container">
+                                        <div class="mega-menu-grid">
+                                            @foreach($rootCategories as $category)
+                                                @php $subCategories = $categoriesByParent->get($category->id, collect()); @endphp
+                                                <div class="mega-col">
+                                                    <a href="{{ route('products.category', $category->id) }}"
+                                                        class="mega-col-title">{{ $category->name }}</a>
+                                                    @if($subCategories->isNotEmpty())
+                                                        <ul class="mega-col-list">
+                                                            @foreach($subCategories as $sub)
+                                                                <li><a href="{{ route('products.category', $sub->id) }}">{{ $sub->name }}</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('news.index') }}" class="nav-link">TIN TỨC</a>
@@ -147,6 +156,11 @@
                         </li>
                     </ul>
                 </nav>
+
+                {{-- Ô tìm kiếm: mặc định nằm ở header (desktop). Markup nằm trong partial riêng. --}}
+                <div class="header-search-slot" id="headerSearchSlot">
+                    @include('frontend.partials.header.search')
+                </div>
 
                 <div class="header-actions">
                     <div class="mobile-burger">
@@ -214,6 +228,43 @@
             </div>
         </div>
     </header>
+
+    {{--
+    Script nhỏ chạy ngay (không defer) để:
+    1) Đưa ô tìm kiếm vào header (desktop >= 993px) hoặc top-bar (mobile) - dùng chính node cũ nên listener
+       của header.js vẫn hoạt động bình thường.
+    2) Thêm class is-scrolled cho header khi cuộn (thu gọn + đổ bóng trên desktop).
+    --}}
+    <script>
+        (function () {
+            var mq = window.matchMedia('(min-width: 993px)');
+            var search = document.querySelector('.search-container');
+            var deskSlot = document.getElementById('headerSearchSlot');
+            var mobSlot = document.getElementById('topBarSearchSlot');
+
+            function placeSearch() {
+                var target = mq.matches ? deskSlot : mobSlot;
+                if (search && target && search.parentNode !== target) target.appendChild(search);
+            }
+            placeSearch();
+            if (mq.addEventListener) mq.addEventListener('change', placeSearch);
+            else mq.addListener(placeSearch);
+
+            var header = document.querySelector('.main-header');
+            var ticking = false;
+            function update() {
+                var y = window.pageYOffset || document.documentElement.scrollTop;
+                // Hysteresis để header không bị giật khi chiều cao thay đổi
+                if (y > 70) header.classList.add('is-scrolled');
+                else if (y < 20) header.classList.remove('is-scrolled');
+                ticking = false;
+            }
+            window.addEventListener('scroll', function () {
+                if (!ticking) { ticking = true; requestAnimationFrame(update); }
+            }, { passive: true });
+            update();
+        })();
+    </script>
 
     <section class="features-section">
         <div class="container">

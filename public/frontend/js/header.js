@@ -1,3 +1,5 @@
+// Header: chỉ còn phần mobile menu.
+// Logic tìm kiếm đã được tách sang search.js
 document.addEventListener('DOMContentLoaded', () => {
     // ---- Mobile menu ----
     const burgerBtn = document.getElementById('burgerBtn');
@@ -26,56 +28,5 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             item.classList.toggle('open');
         });
-    });
-
-    // ---- Search (debounced ajax + submit) ----
-    const searchContainer = document.querySelector('.search-container');
-    const searchInput = document.getElementById('key');
-    const searchResults = document.getElementById('searchResults');
-
-    if (!searchContainer || !searchInput || !searchResults) return;
-
-    const searchUrl = searchContainer.dataset.searchUrl;
-    const ajaxSearchUrl = searchContainer.dataset.ajaxSearchUrl;
-    let debounceTimer;
-
-    const goToSearchPage = () => {
-        const key = searchInput.value.trim();
-        if (key !== '') {
-            window.location.href = `${searchUrl}?key=${encodeURIComponent(key)}`;
-        }
-    };
-
-    const runAjaxSearch = () => {
-        const key = searchInput.value.trim();
-        if (key === '') {
-            searchResults.style.display = 'none';
-            return;
-        }
-        searchResults.style.display = 'block';
-        fetch(`${ajaxSearchUrl}?key=${encodeURIComponent(key)}`)
-            .then((res) => res.text())
-            .then((html) => { searchResults.innerHTML = html; })
-            .catch((err) => {
-                console.error('Search error:', err);
-                searchResults.style.display = 'none';
-            });
-    };
-
-    searchInput.addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') {
-            goToSearchPage();
-            return;
-        }
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(runAjaxSearch, 300);
-    });
-
-    document.getElementById('searchBtn')?.addEventListener('click', goToSearchPage);
-
-    document.addEventListener('click', (e) => {
-        if (!searchContainer.contains(e.target)) {
-            searchResults.style.display = 'none';
-        }
     });
 });

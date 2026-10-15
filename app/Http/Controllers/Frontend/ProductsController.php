@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Services\Search\ProductSearchService;
 use Illuminate\Http\Request;
 use DB;
 
@@ -41,15 +42,12 @@ class ProductsController extends Controller
             //print_r($data);
             return view("frontend.product_search",["key"=>$key,"data"=>$data]);
         }
-        public function ajax(){
-            //lấy biến key truyền từ url
-            $key = request('key');//hoặc $key = $request->get('key');
-            $data = DB::table("products")->where("name","like",'%'.$key.'%')->orWhere("description","like",'%'.$key.'%')->orWhere("content","like",'%'.$key.'%')->select('name','id','photo')->get();
-            $str = "";
-            foreach($data as $row){
-                $str =  $str."<li><img src='".asset('storage/products/'.$row->photo)."'> <a href='".url('products/detail/'.$row->id)."'>".$row->name."</a></li>";
-            }
-            echo $str;
+
+        // Dropdown tìm kiếm ở header: trả về HTML đã render từ blade, kết quả gom nhóm theo danh mục.
+        // Logic tìm nằm trong ProductSearchService, sau này đổi engine chỉ cần sửa ở đó.
+        public function ajax(Request $request, ProductSearchService $searchService){
+            $result = $searchService->search($request->get('key'));
+            return view('frontend.partials.header.search-results', $result);
         }
         //đánh giá sao sản phẩm
         public function rating($id){

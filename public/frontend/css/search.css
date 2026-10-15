@@ -1,0 +1,315 @@
+/* =========================================================
+   SEARCH (ô tìm kiếm + dropdown kết quả gom nhóm theo danh mục)
+   Dùng biến màu :root khai báo trong header.css - cần nạp header.css trước file này.
+   ========================================================= */
+
+/* ---------- Ô tìm kiếm (mặc định: kiểu tối trong top-bar trên mobile) ---------- */
+
+.search-container {
+    position: relative;
+    flex: 0 0 400px;
+}
+
+.search-wrapper {
+    display: flex;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.search-wrapper:focus-within {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: var(--accent-color);
+}
+
+.search-input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 14px;
+    border: none;
+    background: transparent;
+    color: var(--white);
+    font-size: 14px;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-btn {
+    padding: 0 16px;
+    background: var(--secondary-color);
+    border: none;
+    color: var(--white);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.search-btn:hover {
+    background: var(--accent-color);
+}
+
+/* ---------- Dropdown kết quả ---------- */
+
+.search-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: 0 12px 28px rgba(36, 32, 82, 0.12);
+    max-height: min(70vh, 520px);
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    color: var(--text-dark);
+}
+
+.search-results.is-loading .sr-body {
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+/* Thanh dài ghi tên danh mục */
+
+.sr-group + .sr-group {
+    border-top: 1px solid var(--border-color);
+}
+
+.sr-group-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 16px;
+    background: var(--light-purple);
+    border-left: 3px solid var(--accent-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+a.sr-group-head:hover .sr-group-more {
+    color: var(--secondary-color);
+}
+
+.sr-group-name {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sr-group-more {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    transition: color 0.2s ease;
+}
+
+.sr-group-more i {
+    margin-left: 2px;
+    font-size: 11px;
+}
+
+/* Danh sách sản phẩm: tên + giá */
+
+.sr-list {
+    list-style: none;
+}
+
+.sr-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.sr-item:hover,
+.sr-item.is-active {
+    background: var(--light-purple);
+}
+
+.sr-item img,
+.sr-noimg {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+}
+
+.sr-noimg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-purple);
+    color: var(--secondary-color);
+}
+
+.sr-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.sr-name mark {
+    background: none;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.sr-price {
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--secondary-color);
+    white-space: nowrap;
+}
+
+/* Footer: luôn dính đáy dropdown */
+
+.sr-footer {
+    position: sticky;
+    bottom: 0;
+    display: block;
+    padding: 12px 16px;
+    background: var(--white);
+    border-top: 1px solid var(--border-color);
+    color: var(--secondary-color);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sr-footer:hover,
+.sr-footer.is-active {
+    background: var(--light-purple);
+    color: var(--primary-color);
+}
+
+.sr-footer i {
+    margin-left: 4px;
+    font-size: 11px;
+}
+
+/* Trạng thái: đang tải / không có kết quả */
+
+.sr-state {
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.sr-state i {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 24px;
+    color: var(--accent-color);
+}
+
+.sr-state i.fa-spin {
+    display: inline-block;
+    margin: 0 6px 0 0;
+    font-size: 14px;
+}
+
+.sr-state p strong {
+    color: var(--text-dark);
+}
+
+/* Scrollbar */
+
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: var(--light-purple);
+    border-radius: 6px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 6px;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 768px) {
+    .search-container {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .sr-item {
+        padding: 10px 12px;
+    }
+
+    .sr-group-head {
+        padding: 9px 12px;
+    }
+}
+
+/* ---------- Desktop (>= 993px): ô tìm kiếm to, kiểu viên thuốc, chiếm hết chỗ trống ở hàng trên của header ---------- */
+
+@media (min-width: 993px) {
+    .main-header .search-container {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: none;
+    }
+
+    .main-header .search-wrapper {
+        background: var(--light-purple);
+        border: 2px solid var(--light-purple);
+        border-radius: 999px;
+    }
+
+    .main-header .search-wrapper:focus-within {
+        background: var(--white);
+        border-color: var(--accent-color);
+    }
+
+    .main-header .search-input {
+        padding: 13px 10px 13px 24px;
+        font-size: 15px;
+        color: var(--text-dark);
+    }
+
+    .main-header .search-input::placeholder {
+        color: var(--text-light);
+    }
+
+    .main-header .search-btn {
+        padding: 0 28px;
+        font-size: 16px;
+    }
+
+    /* Dropdown rộng đúng bằng ô tìm kiếm */
+    .main-header .search-results {
+        border-radius: 12px;
+        max-height: min(75vh, 560px);
+    }
+}

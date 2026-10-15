@@ -152,7 +152,7 @@
    1. WRAPPER CHUNG
 ============================ */
 .page-content-wrapper {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 30px auto;
     padding: 0 15px;
 }

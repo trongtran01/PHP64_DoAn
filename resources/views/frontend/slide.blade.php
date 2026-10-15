@@ -27,7 +27,7 @@
 .home-banners {
     position: relative;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
     height: 700px;
     margin: 0 auto;
     overflow: hidden;
