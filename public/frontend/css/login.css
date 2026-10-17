@@ -18,7 +18,7 @@ body {
     position: relative;
     width: 900px;
     max-width: 100%;
-    min-height: 700px;
+    min-height: 800px;
     background: #fff;
     border-radius: 6px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -766,4 +766,136 @@ a:hover {
     display: block;
     margin-top: 2px;
     color: #6b7280;
+}
+
+/* Địa chỉ mới Việt Nam 2026 update */
+select {
+    width: 100%;
+    padding: 15px 34px 15px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #f8f8f8;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px 8px;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    appearance: none;
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.address-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.address-row .input-group {
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container select {
+        padding: 11px 28px 11px 12px;
+        font-size: 12px;
+    }
+
+    .container .address-row {
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .container select {
+        min-height: 42px;
+        padding: 10px 28px 10px 12px;
+        border-width: 1px;
+        font-size: 13px;
+    }
+
+    .container .address-row {
+        gap: 8px;
+        margin-bottom: 13px;
+    }
+}
+
+/* Nút hiện/ẩn mật khẩu */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.container .password-wrapper input {
+    padding-right: 46px;
+}
+
+.container .password-wrapper input:focus {
+    transform: none;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover,
+.password-toggle:focus-visible {
+    color: #667eea;
+    outline: none;
+}
+
+.password-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.password-toggle .icon-eye-off {
+    display: none;
+}
+
+.password-toggle.is-visible .icon-eye {
+    display: none;
+}
+
+.password-toggle.is-visible .icon-eye-off {
+    display: block;
 }

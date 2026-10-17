@@ -49,8 +49,13 @@
                 </div>
 
                 <div class="input-group">
-                    <input type="password" name="password" placeholder="Mật khẩu"
-                        class="@error('password', 'login') input-error @enderror">
+                    <div class="password-wrapper">
+                        <input type="password" name="password" placeholder="Mật khẩu"
+                            autocomplete="current-password"
+                            class="@error('password', 'login') input-error @enderror">
+
+                        @include('frontend.partials.password_toggle')
+                    </div>
 
                     @error('password', 'login')
                         <span class="error-message">{{ $message }}</span>
@@ -90,8 +95,10 @@
                     @enderror
                 </div>
 
+                @include('frontend.partials.address_fields')
+
                 <div class="input-group">
-                    <input type="text" name="address" value="{{ old('address') }}" placeholder="Địa chỉ"
+                    <input type="text" name="address" value="{{ old('address') }}" placeholder="Số nhà, tên đường"
                         class="@error('address', 'register') input-error @enderror">
 
                     @error('address', 'register')
@@ -109,20 +116,15 @@
                 </div>
 
                 <div class="input-group password-field">
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Mật khẩu"
-                        data-password-input
-                        autocomplete="new-password"
-                        class="@error('password', 'register') input-error @enderror"
-                    >
+                    <div class="password-wrapper">
+                        <input type="password" name="password" placeholder="Mật khẩu"
+                            data-password-input autocomplete="new-password"
+                            class="@error('password', 'register') input-error @enderror">
+
+                        @include('frontend.partials.password_toggle')
+                    </div>
 
                     <div class="password-strength" data-password-strength>
-                        <div class="password-strength__bar">
-                            <div class="password-strength__progress"></div>
-                        </div>
-
                         <div class="password-strength__content">
                             <span class="password-strength__text"></span>
                             <span class="password-strength__suggestion"></span>
@@ -135,12 +137,12 @@
                 </div>
 
                 <div class="input-group">
-                    <input
-                        type="password"
-                        name="password_confirmation"
-                        placeholder="Nhập lại mật khẩu"
-                        autocomplete="new-password"
-                    >
+                    <div class="password-wrapper">
+                        <input type="password" name="password_confirmation"
+                            placeholder="Nhập lại mật khẩu" autocomplete="new-password">
+
+                        @include('frontend.partials.password_toggle')
+                    </div>
                 </div>
 
                 <button type="submit" class="btn">
@@ -329,6 +331,8 @@
             });
         });
     </script>
-
+    
+    <script src="{{ asset('frontend/js/address-select.js') }}" defer></script>
+    <script src="{{ asset('frontend/js/password-toggle.js') }}" defer></script>
 </body>
 </html>

@@ -28,10 +28,54 @@
                     value="{{ old('phone', $customer->phone ?? '') }}">
             </div>
 
+            <div class="row"
+                data-address-select
+                data-wards-url="{{ route('locations.wards', ['province' => '__CODE__']) }}">
+
+                <div class="form-group col-md-6">
+                    <label for="province_code">Tỉnh / Thành phố</label>
+
+                    <select name="province_code" id="province_code" data-province-select
+                        class="form-control @error('province_code') is-invalid @enderror">
+                        <option value="">-- Chọn Tỉnh / Thành phố --</option>
+
+                        @foreach ($provinces as $province)
+                            <option value="{{ $province->code }}"
+                                @selected((string) old('province_code', $customer->province_code ?? '') === (string) $province->code)>
+                                {{ $province->name }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    @error('province_code')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="ward_code">Phường / Xã</label>
+
+                    <select name="ward_code" id="ward_code" data-ward-select disabled
+                        data-old="{{ old('ward_code', $customer->ward_code ?? '') }}"
+                        class="form-control @error('ward_code') is-invalid @enderror">
+                        <option value="">-- Chọn Phường / Xã --</option>
+                    </select>
+
+                    @error('ward_code')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
             <div class="form-group">
-                <label>Address</label>
-                <input type="text" name="address" class="form-control"
+                <label for="address">Số nhà, tên đường</label>
+                <input type="text" name="address" id="address"
+                    class="form-control @error('address') is-invalid @enderror"
                     value="{{ old('address', $customer->address ?? '') }}">
+
+                @error('address')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
@@ -66,4 +110,5 @@
         </form>
     </div>
 </div>
+<script src="{{ asset('frontend/js/address-select.js') }}" defer></script>
 @endsection

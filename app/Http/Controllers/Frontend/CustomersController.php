@@ -6,13 +6,37 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Frontend\RegisterCustomerRequest;
+use App\Models\Customer;
+use App\Models\Province;
+use Illuminate\Contracts\View\View;
 
 class CustomersController extends Controller
 {
-    public function login()
+    public function login(): View
     {
-        return view('frontend.form_customers_login');
+        return $this->authForm();
+    }
+
+    public function register(): View
+    {
+        return $this->authForm();
+    }
+
+    public function registerPost(RegisterCustomerRequest $request)
+    {
+        // Mutator trong model Customer tự hash password, không Hash::make thêm
+        Customer::create($request->validated());
+
+        return redirect('customers/login')
+            ->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
+    }
+
+    private function authForm(): View
+    {
+        return view('frontend.form_customers_login', [
+            'provinces' => Province::orderBy('name')->get(['code', 'name']),
+        ]);
     }
 
     public function loginPost(Request $request)
@@ -51,70 +75,6 @@ class CustomersController extends Controller
 
         return redirect('/')
             ->with('success', 'Đăng nhập thành công.');
-    }
-
-    public function register()
-    {
-        return view('frontend.form_customers_login');
-    }
-
-    public function registerPost(Request $request)
-    {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'name' => ['required', 'string', 'max:100'],
-                'email' => [
-                    'required',
-                    'email',
-                    'max:255',
-                    'unique:customers,email',
-                ],
-                'address' => ['nullable', 'string', 'max:255'],
-                'phone' => ['nullable', 'string', 'max:20'],
-                'password' => [
-                    'required',
-                    'string',
-                    'min:8',
-                    'confirmed',
-                ],
-            ],
-            [
-                'name.required' => 'Vui lòng nhập họ và tên.',
-                'name.max' => 'Họ và tên không được vượt quá 100 ký tự.',
-
-                'email.required' => 'Vui lòng nhập email.',
-                'email.email' => 'Email không đúng định dạng.',
-                'email.unique' => 'Email này đã được sử dụng.',
-
-                'address.max' => 'Địa chỉ không được vượt quá 255 ký tự.',
-                'phone.max' => 'Số điện thoại không được vượt quá 20 ký tự.',
-
-                'password.required' => 'Vui lòng nhập mật khẩu.',
-                'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
-                'password.confirmed' => 'Mật khẩu nhập lại không khớp.',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return back()
-                ->withErrors($validator, 'register')
-                ->withInput()
-                ->with('active_form', 'register');
-        }
-
-        $validated = $validator->validated();
-
-        DB::table('customers')->insert([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'address' => $validated['address'] ?? null,
-            'phone' => $validated['phone'] ?? null,
-            'password' => Hash::make($validated['password']),
-        ]);
-
-        return redirect('customers/login')
-            ->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
 
     public function logout(Request $request)

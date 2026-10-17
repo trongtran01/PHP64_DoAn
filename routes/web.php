@@ -22,6 +22,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\IntroduceController;
 use App\Http\Controllers\Frontend\NewsController as NewsFrontend;
 use App\Http\Controllers\Frontend\ProductsController as ProductsFrontend;
+use App\Http\Controllers\Frontend\LocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -146,6 +147,11 @@ Route::prefix('customers')->name('customers.')->group(function () {
     Route::get('profile', [CustomersController::class, 'profile'])->name('profile');
     Route::get('forgot-password', [CustomersController::class, 'forgotPassword'])->name('forgot-password');
 });
+
+// Địa giới hành chính
+Route::get('locations/provinces/{province}/wards', [LocationController::class, 'wards'])
+    ->whereNumber('province')
+    ->name('locations.wards');
 
 // Giỏ hàng
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');

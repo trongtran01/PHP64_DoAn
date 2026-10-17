@@ -26,10 +26,10 @@
                     <td>{{ $customer->email }}</td>
                     <td>{{ $customer->name }}</td>
                     <td>{{ $customer->phone ?? '-' }}</td>
-                    <td>{{ $customer->address ?? '-' }}</td>
+                    <td>{{ $customer->full_address ?: '-' }}</td>
 
                     <td>
-                        <a href="{{ route('admin.customers.edit', $customer->id) }}" 
+                        <a href="{{ route('admin.customers.edit', $customer->id) }}"
                            class="btn btn-sm btn-primary">Sửa</a>
 
                         <form action="{{ route('admin.customers.destroy', $customer->id) }}"
