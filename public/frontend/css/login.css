@@ -899,3 +899,137 @@ select:disabled {
 .password-toggle.is-visible .icon-eye-off {
     display: block;
 }
+
+/* Small laptop and short viewport adjustments */
+@media (min-width: 1025px) and (max-width: 1366px) {
+    body {
+        padding: 16px;
+        align-items: flex-start;
+    }
+
+    .container {
+        width: min(100%, 1040px);
+        min-height: min(740px, calc(100vh - 32px));
+        margin: auto;
+    }
+
+    .form-container {
+        padding: 24px 34px;
+    }
+
+    .form-container form {
+        max-width: 360px;
+    }
+
+    .container h1 {
+        margin-bottom: 20px;
+        font-size: 28px;
+        line-height: 1.25;
+    }
+
+    .container .input-group {
+        margin-bottom: 13px;
+    }
+
+    .container input,
+    .container select {
+        padding-top: 11px;
+        padding-bottom: 11px;
+    }
+
+    .container .btn {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .overlay-panel {
+        padding: 24px 32px;
+    }
+
+    .overlay-panel h1 {
+        margin-bottom: 14px;
+        font-size: 28px;
+    }
+
+    .overlay-panel p {
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .icon-welcome {
+        width: 104px;
+        height: 104px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-height: 800px) {
+    body {
+        align-items: flex-start;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .container {
+        min-height: max(620px, calc(100vh - 24px));
+    }
+
+    .form-container {
+        padding-top: 18px;
+        padding-bottom: 18px;
+    }
+
+    .container h1 {
+        margin-bottom: 16px;
+    }
+
+    .container .input-group {
+        margin-bottom: 10px;
+    }
+
+    .container input,
+    .container select {
+        padding-top: 9px;
+        padding-bottom: 9px;
+    }
+
+    .container .btn {
+        margin-top: 6px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .overlay-panel h1 {
+        margin-bottom: 10px;
+    }
+
+    .overlay-panel p {
+        margin-bottom: 16px;
+    }
+
+    .icon-welcome {
+        width: 84px;
+        height: 84px;
+        margin-bottom: 14px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+    .container {
+        width: 100%;
+    }
+
+    .form-container {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    .overlay-panel {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    .overlay-panel p {
+        font-size: 12px;
+    }
+}

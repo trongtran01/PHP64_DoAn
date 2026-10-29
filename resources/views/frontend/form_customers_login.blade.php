@@ -125,6 +125,10 @@
                     </div>
 
                     <div class="password-strength" data-password-strength>
+                        <div class="password-strength__bar">
+                            <div class="password-strength__progress" data-level="empty"></div>
+                        </div>
+
                         <div class="password-strength__content">
                             <span class="password-strength__text"></span>
                             <span class="password-strength__suggestion"></span>
@@ -156,60 +160,28 @@
             <div class="overlay">
                 <!-- Panel hiển thị khi ở trang Đăng Ký -->
                 <div class="overlay-panel overlay-left">
-                    <svg class="icon-welcome" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Khói -->
-                        <path d="M 90 40 Q 85 30 90 20" stroke="#fff" stroke-width="3" fill="none" opacity="0.7"
-                            stroke-linecap="round">
-                            <animate attributeName="d"
-                                values="M 90 40 Q 85 30 90 20;M 90 40 Q 95 30 90 20;M 90 40 Q 85 30 90 20" dur="2s"
-                                repeatCount="indefinite" />
-                        </path>
-                        <path d="M 100 45 Q 95 35 100 25" stroke="#fff" stroke-width="3" fill="none" opacity="0.7"
-                            stroke-linecap="round">
-                            <animate attributeName="d"
-                                values="M 100 45 Q 95 35 100 25;M 100 45 Q 105 35 100 25;M 100 45 Q 95 35 100 25"
-                                dur="2s" repeatCount="indefinite" begin="0.3s" />
-                        </path>
-                        <path d="M 110 40 Q 105 30 110 20" stroke="#fff" stroke-width="3" fill="none" opacity="0.7"
-                            stroke-linecap="round">
-                            <animate attributeName="d"
-                                values="M 110 40 Q 105 30 110 20;M 110 40 Q 115 30 110 20;M 110 40 Q 105 30 110 20"
-                                dur="2s" repeatCount="indefinite" begin="0.6s" />
-                        </path>
-                        <!-- Cốc cà phê -->
-                        <path d="M 70 60 L 75 140 Q 75 155 100 155 Q 125 155 125 140 L 130 60 Z" fill="#fff" />
-                        <ellipse cx="100" cy="60" rx="30" ry="8" fill="#8B4513" />
-                        <!-- Tay cầm -->
-                        <path d="M 130 80 Q 150 80 150 100 Q 150 120 130 120" stroke="#fff" stroke-width="5"
-                            fill="none" />
-                        <!-- Đĩa -->
-                        <ellipse cx="100" cy="155" rx="45" ry="8" fill="#fff" opacity="0.6" />
+                    <svg class="icon-welcome" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="100" cy="100" r="82" fill="#fff" opacity="0.18" />
+                        <path d="M48 72h15l12 61h66l15-45H70" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="88" cy="151" r="8" fill="#fff" />
+                        <circle cx="137" cy="151" r="8" fill="#fff" />
+                        <path d="M91 91h39M91 108h27" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity="0.9" />
                     </svg>
                     <h1>Chào Mừng Trở Lại!</h1>
-                    <p>Đã có tài khoản rồi? Đăng nhập ngay để tiếp tục trải nghiệm nhé!</p>
+                    <p>Đăng nhập để theo dõi đơn hàng và tiếp tục mua sắm dễ dàng.</p>
                     <button type="button" class="btn-ghost" id="signIn">Đăng Nhập</button>
                 </div>
 
                 <!-- Panel hiển thị khi ở trang Đăng Nhập -->
                 <div class="overlay-panel overlay-right">
-                    <svg class="icon-welcome" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Vòng tròn nền -->
-                        <circle cx="100" cy="100" r="90" fill="#fff" opacity="0.2" />
-                        <!-- Hạt cà phê 1 -->
-                        <ellipse cx="80" cy="90" rx="25" ry="35" fill="#8B4513" transform="rotate(-20 80 90)" />
-                        <path d="M 65 75 Q 80 90 65 105" stroke="#fff" stroke-width="4" fill="none"
-                            stroke-linecap="round" />
-                        <!-- Hạt cà phê 2 -->
-                        <ellipse cx="120" cy="110" rx="25" ry="35" fill="#8B4513" transform="rotate(20 120 110)" />
-                        <path d="M 105 95 Q 120 110 105 125" stroke="#fff" stroke-width="4" fill="none"
-                            stroke-linecap="round" />
-                        <!-- Tim nhỏ -->
-                        <path
-                            d="M 100 50 L 95 45 Q 90 40 85 45 Q 80 50 85 60 L 100 75 L 115 60 Q 120 50 115 45 Q 110 40 105 45 Z"
-                            fill="#FFD700" />
+                    <svg class="icon-welcome" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="100" cy="100" r="82" fill="#fff" opacity="0.18" />
+                        <path d="M100 48l15 31 34 5-25 24 6 34-30-16-30 16 6-34-25-24 34-5z" fill="#fff" opacity="0.95" />
+                        <circle cx="145" cy="55" r="8" fill="#FFD166" />
+                        <circle cx="52" cy="128" r="6" fill="#FFD166" />
                     </svg>
                     <h1>Xin Chào Bạn Mới!</h1>
-                    <p>Chưa có tài khoản? Đăng ký ngay để khám phá những điều tuyệt vời!</p>
+                    <p>Tạo tài khoản để lưu thông tin, theo dõi đơn hàng và nhận ưu đãi mới.</p>
                     <button type="button" class="btn-ghost" id="signUp">Đăng Ký</button>
                 </div>
             </div>
