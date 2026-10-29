@@ -88,6 +88,7 @@ Route::prefix('backend')
         // CRUD cơ bản
         Route::resource('categories', CategoriesController::class);
         Route::resource('products', ProductsController::class)->except(['show']);
+        Route::get('products/{id}/stock', [ProductsController::class, 'stock'])->name('products.stock');
         Route::resource('news', NewsController::class)->except(['show']);
         Route::resource('users', UsersController::class);
         Route::resource('banner', BannerController::class)->except(['show']);

@@ -4,6 +4,16 @@
 @section('page-title', isset($record) ? 'Cập nhật sản phẩm' : 'Tạo sản phẩm')
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form action="{{ $action }}" method="post" enctype="multipart/form-data">
     @csrf
     @if(isset($record))
@@ -12,7 +22,13 @@
 
     <div class="mb-3">
         <label>Tên sản phẩm</label>
-        <input name="name" class="form-control" value="{{ $record->name ?? old('name') }}">
+        <input name="name" class="form-control" value="{{ old('name', $record->name ?? '') }}">
+    </div>
+
+    <div class="mb-3">
+        <label>SKU</label>
+        <input name="sku" class="form-control" maxlength="64" value="{{ old('sku', $record->sku ?? '') }}">
+        <small class="text-muted">Mã sản phẩm, không được trùng. Có thể để trống.</small>
     </div>
 
     <div class="mb-3">
@@ -20,7 +36,7 @@
         <select name="category_id" class="form-control">
             <option value="0">Không có</option>
             @foreach($categories as $c)
-                <option value="{{ $c->id }}" @if(isset($record) && $record->category_id == $c->id) selected @endif>
+                <option value="{{ $c->id }}" @selected(old('category_id', $record->category_id ?? null) == $c->id)>
                     {{ $c->name }}
                 </option>
             @endforeach
@@ -28,23 +44,41 @@
     </div>
 
     <div class="mb-3">
-        <label>Giá</label>
-        <input name="price" type="number" class="form-control" value="{{ $record->price ?? old('price') }}">
+        <label>Giá (VND)</label>
+        <input name="price" type="number" min="0" step="1" class="form-control" value="{{ old('price', $record->price ?? '') }}">
     </div>
 
     <div class="mb-3">
-        <label>Giảm giá</label>
-        <input name="discount" type="number" class="form-control" value="{{ $record->discount ?? old('discount') }}">
+        <label>Giảm giá (%)</label>
+        <input name="discount" type="number" min="0" max="100" class="form-control" value="{{ old('discount', $record->discount ?? 0) }}">
+    </div>
+
+    {{-- Tồn kho --}}
+    <div class="mb-3">
+        <label>Tồn kho</label>
+        @if(isset($record))
+            <div>
+                <strong>{{ $record->stock }}</strong>
+                @if($record->isConfigurable())
+                    <span class="text-muted">(sản phẩm configurable không có tồn kho riêng)</span>
+                @else
+                    <a href="{{ route('admin.products.stock', $record->id) }}" class="btn btn-sm btn-outline-primary ms-2">Điều chỉnh kho / Lịch sử</a>
+                @endif
+            </div>
+        @else
+            <input name="stock" type="number" min="0" step="1" class="form-control" value="{{ old('stock', 0) }}">
+            <small class="text-muted">Số lượng nhập ban đầu. Sau khi tạo, chỉ đổi được qua "Điều chỉnh kho".</small>
+        @endif
     </div>
 
     <div class="mb-3">
         <label>Tiêu đề sản phẩm</label>
-        <textarea name="description" class="form-control" id="description-editor">{{ $record->description ?? old('description') }}</textarea>
+        <textarea name="description" class="form-control" id="description-editor">{{ old('description', $record->description ?? '') }}</textarea>
     </div>
 
     <div class="mb-3">
         <label>Mô tả sản phẩm</label>
-        <textarea name="content" class="form-control" id="content-editor">{{ $record->content ?? old('content') }}</textarea>
+        <textarea name="content" class="form-control" id="content-editor">{{ old('content', $record->content ?? '') }}</textarea>
     </div>
 
     <div class="mb-3">
@@ -57,8 +91,16 @@
 
     <div class="mb-3">
         <label>
-            <input type="checkbox" name="hot" @if(isset($record) && $record->hot) checked @endif>
+            <input type="checkbox" name="hot" @checked(old('hot', $record->hot ?? false))>
             Là sản phẩm hot
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <input type="hidden" name="is_active" value="0">
+        <label>
+            <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $record->is_active ?? true))>
+            Bật sản phẩm (hiển thị trên website)
         </label>
     </div>
 

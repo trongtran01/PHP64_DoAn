@@ -7,7 +7,7 @@
     <section class="story-card">
         <!-- TOP IMAGE -->
         <div class="story-top-image">
-            <img src="{{ asset('frontend/images/top-story.png') }}">
+            <img src="{{ asset('frontend/images/sub_0.png') }}">
         </div>
 
         <!-- BOTTOM CONTENT -->
@@ -15,28 +15,31 @@
 
             <!-- LEFT IMAGE -->
             <div class="story-left-image">
-                <img src="{{ asset('frontend/images/left-story.png') }}">
+                <img src="{{ asset('frontend/images/sub_1.png') }}">
             </div>
 
             <!-- RIGHT TEXT CONTENT -->
             <div class="story-text">
-                <h2 class="story-title">Không có bí quyết nào<br>để có cà phê ngon…</h2>
+                <h2 class="story-title">Chất lượng tạo nên<br>giá trị bền vững</h2>
 
                 <p>
-                    …ngoài việc từng bước trong quy trình từ hạt giống đến tách cà phê 
-                    cần được thực hiện với kỹ thuật, sự tỉ mỉ và niềm đam mê. 
-                    Từng quả cà phê chín mọng được hái bằng tay và sản xuất trong ngày 
-                    để đạt chất lượng tốt nhất.
+                    Tại Việt Hưng Ecom, chúng tôi tin rằng mỗi sản phẩm chất lượng
+                    đều bắt đầu từ sự chỉn chu trong từng khâu lựa chọn, kiểm soát
+                    và cung cấp. Mục tiêu của chúng tôi là mang đến những giải pháp
+                    phù hợp, đáp ứng nhu cầu thực tế của khách hàng.
                 </p>
 
                 <p>
-                    Từng mẻ cà phê được thổi hồn từ tình yêu của những người thợ lành nghề. 
-                    Chúng tôi tôn trọng khẩu vị khách hàng bằng cách chăm chút cho quá trình làm cà phê của mình.
+                    Chúng tôi luôn chú trọng chất lượng sản phẩm, tối ưu trải nghiệm
+                    mua sắm và không ngừng cải thiện dịch vụ. Sự hài lòng và tin tưởng
+                    của khách hàng chính là động lực để Việt Hưng Ecom phát triển
+                    mỗi ngày.
                 </p>
 
                 <p>
-                    Với chúng tôi, không có cà phê đặc biệt, chỉ có những con người đặc biệt làm cà phê 
-                    với cả lòng tận tâm.
+                    Với Việt Hưng Ecom, thành công không chỉ nằm ở những sản phẩm
+                    được cung cấp, mà còn ở giá trị thiết thực và mối quan hệ bền vững
+                    mà chúng tôi xây dựng cùng khách hàng.
                 </p>
             </div>
 
@@ -142,9 +145,9 @@
         </section>
     </div>
 
-    <div class="banner-footer">
+    <!-- <div class="banner-footer">
         <img src="{{ asset('frontend/images/banner_footer.png') }}">
-    </div>
+    </div> -->
 </div>
 @endsection
 <style>
@@ -196,6 +199,10 @@
     display: flex;
     justify-content: center;
     margin-bottom: 60px;
+
+    img {
+        height: 250px;
+    }
 }
 
 /* BOTTOM BLOCK */
@@ -245,9 +252,11 @@
 @media(max-width: 576px) {
     .story-top-image {
         height: auto;
+        margin-bottom: 10px;
     }
     .story-top-image img {
         width: 100%;
+        height: unset;
     }
     .story-left-image img {
         width: 100%;

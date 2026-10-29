@@ -17,11 +17,11 @@
       <div class="footer-container">
 
         <div class="footer-column footer-brand-info">
-          <h2>CÔNG TY TNHH CÀ PHÊ LÀ VIỆT</h2>
+          <h2>CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ CÔNG NGHỆ VIỆT HƯNG</h2>
           <div class="contact-block">
-            <div>Số ĐKKD 5801206347 do Sở KHĐT Tp.Đà Lạt Cấp Ngày 29/08/2013</div>
-            <div><b>Địa chỉ:</b> Số 95b Hai Bà Trưng, P6, Tp. Đà Lạt, Lâm Đồng</div>
-            <div><b>Điện thoại: </b> 0263 3981 189</div>
+            <div>Số ĐKKD 0000000000 do Sở KHĐT Tp.Hà Nội Cấp Ngày 29/10/2026</div>
+            <div><b>Địa chỉ:</b> Số 298 Đ. Cầu Diễn, Nhổn, Tây Tựu, Hà Nội</div>
+            <div><b>Điện thoại: </b> 0263 3981 199</div>
           </div>
         </div>
 
@@ -64,7 +64,7 @@
 
     <div class="footer-bottom-bar">
       <div class="footer-container">
-        <p>LAVIET.COFFEE PRIVACY POLICY ©2017 LAVIET CORPORATION. ALL RIGHTS RESERVED. | DESIGN WITH LOVE BY DVH</p>
+        <p>VIETHUNG.ECOM PRIVACY POLICY ©2026 VIETHUNG CORPORATION. ALL RIGHTS RESERVED. | DESIGN WITH LOVE BY DVH</p>
       </div>
     </div>
   </footer>

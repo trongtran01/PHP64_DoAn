@@ -22,22 +22,40 @@
     <!-- Hero Section: giữ nguyên như file cũ -->
     <div class="hero">
         <div class="image-grid">
-            <div class="image-box"><div class="image-placeholder"><img src="{{ asset('frontend/images/intro1.jpg') }}" alt="Hello Laviet"></div></div>
-            <div class="image-box"><div class="image-placeholder"><img src="{{ asset('frontend/images/intro2.jpg') }}" alt="Hello Laviet"></div></div>
-            <div class="image-box"><div class="image-placeholder"><img src="{{ asset('frontend/images/intro3.jpg') }}" alt="Hello Laviet"></div></div>
+            <div class="image-box">
+                <div class="image-placeholder">
+                    <img src="{{ asset('frontend/images/intro1.jpg') }}" alt="Sản phẩm Việt Hưng Ecom">
+                </div>
+            </div>
+            <div class="image-box">
+                <div class="image-placeholder">
+                    <img src="{{ asset('frontend/images/intro2.jpg') }}" alt="Trải nghiệm mua sắm">
+                </div>
+            </div>
+            <div class="image-box">
+                <div class="image-placeholder">
+                    <img src="{{ asset('frontend/images/intro3.jpg') }}" alt="Dịch vụ Việt Hưng Ecom">
+                </div>
+            </div>
         </div>
+
         <div class="content">
-            <div class="logo"><img src="{{ asset('frontend/images/logo.png') }}" alt="Logo"></div>
+            <div class="logo">
+                <img src="{{ asset('frontend/images/logo.png') }}" alt="Việt Hưng Ecom">
+            </div>
+
             <p class="intro-text">
-                Từ làn hương đến mùi vị, từ câu chuyện tại nông trại đến bối cảnh địa phương,
-                mỗi cách thưởng thức cà phê là một câu chuyện đầy. Câu chuyện ấy, với bạn, có thể
-                thân thương hay ngộ nghĩnh, thú vị hay lạ lùng. Dù cho cảm xúc ấy là gì, hãy đón
-                nhận tất cả. Để rồi từ đấy, bạn sẽ có cảm nhận cà phê của riêng mình.
+                Tại Việt Hưng Ecom, chúng tôi tin rằng trải nghiệm mua sắm tốt
+                bắt đầu từ những sản phẩm chất lượng và dịch vụ tận tâm.
+                Chúng tôi không ngừng cải thiện để việc mua sắm trực tuyến trở nên
+                dễ dàng, thuận tiện và đáng tin cậy hơn mỗi ngày.
             </p>
-            <div class="brand-name">HELLO LAVIET</div>
+
+            <div class="brand-name">VIỆT HƯNG ECOM</div>
+
             <div class="contact-info">
-                <div class="contact-item">Hotline: 0866 10 6989</div>
-                <div class="contact-item">coffee.laviet@gmail.com</div>
+                <div class="contact-item">Chất lượng tạo dựng niềm tin</div>
+                <div class="contact-item">Đồng hành cùng khách hàng</div>
             </div>
         </div>
     </div>
